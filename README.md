@@ -19,25 +19,25 @@
 --------------------------------------------------------------------------
 
 # Steps:
-### 1. Build OpenWrt image*
+#### 1. Build OpenWrt image*
 * only neccesary until the port gets merged and officially supported
-### 2. Install OpenWrt to the device
-### 3. Setup Wi-FI
-### 4. Enable extroot to expand storage on the TF card
-**4.1 Enable swap just in case (though 128mb seemed more than enough)**
-### 5. Install dependencies
+#### 2. Install OpenWrt to the device
+#### 3. Setup Wi-FI
+#### 4. Enable extroot to expand storage on the TF card
+- **4.1 Enable swap just in case (though 128mb seemed more than enough)**
+#### 5. Install dependencies
 * for Klipper, fluidd/mainsail
-### 6. Install Klipper
+#### 6. Install Klipper
 **6.1 Use provided klipper service**
-### 7. Install fluidd/mainsail
-**7.1 Follow mainsail Manual Setup [Guide](https://docs.mainsail.xyz/setup/manual-setup)**
-**7.2 Use provided moonraker service**
-**7.3 Create and place all the nginx files inside conf.d***
-* if you followed mainsail guide, `mainsail` should pe renamed to `mainsail.conf` and placed inside /etc/nginx/conf.d/ alongside `common_vars.conf` and `upstreams.conf`
-### 7. Install mjpg-streamer
+#### 7. Install fluidd/mainsail
+- **7.1 Follow mainsail Manual Setup [Guide](https://docs.mainsail.xyz/setup/manual-setup)**
+- **7.2 Use provided moonraker service**
+- **7.3 Create and place all the nginx files inside conf.d***
+* if you followed mainsail guide, `mainsail` should pe renamed to `mainsail.conf` and placed inside `/etc/nginx/conf.d/` alongside `common_vars.conf` and `upstreams.conf`
+#### 7. Install mjpg-streamer
 * connect a uvc webcam, configure /etc/config/mjpg-streamer to your likings and restart service `/etc/init.d/mjpg-streeamer restart`
 * put the stream link inside the client(fluidd/mainsail) camera setting
-### 8. Enjoy 
+#### 8. Enjoy 
 
 --------------------------------------------------------------------------
 
@@ -48,6 +48,6 @@
                            cadriel - for [fluidd](https://github.com/cadriel/fluidd)
                            Eric Callahan - for [Moonraker](https://github.com/Arksine/moonraker)
 * the fine tuning: andryblack - for the OpenWrt Klipper [service](https://github.com/andryblack/openwrt-build/tree/master/packages/klipper/files)
-* the encouragement: Tom Hensel - for supporting me into this
+* the encouragement: [Tom Hensel](https://github.com/gretel)- for supporting me into this
 
 You can find me on discord: jonah1024#4422
