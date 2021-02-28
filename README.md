@@ -13,7 +13,7 @@
 ### What is [fluidd](https://github.com/cadriel/fluidd) / [mainsail](https://github.com/meteyou/mainsail)?
 - These are free and open-source Klipper web interface clients for managing your 3d printer.
     
-### What is Moonraker?
+### What is [Moonraker](https://github.com/Arksine/moonraker)?
 - A Python 3 based web server that exposes APIs with which client applications (fluidd or mainsail) may use to interact with Klipper
 
 --------------------------------------------------------------------------
@@ -22,11 +22,12 @@
 #### 1. Build OpenWrt image*
 * only neccesary until the port gets merged and officially supported
 #### 2. Install OpenWrt to the device
+* I recommend following figgyc's [post](https://github.com/figgyc/figgyc.github.io/blob/source/posts.org#compiling-openwrt-for-the-creality-wb-01-tips-and-tricks). You'll find there his experience and a guide to compile OpenWrt. Here is his OpenWrt [branch](https://github.com/figgyc/openwrt/tree/wb01) with support for the Creality Wi-Fi Box 
 #### 3. Setup Wi-FI
 #### 4. Enable extroot to expand storage on the TF card
-- **4.1 Enable swap just in case (though 128mb seemed more than enough)**
+- **4.1 Enable swap just in case** (though 128mb seemed more than enough)
 #### 5. Install dependencies
-* for Klipper, fluidd/mainsail
+* for Klipper and fluidd/mainsail
 #### 6. Install Klipper
 **6.1 Use provided klipper service**
 #### 7. Install fluidd/mainsail
@@ -44,9 +45,10 @@
 ### Credits:
 * the ideea: Hackaday.com - for the [article](https://hackaday.com/2020/12/28/teardown-creality-wifi-box) that set me on this journey
 * the hard part: figgyc - for porting [OpenWrt](https://github.com/figgyc/openwrt/tree/wb01) to the Creality Wi-Fi Box
-* the essentials: Kevin O'Connor - for [Klipper](https://github.com/KevinOConnor/klipper)
-                           cadriel - for [fluidd](https://github.com/cadriel/fluidd)
-                           Eric Callahan - for [Moonraker](https://github.com/Arksine/moonraker)
+* the essentials: 
+  - Kevin O'Connor - for [Klipper](https://github.com/KevinOConnor/klipper)
+  - cadriel - for [fluidd](https://github.com/cadriel/fluidd)
+  - Eric Callahan - for [Moonraker](https://github.com/Arksine/moonraker)
 * the fine tuning: andryblack - for the OpenWrt Klipper [service](https://github.com/andryblack/openwrt-build/tree/master/packages/klipper/files)
 * the encouragement: [Tom Hensel](https://github.com/gretel)- for supporting me into this
 
