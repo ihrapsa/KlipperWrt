@@ -273,7 +273,7 @@ Flashing:
 <details>
   <summary>Click to expand!</summary>
  
-1. Download a [stock](http://file2-cdn.creality.com/model/cfg/box/V1.01b51/cxsw_update.tar.bz2) image (found inside Stock_fw folder as well) or get a previowsly working OpenWrt image.
+1. Download a [stock](http://file2-cdn.creality.com/model/cfg/box/V1.01b51/cxsw_update.tar.bz2) image (found inside `Firmware/Creality_Stock` folder as well) or get a previowsly working OpenWrt image.
 2. Unzip the stock `tar.bz2` and get the `root_uImage` file OR if you have a previously working OpenWrt image: rename it to `root_uImage`
 3. Put it on a FAT32 formatted USB stick (NOT sd card)
 4. Insert it in the box while off
