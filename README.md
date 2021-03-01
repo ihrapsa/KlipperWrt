@@ -25,10 +25,37 @@
 * I recommend following figgyc's [post](https://github.com/figgyc/figgyc.github.io/blob/source/posts.org#compiling-openwrt-for-the-creality-wb-01-tips-and-tricks). You'll find there his experience and a guide to compile OpenWrt. Here is his OpenWrt [branch](https://github.com/figgyc/openwrt/tree/wb01) with support for the Creality Wi-Fi Box 
 #### 3. Setup Wi-FI
 #### 4. Enable [extroot](https://openwrt.org/docs/guide-user/additional-software/extroot_configuration) to expand storage on the TF card
+<details>
+  <summary>Click to expand!</summary>
+  
+  `opkg update && opkg install block-mount kmod-fs-ext4 kmod-usb-storage kmod-usb-ohci kmod-usb-uhci e2fsprogs fdisk  
+  DEVICE="$(sed -n -e "/\s\/overlay\s.*$/s///p" /etc/mtab)"  
+  uci -q delete fstab.rwm  
+  uci set fstab.rwm="mount"  
+  uci set fstab.rwm.device="${DEVICE}"  
+  uci set fstab.rwm.target="/rwm"  
+  uci commit fstab`  
+
+  `mkfs.ext4 /dev/mmcblk0p1`  
+
+  `DEVICE="/dev/mmcblk0p1"  
+  eval $(block info "${DEVICE}" | grep -o -e "UUID=\S*")  
+  uci -q delete fstab.overlay  
+  uci set fstab.overlay="mount"  
+  uci set fstab.overlay.uuid="${UUID}"  
+  uci set fstab.overlay.target="/overlay"  
+  uci commit fstab  
+  mount /dev/mmcblk0p1 /mnt  
+  cp -f -a /overlay/. /mnt  
+  umount /mnt  
+  reboot`  
+  </details>
+  
 - **4.1 Enable swap just in case** (though the existing 128mb RAM seemed more than enough)
 <details>
   <summary>Click to expand!</summary>
 
+**run this once:**  
 `opkg update && opkg install swap-utils*`
 
 `dd if=/dev/zero of=/overlay/swap.page bs=1M count=512`  
@@ -36,12 +63,12 @@
 `swapon /overlay/swap.page`  
 `mount -o remount,size=200M /tmp`  
   
-**put this inside /etc/rc.local above exit:**  
+**put this inside /etc/rc.local above exit so that swap is enabled at boot:**  
 
-###activate the swap file on the SD card
+###activate the swap file on the SD card  
 `swapon /overlay/swap.page`  
 
-###expand /tmp space
+###expand /tmp space  
 `mount -o remount,size=200M /tmp`  
 </details>
 
