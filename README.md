@@ -28,27 +28,27 @@
 <details>
   <summary>Click to expand!</summary>
   
-  `opkg update && opkg install block-mount kmod-fs-ext4 kmod-usb-storage kmod-usb-ohci kmod-usb-uhci e2fsprogs fdisk  
-  DEVICE="$(sed -n -e "/\s\/overlay\s.*$/s///p" /etc/mtab)"  
-  uci -q delete fstab.rwm  
-  uci set fstab.rwm="mount"  
-  uci set fstab.rwm.device="${DEVICE}"  
-  uci set fstab.rwm.target="/rwm"  
-  uci commit fstab`  
+`opkg update && opkg install block-mount kmod-fs-ext4 kmod-usb-storage kmod-usb-ohci kmod-usb-uhci e2fsprogs fdisk`  
+`DEVICE="$(sed -n -e "/\s\/overlay\s.*$/s///p" /etc/mtab)"`  
+`uci -q delete fstab.rwm`  
+`uci set fstab.rwm="mount"`  
+`uci set fstab.rwm.device="${DEVICE}"`  
+`uci set fstab.rwm.target="/rwm"`  
+`uci commit fstab`  
 
-  `mkfs.ext4 /dev/mmcblk0p1`  
+`mkfs.ext4 /dev/mmcblk0p1`  
 
-  `DEVICE="/dev/mmcblk0p1"  
-  eval $(block info "${DEVICE}" | grep -o -e "UUID=\S*")  
-  uci -q delete fstab.overlay  
-  uci set fstab.overlay="mount"  
-  uci set fstab.overlay.uuid="${UUID}"  
-  uci set fstab.overlay.target="/overlay"  
-  uci commit fstab  
-  mount /dev/mmcblk0p1 /mnt  
-  cp -f -a /overlay/. /mnt  
-  umount /mnt  
-  reboot`  
+`DEVICE="/dev/mmcblk0p1"`  
+`eval $(block info "${DEVICE}" | grep -o -e "UUID=\S*")`  
+`uci -q delete fstab.overlay`  
+`uci set fstab.overlay="mount"`  
+`uci set fstab.overlay.uuid="${UUID}"`  
+`uci set fstab.overlay.target="/overlay"`  
+`uci commit fstab`  
+`mount /dev/mmcblk0p1 /mnt`  
+`cp -f -a /overlay/. /mnt`  
+`umount /mnt`  
+`reboot`  
   </details>
   
 - **4.1 Enable swap just in case** (though the existing 128mb RAM seemed more than enough)
@@ -56,7 +56,7 @@
   <summary>Click to expand!</summary>
 
 **run this once:**  
-`opkg update && opkg install swap-utils*`
+`opkg update && opkg install swap-utils`
 
 `dd if=/dev/zero of=/overlay/swap.page bs=1M count=512`  
 `mkswap /overlay/swap.page`  
