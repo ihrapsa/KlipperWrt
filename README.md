@@ -24,8 +24,25 @@
 #### 2. Install OpenWrt to the device
 * I recommend following figgyc's [post](https://github.com/figgyc/figgyc.github.io/blob/source/posts.org#compiling-openwrt-for-the-creality-wb-01-tips-and-tricks). You'll find there his experience and a guide to compile OpenWrt. Here is his OpenWrt [branch](https://github.com/figgyc/openwrt/tree/wb01) with support for the Creality Wi-Fi Box 
 #### 3. Setup Wi-FI
-#### 4. Enable extroot to expand storage on the TF card
-- **4.1 Enable swap just in case** (though 128mb seemed more than enough)
+#### 4. Enable [extroot](https://openwrt.org/docs/guide-user/additional-software/extroot_configuration) to expand storage on the TF card
+- **4.1 Enable swap just in case** (though the existing 128mb RAM seemed more than enough)
+<details>
+  <summary>Click to expand!</summary>
+  `opkg update && opkg install swap-utils
+  
+  dd if=/dev/zero of=/overlay/swap.page bs=1M count=512
+  mkswap /overlay/swap.page
+  swapon /overlay/swap.page
+
+  mount -o remount,size=200M /tmp`
+  
+  put this inside /etc/rc.local
+  `###activate the swap file on the SD card
+  swapon /overlay/swap.page
+
+  ###expand /tmp space
+  mount -o remount,size=200M /tmp'
+</details>
 #### 5. Install dependencies
 * for Klipper and fluidd/mainsail
 #### 6. Install Klipper
