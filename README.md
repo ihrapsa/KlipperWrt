@@ -156,8 +156,9 @@ Flashing:
 <details>
   <summary>Click to expand!</summary>
  
+* install video4linux utilities: `opkg update && opkg install v4l2-utils`
 * use commands: `opkg update && opkg install mjpg-streamer-input-uvc mjpg-streamer-output-http mjpg-streamer-www`
-* connect a uvc webcam, configure `/etc/config/mjpg-streamer` to your likings and restart service `/etc/init.d/mjpg-streeamer restart`
+* connect a uvc webcam, configure `/etc/config/mjpg-streamer` to your likings and restart service `/etc/init.d/mjpg-streamer restart`
 * put the stream link inside the client(fluidd/mainsail) camera setting: `http://<your_ip>/webcam/?action=stream`
 
 </details>
@@ -165,8 +166,35 @@ Flashing:
 #### 9. Enjoy 
 
 --------------------------------------------------------------------------
+#### :computer: Useful commands
+
+- Watch realtime CommandLine log (open an aditional terminal instance for this)  
+`logread -f`  
+
+- Services commands (Replace `service` with `klipper`/`moonraker`/`nginx`/`mjpg-streamer` respectively)  
+`/etc/init.d/service enable`  
+`/etc/init.d/service start`  
+`/etc/init.d/service restart`  
+
+- Check CPU/system resources usage  
+`top`
+
+- Check webcam specifcations  
+`v4l2-ctl --all`  
+`v4l2-ctl --list-formats`  
+
+- List installed packages  
+`opkg list-installed`
+
+- Reboot, Poweroff  
+`reboot`  
+`poweroff`  
+
+--------------------------------------------------------------------------
 
 #### :exclamation: Issues I had but solved:
+- If enabling the services returns an error, do: `ls -l` inside `/etc/init.d/` and check if the service has executable permissions (x flag). If not do: `chmod 755 service` - replace `service` accordingly.
+
 - I didn't manage to get the printer to communicate on 250000 baudrate (I think because the box/pyserial is unable to set a custom nonstandard baudrate - I found a possible fix by [ckielstra](https://github.com/pyserial/pyserial/pull/496) but haven't tried it yet. I solved this by using 230400 instead (you need to change this both while building the mcu klipper firmware AND inside printer.cfg under [mcu]:  
 `[mcu]`  
 `baud: 230400`  
@@ -193,7 +221,9 @@ Flashing:
 * the fine tuning: andryblack - for the OpenWrt Klipper [service](https://github.com/andryblack/openwrt-build/tree/master/packages/klipper/files)
 * the encouragement: [Tom Hensel](https://github.com/gretel)- for supporting me into this
 
+--------------------------------------------------------------------------
+
 You can find me on:  
 
-💬     discord: jonah1024#4422  
-:email:    email: hrapsaiona@gmail.com  
+💬 discord: jonah1024#4422  
+:email: email: hrapsaiona@gmail.com  
