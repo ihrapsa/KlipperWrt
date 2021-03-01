@@ -219,6 +219,10 @@ Flashing:
 
 --------------------------------------------------------------------------
 #### :computer: Useful commands
+
+<details>
+  <summary>Click to expand!</summary>
+ 
 - Copy files to the box 
 `scp /path/file.ext root@<your_box_ip>:/tmp`  
 
@@ -242,11 +246,17 @@ Flashing:
 
 - Reboot, Poweroff  
 `reboot`  
-`poweroff`  
+`poweroff`
+
+</details>
 
 --------------------------------------------------------------------------
 
 #### :exclamation: Issues I had but solved:
+
+<details>
+  <summary>Click to expand!</summary>
+ 
 - If enabling the services returns an error, do: `ls -l` inside `/etc/init.d/` and check if the service has executable permissions (x flag). If not do: `chmod 755 service` - replace `service` accordingly.
 
 - I didn't manage to get the printer to communicate on 250000 baudrate (I think because the box/pyserial is unable to set a custom nonstandard baudrate - I found a possible fix by [ckielstra](https://github.com/pyserial/pyserial/pull/496) but haven't tried it yet. I solved this by using 230400 instead (you need to change this both while building the mcu klipper firmware AND inside printer.cfg under [mcu]:  
@@ -254,9 +264,15 @@ Flashing:
 `baud: 230400`  
 
 - The Host and Services commands (`Reboot`, `Shutdown`, `Restart Moonraker`, `Restart Klipper` etc.) inside fluidd/mainsail did not work at first due to moonraker using debian syntax. I solved this by editing the `~moonraker/moonraker/plugins/machine.py`. Use these commands inside `self._execute_cmd("command")`: `"poweroff"`, `"reboot"`, `f'/etc/init.d/{service_name} restart'` for host *poweroff*, *reboot* and *services restart* respectively.
-- 
+
+</details>
+
 --------------------------------------------------------------------------
 ### :warning:  Going back to stock (if ever needed) OR if it gets bricked:
+
+<details>
+  <summary>Click to expand!</summary>
+ 
 1. Download a [stock](http://file2-cdn.creality.com/model/cfg/box/V1.01b51/cxsw_update.tar.bz2) image (found inside Stock_fw folder as well) or get a previowsly working OpenWrt image.
 2. Unzip the stock `tar.bz2` and get the `root_uImage` file OR if you have a previously working OpenWrt image: rename it to `root_uImage`
 3. Put it on a FAT32 formatted USB stick (NOT sd card)
@@ -264,6 +280,9 @@ Flashing:
 5. Press and hold the reset button
 6. Power on the box while still holding the reset button for about 6-10 sec.
 7. Release the button and wait for a couple of minutes. If stock, you should find it on network. If OpenWrt you should be able to ssh into it through ethernet(`ssh root@192.168.1.1`)
+
+</details>
+
 --------------------------------------------------------------------------
 ### Credits:
 * the ideea: Hackaday.com - for the [article](https://hackaday.com/2020/12/28/teardown-creality-wifi-box) that set me on this journey
