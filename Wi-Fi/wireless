@@ -1,0 +1,27 @@
+
+config wifi-device 'radio0'
+	option type 'mac80211'
+	option channel '11'
+	option hwmode '11g'
+	option path 'platform/10300000.wmac'
+	option htmode 'HT20'
+	option disabled '0' #<- change this from 1 to 0
+
+config wifi-iface 'default_radio0'
+	option device 'radio0'
+	option network 'lan'
+	option mode 'ap'
+	option ssid 'OpenWrt'
+	option encryption 'psk'
+	option key 'none'
+
+config wifi-iface
+	option network 'wwan'
+	option ssid 'Your_internet_router_SSID' #<- change this
+	option encryption 'psk' #<- this might cause issues - try psk2 if issues connecting
+	option device 'radio0'
+	option mode 'sta'
+	option bssid 'your_router_mac_address' #<- this is not mandatory but recommended
+	option key 'your_password'  #<-change this
+	
+

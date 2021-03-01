@@ -1,0 +1,14 @@
+#Add this block under the other config zone blocks
+
+(...)
+
+config zone
+        option name             wwan
+        list   network          'wwan'
+        option input            ACCEPT
+        option output           ACCEPT
+        option forward          ACCEPT
+        option masq             1
+        option mtu_fix          1
+
+(...)

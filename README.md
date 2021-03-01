@@ -46,6 +46,8 @@
   `kmod-fs-ext4` `kmod-usb-storage` `kmod-usb-ohci` `kmod-usb-uhci` `kmod-usb-serial` `kmod-usb-serial-ch431`*  `kmod-video-core` `kmod-video-uvc`  
   *(chose this because my printer has the ch431 serial usb convertor. You might want to choose `kmod-usb-serial-fttdi` if your mainboard uses that - check this before building/compiling) 
   
+  **OR use the provided image I built located inside `Firmware/OpenWrt_snapshot` - Be aware though  that this was built with only the `kmod-usb-serial-ch431` - if your mainboard is different -> use the above instructions to compile.**
+  
   </details>
 #### 2. Install OpenWrt to the device
 
@@ -64,7 +66,7 @@ Flashing:
 <details>
   <summary>Click to expand!</summary>
  
-* Edit `/etc/config/network`, `/etc/config/wireless` and `/etc/config/firewall`. I've uploaded these to follow as a model (inside Fix_Wi-Fi).
+* Edit `/etc/config/network`, `/etc/config/wireless` and `/etc/config/firewall`. I've uploaded these to follow as a model (inside `Wi-Fi`).
 
 </details>
 
@@ -197,7 +199,7 @@ Flashing:
 - **7.3 Create and place all the nginx files inside `/etc/nginx/conf.d`***
 * if you followed mainsail guide, `mainsail` should pe renamed to `mainsail.conf` and placed inside `/etc/nginx/conf.d/` alongside `common_vars.conf` and `upstreams.conf`
 * if you'd prefer fluidd, download the fluidd latest release instead of mainsail and use the `fluidd.conf` file instead of `mainsail.conf`.
-* I've uploaded the `mainsail.conf` and `fluidd.conf` as well. You need to use one or the other depending on your chosen client. Don't use both .conf files inside `/etc/nginx/conf.d/` or rename the unused client.
+* I've uploaded the `mainsail.conf` and `fluidd.conf` as well (look inside `nginx`). You need to use one or the other depending on your chosen client. Don't use both .conf files inside `/etc/nginx/conf.d/` or rename the unused client.
 
 </details>
  
