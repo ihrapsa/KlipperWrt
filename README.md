@@ -4,6 +4,21 @@
 ### What is the Creality [Wi-Fi Box](https://www.creality.com/goods-detail/creality-box-3d-printer)?
 - A router box device released by Creality meant to add network control to your printer.  Big claims, lots of problems and frustrations. No desktop control, only mobile. No custom slicing only cloud based. No camera support, only claims.
 
+<details>
+  <summary>Specifications (Click to expand!)</summary>
+ 
+ *(taken form figgyc's commit)*
+
+- **SoC**: MediaTek MT7688AN @ 580 MHz  
+- **Flash**: BoyaMicro BY25Q128AS (16 MiB, SPI NOR)  
+- **RAM**: 128 MiB DDR2 (Winbond W971GG6SB-25)  
+- **Peripheral**: Genesys Logic GL850G 2 port USB 2.0 hub  
+- **I/O**: 1x 10/100 Ethernet port, microSD SD-XC Class 10 slot, 4x LEDs, 2x USB 2.0 ports, micro USB input (for power only), reset button  
+- **FCC ID**: 2AXH6CREALITY-BOX  
+- **UART**: test pads: (square on silkscreen) 3V3, TX, RX, GND; default baudrate: 57600  
+ 
+ </details>
+
 ### What is [OpenWrt](https://github.com/openwrt/openwrt)?
 - A Linux OS built for embeded devices, routers especially. Light, Open Source with a great community and packages that gives your device the freedom it deserves. 
     
@@ -22,6 +37,10 @@
 #### 1. Build OpenWrt image
 * Only neccesary until the [port](https://github.com/openwrt/openwrt/pull/3802) gets merged and officially supported.
   * I recommend following figgyc's [post](https://github.com/figgyc/figgyc.github.io/blob/source/posts.org#compiling-openwrt-for-the-creality-wb-01-tips-and-tricks). You'll find there his experience and a guide to compile OpenWrt. Here is his OpenWrt [branch](https://github.com/figgyc/openwrt/tree/wb01) with support for the Creality Wi-Fi Box and the [PR](https://github.com/openwrt/openwrt/pull/3802) pending to merge to main OpenWrt.
+  
+  * :exclamation: This is an OpenWrt snapshot (aka not officially supported) and kernel modules can't be installed with opkg. You NEED to choose some required kmods inside `make menuconfig`:  
+  `kmod-fs-ext4` `kmod-usb-storage` `kmod-usb-ohci` `kmod-usb-uhci` `kmod-usb-serial` `kmod-usb-serial-ch431`*  `kmod-video-core` `kmod-video-uvc`  
+  *(chose this because my printer has the ch431 serial usb convertor. You might want to choose `kmod-usb-serial-fttdi` if your mainboard uses that - check this before building/compiling) 
 #### 2. Install OpenWrt to the device
 
 <details>
@@ -35,7 +54,7 @@ Flashing:
 </details>
 
 #### 3. Setup Wi-FI
-* Edit `/etc/config/network`, `/etc/config/wireless` and `/etc/config/firewall`. I've uploaded these to follow as a model.
+* Edit `/etc/config/network`, `/etc/config/wireless` and `/etc/config/firewall`. I've uploaded these to follow as a model (inside Fix_Wi-Fi).
 #### 4. Enable [extroot](https://openwrt.org/docs/guide-user/additional-software/extroot_configuration) to expand the storage on the TF card.
 <details>
   <summary>Click to expand!</summary>
@@ -86,9 +105,11 @@ Flashing:
 
 #### 5. Install dependencies
 * for Klipper and moonraker/fluidd/mainsail - check the `requirements.txt` file
+* Some of the packages like python2 (that refuse to be installed using `opkg` that aren't available inside `make menuconfig` either) can be installed by manually downloading and `scp` them to the box from the OpenWrt package repository for [`mipsel_24kc`](https://downloads.openwrt.org/releases/packages-19.07/mipsel_24kc/packages/) devices. (you need to find and download all the dependencies otherwise it won't let you install it) 
+* An easier workaround I found was to use the v19.07 OpenWrt release (that still has python2 package feeds) and build an image with required packages selected as `(M)` for a device with the same cpu as the Creality WiFi box (Found the Onion Omega2+ to be almost identical). This way all the  packages you selected with (M) and their dependencies will be built and found inside the `bin` folder.
 #### 6. Install Klipper
-- **6.1 Clone Klipper inside `~/`
-- **6.1 Use provided klipper service and place inside `/etc/init.d/`**
+- **6.1 Clone Klipper inside** `~/`
+- **6.2 Use provided klipper service and place inside `/etc/init.d/`**
 #### 7. Install fluidd/mainsail
 - **7.1 Follow mainsail Manual Setup [Guide](https://docs.mainsail.xyz/setup/manual-setup)** (it's almost identical for fluidd as well)
 - **7.2 Use provided moonraker service and place inside `/etc/init.d/`**
