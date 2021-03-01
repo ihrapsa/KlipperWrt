@@ -20,17 +20,18 @@
 
 # Steps:
 #### 1. Build OpenWrt image
-* only neccesary until the [port](https://github.com/openwrt/openwrt/pull/3802) gets merged and officially supported.
-* * I recommend following figgyc's [post](https://github.com/figgyc/figgyc.github.io/blob/source/posts.org#compiling-openwrt-for-the-creality-wb-01-tips-and-tricks). You'll find there his experience and a guide to compile OpenWrt. Here is his OpenWrt [branch](https://github.com/figgyc/openwrt/tree/wb01) with support for the Creality Wi-Fi Box and the [PR](https://github.com/openwrt/openwrt/pull/3802) pending to merge to main OpenWrt.
+* Only neccesary until the [port](https://github.com/openwrt/openwrt/pull/3802) gets merged and officially supported.
+  * I recommend following figgyc's [post](https://github.com/figgyc/figgyc.github.io/blob/source/posts.org#compiling-openwrt-for-the-creality-wb-01-tips-and-tricks). You'll find there his experience and a guide to compile OpenWrt. Here is his OpenWrt [branch](https://github.com/figgyc/openwrt/tree/wb01) with support for the Creality Wi-Fi Box and the [PR](https://github.com/openwrt/openwrt/pull/3802) pending to merge to main OpenWrt.
 #### 2. Install OpenWrt to the device
 
 <details>
   <summary>Click to expand!</summary>
-* Flashing:
+ 
+Flashing:  
 1) Rename factory.bin to cxsw_update.tar.bz2  
 2) Copy it to the root of a FAT32 formatted microSD card.  
-3) Turn on the device, wait for it to start, then insert the card.  
-The stock firmware reads the install.sh script from this archive, the build script I added creates one that works in a similar way. Web firmware update didn't work in my testing.
+3) Turn on the device, wait for it to start, then insert the card. The stock firmware reads the install.sh script from this archive, the build script I added creates one that works in a similar way. Web firmware update didn't work in my testing.
+
 </details>
 
 #### 3. Setup Wi-FI
@@ -112,8 +113,8 @@ The stock firmware reads the install.sh script from this archive, the build scri
 - The Host and Services commands (`Reboot`, `Shutdown`, `Restart Moonraker`, `Restart Klipper` etc.) inside fluidd/mainsail did not work at first due to moonraker using debian syntax. I solved this by editing the `~moonraker/moonraker/plugins/machine.py`. Use these commands inside `self._execute_cmd("command")`: `"poweroff"`, `"reboot"`, `f'/etc/init.d/{service_name} restart'` for host *poweroff*, *reboot* and *services restart* respectively.
 - 
 --------------------------------------------------------------------------
-### Going back to stock (if ever needed) OR if it gets bricked:
-1. Download a [stock](http://file2-cdn.creality.com/model/cfg/box/V1.01b51/cxsw_update.tar.bz2) image or get a previowsly working OpenWrt image.
+### :warning:  Going back to stock (if ever needed) OR if it gets bricked:
+1. Download a [stock](http://file2-cdn.creality.com/model/cfg/box/V1.01b51/cxsw_update.tar.bz2) image (found inside Stock_fw folder as well) or get a previowsly working OpenWrt image.
 2. Unzip the stock `tar.bz2` and get the `root_uImage` file OR if you have a previously working OpenWrt image: rename it to `root_uImage`
 3. Put it on a FAT32 formatted USB stick (NOT sd card)
 4. Insert it in the box while off
