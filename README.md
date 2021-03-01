@@ -60,7 +60,14 @@ Flashing:
 </details>
 
 #### 3. Setup Wi-FI
+
+<details>
+  <summary>Click to expand!</summary>
+ 
 * Edit `/etc/config/network`, `/etc/config/wireless` and `/etc/config/firewall`. I've uploaded these to follow as a model (inside Fix_Wi-Fi).
+
+</details>
+
 #### 4. Enable [extroot](https://openwrt.org/docs/guide-user/additional-software/extroot_configuration) to expand the storage on the TF card.
 <details>
   <summary>Click to expand!</summary>
@@ -127,7 +134,13 @@ Flashing:
  
 - **6.1 Clone Klipper inside** `~/`
 - **6.2 Use provided klipper service and place inside `/etc/init.d/`**
+
+</details>
+ 
 #### 7. Install fluidd/mainsail
+<details>
+  <summary>Click to expand!</summary>
+ 
 - **7.1 Follow mainsail Manual Setup [Guide](https://docs.mainsail.xyz/setup/manual-setup)** (it's almost identical for fluidd as well)
 - **7.2 Use provided moonraker service and place inside `/etc/init.d/`**
         - Don't forget to modify the `moonraker.conf` you created inside `~/klipper_config` under `trusted_clients:` with your subnet.
@@ -136,7 +149,7 @@ Flashing:
 * if you'd prefer fluidd, download the fluidd latest release instead of mainsail and use the `fluidd.conf` file instead of `mainsail.conf`.
 * I've uploaded the `mainsail.conf` and `fluidd.conf` as well. You need to use one or the other depending on your chosen client. Don't use both .conf files inside `/etc/nginx/conf.d/` or rename the unused client.
 
-<details>
+</details>
  
 #### 8. Install mjpg-streamer - for webcam stream
 
@@ -147,13 +160,13 @@ Flashing:
 * connect a uvc webcam, configure `/etc/config/mjpg-streamer` to your likings and restart service `/etc/init.d/mjpg-streeamer restart`
 * put the stream link inside the client(fluidd/mainsail) camera setting: `http://<your_ip>/webcam/?action=stream`
 
-<details>
+</details>
  
 #### 9. Enjoy 
 
 --------------------------------------------------------------------------
 
-#### Issues I had but solved:
+#### :exclamation: Issues I had but solved:
 - I didn't manage to get the printer to communicate on 250000 baudrate (I think because the box/pyserial is unable to set a custom nonstandard baudrate - I found a possible fix by [ckielstra](https://github.com/pyserial/pyserial/pull/496) but haven't tried it yet. I solved this by using 230400 instead (you need to change this both while building the mcu klipper firmware AND inside printer.cfg under [mcu]:  
 `[mcu]`  
 `baud: 230400`  
@@ -181,5 +194,6 @@ Flashing:
 * the encouragement: [Tom Hensel](https://github.com/gretel)- for supporting me into this
 
 You can find me on:  
-discord: jonah1024#4422  
-email: hrapsaiona@gmail.com  
+
+💬     discord: jonah1024#4422  
+:email:    email: hrapsaiona@gmail.com  
