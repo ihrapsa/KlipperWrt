@@ -29,19 +29,20 @@
 <details>
   <summary>Click to expand!</summary>
 
-`*opkg update && opkg install swap-utils*`
+`opkg update && opkg install swap-utils*`
 
-`*dd if=/dev/zero of=/overlay/swap.page bs=1M count=512
-mkswap /overlay/swap.page
-swapon /overlay/swap.page
-mount -o remount,size=200M /tmp*`
+`dd if=/dev/zero of=/overlay/swap.page bs=1M count=512`  
+`mkswap /overlay/swap.page`  
+`swapon /overlay/swap.page`  
+`mount -o remount,size=200M /tmp`  
   
-**put this inside /etc/rc.local above exit:**
+**put this inside /etc/rc.local above exit:**  
+
 ###activate the swap file on the SD card
-`*swapon /overlay/swap.page*`
+`swapon /overlay/swap.page`  
 
 ###expand /tmp space
-`*mount -o remount,size=200M /tmp*`
+`mount -o remount,size=200M /tmp`  
 </details>
 
 #### 5. Install dependencies
