@@ -1,0 +1,7 @@
+#Add the two lines at the end
+
+(...)
+
+config interface 'wwan'
+	option proto 'dhcp'
+

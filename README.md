@@ -121,9 +121,9 @@ Flashing:
 <details>
   <summary>Click to expand!</summary>
  
-* for Klipper and moonraker/fluidd/mainsail - check the `requirements.txt` file
+* for Klipper and moonraker - check the `requirements.txt` file
 * Some of the packages like python2 (that refuse to be installed using `opkg` that aren't available inside `make menuconfig` either) can be installed by manually downloading and `scp` them to the box from the OpenWrt package repository for [`mipsel_24kc`](https://downloads.openwrt.org/releases/packages-19.07/mipsel_24kc/packages/) devices. (you need to find and download all the dependencies otherwise it won't let you install it) 
-* An easier workaround I found was to use the v19.07 OpenWrt release (that still has python2 package feeds) and build an image with required packages selected as `(M)` for a device with the same cpu as the Creality WiFi box (Found the Onion Omega2+ to be almost identical). This way all the  packages you selected with (M) and their dependencies will be built and found inside the `bin` folder.
+* An easier workaround I found was to use the v19.07 OpenWrt release (that still has python2 package feeds) and build an image with required packages selected as `(M)` for a device with the same cpu as the Creality WiFi box (Found the Onion Omega2+ to be almost identical). This way all the  packages you selected with (M) and their dependencies will be built and found inside the `bin` folder. `scp` them to the box (use `scp files root@<your_box_ip>:/tmp`) and install them by using `opkg install *ipk`
 
 </details>
 
@@ -134,14 +134,64 @@ Flashing:
  
 - **6.1 Clone Klipper inside** `~/`
 - **6.2 Use provided klipper service and place inside `/etc/init.d/`**
+- **6.3 Prepare your `printer.cfg` file**
+           - do `mkdir ~/klipper_config`  and  `mkdir ~/gcode_files` . Locate your `.cfg` file inside `~/klipper/config/` copy it to `~/klipper_config` and rename it to `printer.cfg`
+           - Add these lines inside `printer.cfg`:
+           > 
+           
+           [virtual_sdcard]
+           # for gcode upload
+           path: ~/gcode_files
 
+           [display_status]
+           # for display messages in status panel
+
+           [pause_resume]
+           # for pause/resume functionality. 
+           # Mainsail/fluidd needs gcode macros for `PAUSE`, `RESUME` and `CANCEL_PRINT` to make the buttons work.
+           
+           [gcode_macro PAUSE]
+           rename_existing: BASE_PAUSE
+           default_parameter_X: 230    #edit to your park position
+           default_parameter_Y: 230    #edit to your park position
+           default_parameter_Z: 10     #edit to your park position
+           default_parameter_E: 1      #edit to your retract length
+           gcode:
+               SAVE_GCODE_STATE NAME=PAUSE_state
+               BASE_PAUSE
+               G91
+               G1 E-{E} F2100
+               G1 Z{Z}
+               G90
+               G1 X{X} Y{Y} F6000
+               
+           [gcode_macro RESUME]
+           rename_existing: BASE_RESUME
+           default_parameter_E: 1      #edit to your retract length
+           gcode:
+               G91
+               G1 E{E} F2100
+               G90
+               RESTORE_GCODE_STATE NAME=PAUSE_state MOVE=1
+               BASE_RESUME
+               
+           [gcode_macro CANCEL_PRINT]
+           rename_existing: BASE_CANCEL_PRINT
+           gcode:
+               TURN_OFF_HEATERS
+               CLEAR_PAUSE
+               SDCARD_RESET_FILE
+               BASE_CANCEL_PRINT
+           
+- **6.3 Build `klipper.bin` file**
+            - Building is not mandatory to be done on the device that hosts klippy. To build it on the box you need a lot of dependencies that are not available for OpenWrt so I just used my pc running ubuntu - I used a custom baud: `230400` since the default `250000` did not work for me)
 </details>
  
 #### 7. Install fluidd/mainsail
 <details>
   <summary>Click to expand!</summary>
  
-- **7.1 Follow mainsail Manual Setup [Guide](https://docs.mainsail.xyz/setup/manual-setup)** (it's almost identical for fluidd as well)
+- **7.1 Follow mainsail Manual Setup [Guide](https://docs.mainsail.xyz/setup/manual-setup)** (it's almost identical for fluidd as well) - but avoid running any scripts (as those only work on debian/raspberry pi)
 - **7.2 Use provided moonraker service and place inside `/etc/init.d/`**
         - Don't forget to modify the `moonraker.conf` you created inside `~/klipper_config` under `trusted_clients:` with your subnet.
 - **7.3 Create and place all the nginx files inside `/etc/nginx/conf.d`***
@@ -167,6 +217,8 @@ Flashing:
 
 --------------------------------------------------------------------------
 #### :computer: Useful commands
+- Copy files to the box 
+`scp /path/file.ext root@<your_box_ip>:/tmp`  
 
 - Watch realtime CommandLine log (open an aditional terminal instance for this)  
 `logread -f`  

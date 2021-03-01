@@ -1,6 +1,19 @@
-#to be updated!!
+~~~~~Klipper~~~~~ dependencies:
 
-Klipper dependencies:
 Python2
-Mainsail/fluidd dependencies:
+Python2-pip
+Python2 packages:
+  - cffi
+  - pyserial
+  - greenlet - had trouble with this - had to build it (you can find it in my repo)
+  - Jinja2
+
+~~~~~Moonraker~~~ dependencies:
+
 Python3
+Python3-pip
+Python3 packages:
+  - pyserial
+  - pillow
+  - tornado
+nginx
