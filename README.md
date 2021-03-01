@@ -35,12 +35,18 @@
 
 # Steps:
 #### 1. Build OpenWrt image
+
+<details>
+  <summary>Click to expand!</summary>
+ 
 * Only neccesary until the [port](https://github.com/openwrt/openwrt/pull/3802) gets merged and officially supported.
   * I recommend following figgyc's [post](https://github.com/figgyc/figgyc.github.io/blob/source/posts.org#compiling-openwrt-for-the-creality-wb-01-tips-and-tricks). You'll find there his experience and a guide to compile OpenWrt. Here is his OpenWrt [branch](https://github.com/figgyc/openwrt/tree/wb01) with support for the Creality Wi-Fi Box and the [PR](https://github.com/openwrt/openwrt/pull/3802) pending to merge to main OpenWrt.
   
   * :exclamation: This is an OpenWrt snapshot (aka not officially supported) and kernel modules can't be installed with opkg. You NEED to choose some required kmods inside `make menuconfig`:  
   `kmod-fs-ext4` `kmod-usb-storage` `kmod-usb-ohci` `kmod-usb-uhci` `kmod-usb-serial` `kmod-usb-serial-ch431`*  `kmod-video-core` `kmod-video-uvc`  
   *(chose this because my printer has the ch431 serial usb convertor. You might want to choose `kmod-usb-serial-fttdi` if your mainboard uses that - check this before building/compiling) 
+  
+  </details>
 #### 2. Install OpenWrt to the device
 
 <details>
@@ -104,10 +110,21 @@ Flashing:
 </details>
 
 #### 5. Install dependencies
+
+<details>
+  <summary>Click to expand!</summary>
+ 
 * for Klipper and moonraker/fluidd/mainsail - check the `requirements.txt` file
 * Some of the packages like python2 (that refuse to be installed using `opkg` that aren't available inside `make menuconfig` either) can be installed by manually downloading and `scp` them to the box from the OpenWrt package repository for [`mipsel_24kc`](https://downloads.openwrt.org/releases/packages-19.07/mipsel_24kc/packages/) devices. (you need to find and download all the dependencies otherwise it won't let you install it) 
 * An easier workaround I found was to use the v19.07 OpenWrt release (that still has python2 package feeds) and build an image with required packages selected as `(M)` for a device with the same cpu as the Creality WiFi box (Found the Onion Omega2+ to be almost identical). This way all the  packages you selected with (M) and their dependencies will be built and found inside the `bin` folder.
+
+</details>
+
 #### 6. Install Klipper
+
+<details>
+  <summary>Click to expand!</summary>
+ 
 - **6.1 Clone Klipper inside** `~/`
 - **6.2 Use provided klipper service and place inside `/etc/init.d/`**
 #### 7. Install fluidd/mainsail
@@ -118,10 +135,20 @@ Flashing:
 * if you followed mainsail guide, `mainsail` should pe renamed to `mainsail.conf` and placed inside `/etc/nginx/conf.d/` alongside `common_vars.conf` and `upstreams.conf`
 * if you'd prefer fluidd, download the fluidd latest release instead of mainsail and use the `fluidd.conf` file instead of `mainsail.conf`.
 * I've uploaded the `mainsail.conf` and `fluidd.conf` as well. You need to use one or the other depending on your chosen client. Don't use both .conf files inside `/etc/nginx/conf.d/` or rename the unused client.
+
+<details>
+ 
 #### 8. Install mjpg-streamer - for webcam stream
+
+<details>
+  <summary>Click to expand!</summary>
+ 
 * use commands: `opkg update && opkg install mjpg-streamer-input-uvc mjpg-streamer-output-http mjpg-streamer-www`
 * connect a uvc webcam, configure `/etc/config/mjpg-streamer` to your likings and restart service `/etc/init.d/mjpg-streeamer restart`
 * put the stream link inside the client(fluidd/mainsail) camera setting: `http://<your_ip>/webcam/?action=stream`
+
+<details>
+ 
 #### 9. Enjoy 
 
 --------------------------------------------------------------------------
