@@ -29,13 +29,14 @@
 #### 5. Install dependencies
 * for Klipper and fluidd/mainsail
 #### 6. Install Klipper
-**6.1 Use provided klipper service**
+- **6.1 Use provided klipper service and place inside `/etc/init.d/`**
 #### 7. Install fluidd/mainsail
 - **7.1 Follow mainsail Manual Setup [Guide](https://docs.mainsail.xyz/setup/manual-setup)**
-- **7.2 Use provided moonraker service**
-- **7.3 Create and place all the nginx files inside conf.d***
+- **7.2 Use provided moonraker service and place inside `/etc/init.d/`**
+- **7.3 Create and place all the nginx files inside `/etc/nginx/conf.d`***
 * if you followed mainsail guide, `mainsail` should pe renamed to `mainsail.conf` and placed inside `/etc/nginx/conf.d/` alongside `common_vars.conf` and `upstreams.conf`
 #### 7. Install mjpg-streamer
+* use commands: `opkg update && opkg install mjpg-streamer-input-uvc mjpg-streamer-output-http mjpg-streamer-www`
 * connect a uvc webcam, configure /etc/config/mjpg-streamer to your likings and restart service `/etc/init.d/mjpg-streeamer restart`
 * put the stream link inside the client(fluidd/mainsail) camera setting
 #### 8. Enjoy 
