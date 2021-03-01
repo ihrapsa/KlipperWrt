@@ -13,7 +13,8 @@ Python2 packages:
 Python3
 Python3-pip
 Python3 packages:
-  - pyserial
-  - pillow
-  - tornado
+  - pyserial==3.4
+  - pillow==8.0.1
+  - tornado==6.1.0
+  - lmdb==1.1.1
 nginx
