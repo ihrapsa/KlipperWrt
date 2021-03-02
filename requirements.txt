@@ -18,3 +18,8 @@ Python3 packages:
   - tornado==6.1.0
   - lmdb==1.1.1
 nginx
+
+## While choosing packages you need you might prefer to selec them with <M> and install them after you create extroot to avoid building larger images than internal storage
+
+
+## If you can't install python3 packages with opkg or pip and can't finde them inside menuconfig either you can build t#h#em by selecting "[*] Advanced configuration options (for developers)". After that a "python3-packages" option will appear inside Languages --> Python --> "python3-packages" -> select it with <M> -> type pacakge names space delimited inside --> "() List of python3 pacakges to install on target"
