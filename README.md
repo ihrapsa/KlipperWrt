@@ -208,7 +208,7 @@ Flashing:
 <details>
   <summary>Click to expand!</summary>
  
-* install video4linux utilities: `opkg update && opkg install v4l2-utils`
+* install video4linux utilities: `opkg update && opkg install v4l-utils`
 * use commands: `opkg update && opkg install mjpg-streamer-input-uvc mjpg-streamer-output-http mjpg-streamer-www`
 * connect a uvc webcam, configure `/etc/config/mjpg-streamer` to your likings and restart service `/etc/init.d/mjpg-streamer restart`
 * put the stream link inside the client(fluidd/mainsail) camera setting: `http://<your_ip>/webcam/?action=stream`
