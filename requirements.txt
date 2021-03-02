@@ -3,10 +3,10 @@
 Python2
 Python2-pip
 Python2 packages:
-  - cffi
-  - pyserial
-  - greenlet - had trouble with this - had to build it (you can find it in my repo)
-  - Jinja2
+  - cffi==1.12.2
+  - pyserial==3.4
+  - greenlet==0.4.15 - had trouble with this - had to build it (you can find it in my repo)
+  - Jinja2==2.10.1
 
 ~~~~~Moonraker~~~ dependencies:
 
