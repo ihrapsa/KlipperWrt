@@ -223,6 +223,11 @@ Flashing:
 <details>
   <summary>Click to expand!</summary>
  
+ - Creating a non-privileged user  
+  Check this [guide](https://openwrt.org/docs/guide-user/security/secure.access#create_a_non-privileged_user_in_openwrt)
+     *All the tests I did were as root* - some modifications would be necessary to not run everything as root.  
+    - Packages needed: `shadow-useradd` , `sudo`, `shadow-groupadd`, `shadow-usermod`
+
 - Copy files to the box 
 `scp /path/file.ext root@<your_box_ip>:/tmp`  
 
