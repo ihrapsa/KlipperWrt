@@ -1,16 +1,23 @@
 # KlipperWrt
+ ---------------------------------------------------------------------------------
+ 
  Klipper and fluidd/mainsail config files for OpenWrt embeded devices like the Creality Wi-Fi Box.
-### Why Klipper on a Router?
+ 
+ ---------------------------------------------------------------------------------
+### :question:  Why Klipper on a Router :question:
 
 <details>
   <summary> (Click to expand!)</summary>
  
  - OpenWrt is so much more efficient than other linux distros.   
- - On a single core 580MHz cpu (with moonraker, klippy, nginx and mjpg-streamer) I get ~20-25% cpu load while idle/not printing and max 35% cpu load while printing and watching stream (640x480 30fps mjpeg). 
+ - On a single core 580MHz cpu (with moonraker, klippy, nginx and mjpg-streamer) I get ~20-25% cpu load while idle/not printing and max 35-40% cpu load while printing and watching stream (640x480 30fps mjpeg). 
 
-![alt text](https://github.com/ihrapsa/KlipperWrt/blob/main/screenshots/idle_moonraker_klippy_nginx_mjpg_streamer.png)  
+![alt text](https://github.com/ihrapsa/KlipperWrt/blob/main/screenshots/top_idle_moonraker_klippy_nginx_mjpg_streamer.png)
+![alt text](https://github.com/ihrapsa/KlipperWrt/blob/main/screenshots/htop_idle.png)
 ![alt text](https://github.com/ihrapsa/KlipperWrt/blob/main/screenshots/test_print.png)  
-![alt text](https://github.com/ihrapsa/KlipperWrt/blob/main/screenshots/stream.png)
+![alt text](https://github.com/ihrapsa/KlipperWrt/blob/main/screenshots/stream.png)  
+![alt text](https://github.com/ihrapsa/KlipperWrt/blob/main/screenshots/test_print.jpg)
+  * I've tried octoprint on this box as well but unfortunately it was too resource intensive. Test prints speak for themselves.
 
 </details>
 
