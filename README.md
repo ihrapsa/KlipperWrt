@@ -4,10 +4,10 @@
  Klipper and fluidd/mainsail config files for OpenWrt embeded devices like the Creality Wi-Fi Box.
  
  ---------------------------------------------------------------------------------
-### :question:  Why Klipper on a Router :question:
+### Why Klipper on a Router :question:
 
 <details>
-  <summary> (Click to expand!)</summary>
+  <summary> ( :red_circle: Click to expand!)</summary>
  
  - OpenWrt is so much more efficient than other linux distros.   
  - On a single core 580MHz cpu (with moonraker, klippy, nginx and mjpg-streamer) I get ~20-25% cpu load while idle/not printing and max 35-40% cpu load while printing and watching stream (640x480 30fps mjpeg). 
