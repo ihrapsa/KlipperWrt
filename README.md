@@ -1,5 +1,18 @@
 # KlipperWrt
  Klipper and fluidd/mainsail config files for OpenWrt embeded devices like the Creality Wi-Fi Box.
+### Why Klipper on a Router?
+
+<details>
+  <summary> (Click to expand!)</summary>
+ 
+ - OpenWrt is so much more efficient than other linux distros.   
+ - On a single core 580MHz cpu (with moonraker, klippy, nginx and mjpg-streamer) I get ~20-25% cpu load while idle/not printing and max 35% cpu load while printing and watching stream (640x480 30fps mjpeg). 
+
+![alt text](https://github.com/ihrapsa/KlipperWrt/blob/main/screenshots/idle_moonraker_klippy_nginx_mjpg_streamer.png)  
+![alt text](https://github.com/ihrapsa/KlipperWrt/blob/main/screenshots/test_print.png)  
+![alt text](https://github.com/ihrapsa/KlipperWrt/blob/main/screenshots/stream.png)
+
+</details>
 
 ### What is the Creality [Wi-Fi Box](https://www.creality.com/goods-detail/creality-box-3d-printer)?
 - A router box device released by Creality meant to add network control to your printer.  Big claims, lots of problems and frustrations. No desktop control, only mobile. No custom slicing only cloud based. No camera support, only claims.
