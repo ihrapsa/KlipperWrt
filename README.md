@@ -315,6 +315,7 @@ Flashing:
 * the essentials: 
   - Kevin O'Connor - for [Klipper](https://github.com/KevinOConnor/klipper)
   - cadriel - for [fluidd](https://github.com/cadriel/fluidd)
+  - mateyou - for [mainsail](https://github.com/meteyou/mainsail)  
   - Eric Callahan - for [Moonraker](https://github.com/Arksine/moonraker)
 * the fine tuning: andryblack - for the OpenWrt Klipper [service](https://github.com/andryblack/openwrt-build/tree/master/packages/klipper/files)
 * the encouragement: [Tom Hensel](https://github.com/gretel)- for supporting me into this
