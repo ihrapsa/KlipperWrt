@@ -145,7 +145,8 @@ Flashing:
  
 * for Klipper and moonraker - check the `requirements.txt` file
 * Some of the packages like python2 (that refuse to be installed using `opkg` that aren't available inside `make menuconfig` either) can be installed by manually downloading and `scp` them to the box from the OpenWrt package repository for [`mipsel_24kc`](https://downloads.openwrt.org/releases/packages-19.07/mipsel_24kc/packages/) devices. (you need to find and download all the dependencies otherwise it won't let you install it) 
-* An easier workaround I found was to use the v19.07 OpenWrt release (that still has python2 package feeds) and build an image with required packages selected as `(M)` for a device with the same cpu as the Creality WiFi box (Found the Onion Omega2+ to be almost identical). This way all the  packages you selected with (M) and their dependencies will be built and found inside the `bin` folder. `scp` them to the box (use `scp files root@<your_box_ip>:/tmp`) and install them by using `opkg install *ipk`
+
+* :exclamation: An easier workaround I found was to use the v19.07 OpenWrt release feeds (that still have python2 packages) for the snapshot of the same cpu architecture. I make a backup of the original `/etc/opkg/distfeeds.conf` and create another `distfeeds.conf`file with the v19.07 url feeds. Don't forget to run `opkg update` everytime you make modifications to that file. After finishing with the packages that are only available for the v19.07 and below (like python2 packages) I swithc back to the backup `distfeeds.conf` file.
 
 </details>
 
