@@ -148,8 +148,8 @@ Flashing:
 
 * :exclamation: An easier workaround I found was to use the v19.07 OpenWrt release feeds (this version still has python2 packages) for the same target (_ramips/mt76x8_) and cpu architecture (_mipsel_24kc_) as the box. I make a backup of the original `/etc/opkg/distfeeds.conf` and create another `distfeeds.conf`file with the v19.07 url feeds. Don't forget to run `opkg update` everytime you make modifications to that file. After finishing with installing the packages that are only available for the v19.07 and below (like python2 packages) I switch back to the backup `distfeeds.conf` file. 
 * The `distfeeds.conf` file with openwrt v19.07 feeds should look something like this:
-> src/gz openwrt_core http://downloads.openwrt.org/releases/19.07.7/targets/ramips/mt7621/packages  
-src/gz openwrt_kmods http://downloads.openwrt.org/releases/19.07.7/targets/ramips/mt7621/kmods/4.14.162-1-2e88863ccdd594fb8e842df3c25842ee  
+> src/gz openwrt_core http://downloads.openwrt.org/releases/19.07.7/targets/ramips/mt7621/packages   
+src/gz openwrt_freifunk http://downloads.openwrt.org/releases/19.07.7/packages/mipsel_24kc/freifunk  
 src/gz openwrt_base http://downloads.openwrt.org/releases/19.07.7/packages/mipsel_24kc/base  
 src/gz openwrt_luci http://downloads.openwrt.org/releases/19.07.7/packages/mipsel_24kc/luci  
 src/gz openwrt_packages http://downloads.openwrt.org/releases/19.07.7/packages/mipsel_24kc/packages  
