@@ -223,9 +223,10 @@ src/gz openwrt_telephony http://downloads.openwrt.org/releases/19.07.7/packages/
   <summary>Click to expand!</summary>
  
 - **7.1 Follow mainsail Manual Setup [Guide](https://docs.mainsail.xyz/setup/manual-setup)** (it's almost identical for fluidd as well) - but avoid running any scripts (as those only work on debian/raspberry pi)
-- **7.2 Use provided moonraker service and place inside `/etc/init.d/`**
+- **7.2 Use provided moonraker.conf file** You can find the `moonraker.conf` files in my repo: `/moonraker/*.conf`. Depending on your chosen client (mainsail or fluidd) rename the respective `.conf` file to `moonraker.conf`and put it in `klipper_config`. Note: The `[update_manager]` plugin was commented out since this is curently only supported for `debian` distros only. For now, updating `moonraker`, `klipper`, `fluidd` or `mainsail` should be done manaully.
+- **7.3 Use provided moonraker service and place inside `/etc/init.d/`**
         - Don't forget to modify the `moonraker.conf` you created inside `~/klipper_config` under `trusted_clients:` with your subnet.
-- **7.3 Create and place all the nginx files inside `/etc/nginx/conf.d`***
+- **7.4 Create and place all the nginx files inside `/etc/nginx/conf.d`***
 * if you followed mainsail guide, `mainsail` should pe renamed to `mainsail.conf` and placed inside `/etc/nginx/conf.d/` alongside `common_vars.conf` and `upstreams.conf`
 * if you'd prefer fluidd, download the fluidd latest release instead of mainsail and use the `fluidd.conf` file instead of `mainsail.conf`.
 * I've uploaded the `mainsail.conf` and `fluidd.conf` as well (look inside `nginx`). You need to use one or the other depending on your chosen client. Don't use both .conf files inside `/etc/nginx/conf.d/` or rename the unused client.
