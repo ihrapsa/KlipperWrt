@@ -218,14 +218,14 @@ src/gz openwrt_telephony http://downloads.openwrt.org/releases/19.07.7/packages/
             - Building is not mandatory to be done on the device that hosts klippy. To build it on the box you need a lot of dependencies that are not available for OpenWrt so I just used my pc running ubuntu - I used a custom baud: `230400` since the default `250000` did not work for me)
 </details>
  
-#### 7. Install fluidd/mainsail
+#### 7. Install moonraker + fluidd/mainsail
 <details>
   <summary>Click to expand!</summary>
  
 - **7.1 Follow mainsail Manual Setup [Guide](https://docs.mainsail.xyz/setup/manual-setup)** (it's almost identical for fluidd as well) - but avoid running any scripts (as those only work on debian/raspberry pi)
-- **7.2 Use provided moonraker.conf file** You can find the `moonraker.conf` files in my repo: `/moonraker/*.conf`. Depending on your chosen client (mainsail or fluidd) rename the respective `.conf` file to `moonraker.conf`and put it in `klipper_config`. Note: The `[update_manager]` plugin was commented out since this is curently only supported for `debian` distros only. For now, updating `moonraker`, `klipper`, `fluidd` or `mainsail` should be done manaully.
+- **7.2 Use provided moonraker.conf file** You can find the `moonraker.conf` files in my repo: `/moonraker/*.conf`. Depending on your chosen client (`mainsail` or `fluidd`) rename the respective `.conf` file to `moonraker.conf`and put it in `~/klipper_config`. Note: The `[update_manager]` plugin was commented out since this is curently only supported for `debian` distros only. For now, updating `moonraker`, `klipper`, `fluidd` or `mainsail` should be done manaully.
 - **7.3 Use provided moonraker service and place inside `/etc/init.d/`**
-        - Don't forget to modify the `moonraker.conf` you created inside `~/klipper_config` under `trusted_clients:` with your subnet.
+        - Don't forget to modify the `moonraker.conf` you copied inside `~/klipper_config` under `trusted_clients:` with your subnet.
 - **7.4 Create and place all the nginx files inside `/etc/nginx/conf.d`***
 * if you followed mainsail guide, `mainsail` should pe renamed to `mainsail.conf` and placed inside `/etc/nginx/conf.d/` alongside `common_vars.conf` and `upstreams.conf`
 * if you'd prefer fluidd, download the fluidd latest release instead of mainsail and use the `fluidd.conf` file instead of `mainsail.conf`.
@@ -240,7 +240,9 @@ src/gz openwrt_telephony http://downloads.openwrt.org/releases/19.07.7/packages/
  
 * install video4linux utilities: `opkg update && opkg install v4l-utils`
 * use commands: `opkg update && opkg install mjpg-streamer-input-uvc mjpg-streamer-output-http mjpg-streamer-www`
-* connect a uvc webcam, configure `/etc/config/mjpg-streamer` to your likings and restart service `/etc/init.d/mjpg-streamer restart`
+* connect a uvc webcam, configure `/etc/config/mjpg-streamer` to your likings, enable and restart service: 
+>`/etc/init.d/mjpg-streamer enable`  
+`/etc/init.d/mjpg-streamer restart`
 * put the stream link inside the client(fluidd/mainsail) camera setting: `http://<your_ip>/webcam/?action=stream`
 
 </details>
