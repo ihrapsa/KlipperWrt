@@ -16,7 +16,8 @@ Python3 packages:
   - pyserial==3.4
   - pillow==8.0.1
   - tornado==6.1.0
-  - lmdb==1.1.1 - had issues with it - If you don't manage to install it or moonraker still errors on it switch to an older release of moonraker: https://github.com/Arksine/moonraker/tree/1f61357dd65d6eebf0ca0a119b704331cb21cb33
+  - lmdb==1.1.1 - had issues with it - If you don't manage to install it or moonraker still errors on it  
+  switch to an older release of moonraker: https://github.com/Arksine/moonraker/archive/eb37ce767d73b064b0260432e4a3323cf8e8d758.zip
 nginx
 
 ## While choosing packages you need you might prefer to selec them with <M> and install them after you create extroot to avoid building larger images than internal storage
