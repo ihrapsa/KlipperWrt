@@ -227,9 +227,9 @@ src/gz openwrt_telephony http://downloads.openwrt.org/releases/19.07.7/packages/
 - **7.3 Use provided moonraker service and place inside `/etc/init.d/`**
         - Don't forget to modify the `moonraker.conf` you copied inside `~/klipper_config` under `trusted_clients:` with your subnet.
 - **7.4 Create and place all the nginx files inside `/etc/nginx/conf.d`***
-* if you followed mainsail guide, `mainsail` should pe renamed to `mainsail.conf` and placed inside `/etc/nginx/conf.d/` alongside `common_vars.conf` and `upstreams.conf`
+* if you followed mainsail guide, `mainsail` should pe renamed to `mainsail.conf` and placed inside `/etc/nginx/conf.d/` alongside `common_vars.conf` and `upstreams.conf` (those 2 files are common for mainsail and fluidd)
 * if you'd prefer fluidd, download the fluidd latest release instead of mainsail and use the `fluidd.conf` file instead of `mainsail.conf`.
-* I've uploaded the `mainsail.conf` and `fluidd.conf` as well (look inside `nginx`). You need to use one or the other depending on your chosen client. Don't use both .conf files inside `/etc/nginx/conf.d/` or rename the unused client.
+* I've uploaded the `mainsail.conf` and `fluidd.conf` as well (look inside `nginx`). You need to use one or the other depending on your chosen client. Don't use both .conf files inside `/etc/nginx/conf.d/` or rename the unused client. Don't forget to create the `common_vars.conf` and `upstreams.conf` files as well.
 
 </details>
  
