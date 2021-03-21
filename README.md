@@ -169,12 +169,13 @@ src/gz openwrt_telephony http://downloads.openwrt.org/releases/19.07.7/packages/
   <summary>Click to expand!</summary>
  
 - **6.1 Clone Klipper inside** `~/`
-           - do `opkg install git-http unzip` then  `git clone https://github.com/KevinOConnor/klipper.git`
-- **6.2 Use provided klipper service and place inside `/etc/init.d/`**
-- **6.3 Prepare your `printer.cfg` file**
+           - do `opkg install git-http unzip` then  `git clone https://github.com/KevinOConnor/klipper.git`. 
+- **6.2 Use provided klipper service and place inside `/etc/init.d/`**  
+- **6.3 Everytime you create a service file you need to give it executable permissions. For klipper do `chmod 755 klipper`. You can enable it now by `/etc/init.d/klipper enable`
+- **6.4 Prepare your `printer.cfg` file**
            - do `mkdir ~/klipper_config`  and  `mkdir ~/gcode_files` . Locate your `.cfg` file inside `~/klipper/config/` copy it to `~/klipper_config` and rename it to `printer.cfg`
            - Add these lines inside `printer.cfg`:
-           > 
+> 
            
            [virtual_sdcard]
            # for gcode upload
@@ -220,8 +221,9 @@ src/gz openwrt_telephony http://downloads.openwrt.org/releases/19.07.7/packages/
                SDCARD_RESET_FILE
                BASE_CANCEL_PRINT
            
-- **6.3 Build `klipper.bin` file**
-            - Building is not mandatory to be done on the device that hosts klippy. To build it on the box you need a lot of dependencies that are not available for OpenWrt so I just used my pc running ubuntu - I used a custom baud: `230400` since the default `250000` did not work for me)
+- **6.5 Restart klipper** - do `service klipper restart` or `/etc/init.d/klipper restart`
+- **6.6 Build `klipper.bin` file**
+            - Building is not mandatory to be done on the device that hosts klippy. To build it on this box you would need a lot of dependencies that are not available for OpenWrt so I just used my pc running ubuntu - I used a custom baud: `230400` since the default `250000` did not work for me)
 </details>
  
 #### 7. Install moonraker + fluidd/mainsail
@@ -230,12 +232,14 @@ src/gz openwrt_telephony http://downloads.openwrt.org/releases/19.07.7/packages/
  
 - **7.1 Follow mainsail Manual Setup [Guide](https://docs.mainsail.xyz/setup/manual-setup)** (it's almost identical for fluidd as well) - but avoid running any scripts (as those only work on debian/raspberry pi)
 - **7.2 Use provided moonraker.conf file** You can find the `moonraker.conf` files in my repo: `/moonraker/*.conf`. Depending on your chosen client (`mainsail` or `fluidd`) rename the respective `.conf` file to `moonraker.conf`and put it in `~/klipper_config`. Note: The `[update_manager]` plugin was commented out since this is curently only supported for `debian` distros only. For now, updating `moonraker`, `klipper`, `fluidd` or `mainsail` should be done manaully.
-- **7.3 Use provided moonraker service and place inside `/etc/init.d/`**
+- **7.3 Use provided moonraker service and place inside `/etc/init.d/`** - Don't forget to give it executable permissions and then to enable it just like you did with klipper service.
         - Don't forget to modify the `moonraker.conf` you copied inside `~/klipper_config` under `trusted_clients:` with your subnet.
+        - Restart Moonraker service when you're done with `service moonraker restart` or `/etc/init.d/moonraker restart`
 - **7.4 Create and place all the nginx files inside `/etc/nginx/conf.d`***
-* if you followed mainsail guide, `mainsail` should pe renamed to `mainsail.conf` and placed inside `/etc/nginx/conf.d/` alongside `common_vars.conf` and `upstreams.conf` (those 2 files are common for mainsail and fluidd)
+* if you followed mainsail guide, `mainsail` should pe renamed to `mainsail.conf` and placed inside `/etc/nginx/conf.d/` alongside `common_vars.conf` and `upstreams.conf` (those 2 files are common for mainsail and fluidd - you can find them in my repo inside `nginx`)
 * if you'd prefer fluidd, download the fluidd latest release instead of mainsail and use the `fluidd.conf` file instead of `mainsail.conf`.
-* I've uploaded the `mainsail.conf` and `fluidd.conf` as well (look inside `nginx`). You need to use one or the other depending on your chosen client. Don't use both .conf files inside `/etc/nginx/conf.d/` or rename the unused client. Don't forget to create the `common_vars.conf` and `upstreams.conf` files as well.
+* I've uploaded the `mainsail.conf` and `fluidd.conf` as well (look inside `nginx`). You need to use one or the other depending on your chosen client. Don't use both .conf files inside `/etc/nginx/conf.d/` or rename the unused client. Don't forget to create/add the `common_vars.conf` and `upstreams.conf` files as well.
+- **7.5 Restart nginx with `service nginx restart` and check browser if `http://your-ip` brings you the client interface (fluidd or mainsail).
 
 </details>
  
@@ -254,7 +258,10 @@ src/gz openwrt_telephony http://downloads.openwrt.org/releases/19.07.7/packages/
 </details>
  
 #### 9. Enjoy 
-
+--------------------------------------------------------------------------
+#### Troubleshooting
+* Open a separate `ssh` instance and run `logread -f` - you'll get real time log data of the running process.  
+* You can always open an issue or contact me if you get stuck or something doesn't work.
 --------------------------------------------------------------------------
 #### :computer: Useful commands
 
