@@ -239,7 +239,7 @@ src/gz openwrt_telephony http://downloads.openwrt.org/releases/19.07.7/packages/
 * if you followed mainsail guide, `mainsail` should pe renamed to `mainsail.conf` and placed inside `/etc/nginx/conf.d/` alongside `common_vars.conf` and `upstreams.conf` (those 2 files are common for mainsail and fluidd - you can find them in my repo inside `nginx`)
 * if you'd prefer fluidd, download the fluidd latest release instead of mainsail and use the `fluidd.conf` file instead of `mainsail.conf`.
 * I've uploaded the `mainsail.conf` and `fluidd.conf` as well (look inside `nginx`). You need to use one or the other depending on your chosen client. Don't use both .conf files inside `/etc/nginx/conf.d/` or rename the unused client. Don't forget to create/add the `common_vars.conf` and `upstreams.conf` files as well.
-- **7.5 Restart nginx with `service nginx restart` and check browser if `http://your-ip` brings you the client interface (fluidd or mainsail).
+- **7.5 Restart nginx** with `service nginx restart` and check browser if `http://your-ip` brings you the client interface (fluidd or mainsail).
 
 </details>
  
@@ -260,8 +260,15 @@ src/gz openwrt_telephony http://downloads.openwrt.org/releases/19.07.7/packages/
 #### 9. Enjoy 
 --------------------------------------------------------------------------
 #### Troubleshooting
+
+<details>
+  <summary>Click to expand!</summary>
+
 * Open a separate `ssh` instance and run `logread -f` - you'll get real time log data of the running process.  
-* You can always open an issue or contact me if you get stuck or something doesn't work.
+* You can always open an issue or contact me if you get stuck or something doesn't work.  
+
+</details>
+
 --------------------------------------------------------------------------
 #### :computer: Useful commands
 
