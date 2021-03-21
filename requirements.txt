@@ -3,7 +3,7 @@
 Use v19.07 `distfeeds.conf`
 
 * Python2 - install with `opkg install python`
-* Python2-pip - install with `opkg install python3-pip`
+* Python2-pip - install with `opkg install python-pip`
 * Python2 packages:
   - cffi==1.12.2 - install with `opkg install python-cffi`
   - pyserial==3.4 - install with `opkg install python-pyserial`
