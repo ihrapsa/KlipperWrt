@@ -173,7 +173,7 @@ src/gz openwrt_telephony http://downloads.openwrt.org/releases/19.07.7/packages/
            
            [virtual_sdcard]
            # for gcode upload
-           path: ~/gcode_files
+           path: /root/gcode_files
 
            [display_status]
            # for display messages in status panel
