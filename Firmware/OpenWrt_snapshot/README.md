@@ -1,4 +1,4 @@
-*Flashing:*  
+**Flashing:**  
   
 1. Rename `*factory.bin` to `cxsw_update.tar.bz2`  
 2. Copy it to the root of a FAT32 formatted microSD card.  
