@@ -22,7 +22,8 @@
 </details>
 
 ### What is the Creality [Wi-Fi Box](https://www.creality.com/goods-detail/creality-box-3d-printer)?
-- A router box device released by Creality meant to add network control to your printer.  Big claims, lots of problems and frustrations. No desktop control, only mobile. No custom slicing only cloud based. No camera support, only claims.
+| [![creality_wb](img/creality_wb.jpg)](https://www.creality.com/goods-detail/creality-box-3d-printer) | A router box device released by Creality meant to add network control to your printer.  <br> Big claims, lots of problems and frustrations. No desktop control, only mobile. <br> No custom slicing only cloud based. No camera support, only claims. |
+|---|:--|
 
 <details>
   <summary>Specifications (Click to expand!)</summary>
@@ -54,8 +55,8 @@
 |---|:--|
 
 ### What is [Moonraker](https://github.com/Arksine/moonraker)?
-- A Python 3 based web server that exposes APIs with which client applications (fluidd or mainsail) may use to interact with Klipper
-
+| [![Moonraker](img/moonraker.png)](https://moonraker.readthedocs.io/en/latest/) | A Python 3 based web server that exposes APIs with which client applications (fluidd or mainsail) may use to interact with Klipper |
+|---|:--|
 ### What is [duet-web-control](https://github.com/Duet3D/DuetWebControl)
 
 | [![dwc](img/dwc.png)](https://duet3d.dozuki.com/Wiki/Duet_Web_Control_v2_and_v3_%28DWC%29_Manual) | Duet Web Control is a fully-responsive HTML5-based web interface for RepRapFirmware. <br> [Stephan3](https://github.com/Stephan3/dwc2-for-klipper-socket) built a socket to make it communicate with klipper as well (klipper is not a RepRapFirmware). <br> This is a standalone webserver and client interface - so no need for moonraker or nginx. |
