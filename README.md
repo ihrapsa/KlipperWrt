@@ -1,7 +1,7 @@
 # KlipperWrt
  ---------------------------------------------------------------------------------
  
- Klipper and fluidd/mainsail config files for OpenWrt embeded devices like the Creality Wi-Fi Box.
+ Klipper and fluidd/mainsail/duet-web-control config files for OpenWrt embeded devices like the Creality Wi-Fi Box.
  
  ---------------------------------------------------------------------------------
 ### Why Klipper on a Router :question:
@@ -47,9 +47,12 @@
 
 ### What is [fluidd](https://github.com/cadriel/fluidd) / [mainsail](https://github.com/meteyou/mainsail)?
 - These are free and open-source Klipper web interface clients for managing your 3d printer.
-    
+
 ### What is [Moonraker](https://github.com/Arksine/moonraker)?
 - A Python 3 based web server that exposes APIs with which client applications (fluidd or mainsail) may use to interact with Klipper
+
+### What is [duet-web-control](https://github.com/Duet3D/DuetWebControl)
+- Duet Web Control is a fully-responsive HTML5-based web interface for RepRapFirmware. [Stephan3](https://github.com/Stephan3/dwc2-for-klipper-socket) built a socket to make it communicate with klipper as well (klipper is not a RepRapFirmware). This is a standalone webserver and client interface - so no need for moonraker or nginx.
 
 --------------------------------------------------------------------------
 
