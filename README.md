@@ -138,6 +138,11 @@ Flashing:
 `mount -o remount,size=200M /tmp`  
 </details>
 
+### fluidd/mainsail
+
+<details>
+  <summary>Click to expand!</summary>
+ 
 #### 5. Install dependencies
 
 <details>
@@ -148,13 +153,16 @@ Flashing:
 * :exclamation: Python2 packages are not available by default for this `snapshot` A workaround I found was to use the v19.07 OpenWrt release feeds (this version still has python2 packages) for the same target (_ramips/mt76x8_) and cpu architecture (_mipsel_24kc_) as the box. I make a backup of the original `/etc/opkg/distfeeds.conf` and create another `distfeeds.conf`file with the v19.07 url feeds. Don't forget to run `opkg update` everytime you make modifications to that file. After finishing with installing the packages that are only available for the v19.07 and below (like python2 packages) I switch back to the backup `distfeeds.conf` file. 
 
 * The `distfeeds.conf` file with openwrt v19.07 feeds should look something like this:
-> src/gz openwrt_core http://downloads.openwrt.org/releases/19.07.7/targets/ramips/mt7621/packages   
-src/gz openwrt_freifunk http://downloads.openwrt.org/releases/19.07.7/packages/mipsel_24kc/freifunk  
-src/gz openwrt_base http://downloads.openwrt.org/releases/19.07.7/packages/mipsel_24kc/base  
-src/gz openwrt_luci http://downloads.openwrt.org/releases/19.07.7/packages/mipsel_24kc/luci  
-src/gz openwrt_packages http://downloads.openwrt.org/releases/19.07.7/packages/mipsel_24kc/packages  
-src/gz openwrt_routing http://downloads.openwrt.org/releases/19.07.7/packages/mipsel_24kc/routing  
-src/gz openwrt_telephony http://downloads.openwrt.org/releases/19.07.7/packages/mipsel_24kc/telephony  
+
+ >
+
+    src/gz openwrt_core http://downloads.openwrt.org/releases/19.07.7/targets/ramips/mt7621/packages   
+    src/gz openwrt_freifunk http://downloads.openwrt.org/releases/19.07.7/packages/mipsel_24kc/freifunk  
+    src/gz openwrt_base http://downloads.openwrt.org/releases/19.07.7/packages/mipsel_24kc/base  
+    src/gz openwrt_luci http://downloads.openwrt.org/releases/19.07.7/packages/mipsel_24kc/luci  
+    src/gz openwrt_packages http://downloads.openwrt.org/releases/19.07.7/packages/mipsel_24kc/packages  
+    src/gz openwrt_routing http://downloads.openwrt.org/releases/19.07.7/packages/mipsel_24kc/routing  
+    src/gz openwrt_telephony http://downloads.openwrt.org/releases/19.07.7/packages/mipsel_24kc/telephony  
 
 * After you add the v19.07 `distfeeds.conf` install python2 with `opkg install python python-pip python-cffi python-pyserial`. with pip install: `pip install greenlet==0.4.15 jinja2`  
 * Switch back to original `distfeeds.conf`, `opkg update` -> install python3 and packages: `opkg install python3 python3-pyserial python3-pillow python3-tornado --force-overwrite`. `lmdb` and `streaming-form-data` can be found inside `Packages` as a single `*ipk` file. I cross-compiled those while building the OpenWrt image as I couldn't install it with `pip`.  
@@ -174,52 +182,52 @@ src/gz openwrt_telephony http://downloads.openwrt.org/releases/19.07.7/packages/
 - **6.3 Everytime you create a service file you need to give it executable permissions. For klipper do `chmod 755 klipper`. You can enable it now by `/etc/init.d/klipper enable`
 - **6.4 Prepare your `printer.cfg` file**
            - do `mkdir ~/klipper_config`  and  `mkdir ~/gcode_files` . Locate your `.cfg` file inside `~/klipper/config/` copy it to `~/klipper_config` and rename it to `printer.cfg`
-           - Add these lines inside `printer.cfg`:
-> 
-           
-           [virtual_sdcard]
-           # for gcode upload
-           path: /root/gcode_files
+           - Add these lines inside `printer.cfg`
+>
 
-           [display_status]
-           # for display messages in status panel
+    [virtual_sdcard]
+    # for gcode upload
+    path: /root/gcode_files
 
-           [pause_resume]
-           # for pause/resume functionality. 
-           # Mainsail/fluidd needs gcode macros for `PAUSE`, `RESUME` and `CANCEL_PRINT` to make the buttons work.
-           
-           [gcode_macro PAUSE]
-           rename_existing: BASE_PAUSE
-           default_parameter_X: 230    #edit to your park position
-           default_parameter_Y: 230    #edit to your park position
-           default_parameter_Z: 10     #edit to your park position
-           default_parameter_E: 1      #edit to your retract length
-           gcode:
-               SAVE_GCODE_STATE NAME=PAUSE_state
-               BASE_PAUSE
-               G91
-               G1 E-{E} F2100
-               G1 Z{Z}
-               G90
-               G1 X{X} Y{Y} F6000
-               
-           [gcode_macro RESUME]
-           rename_existing: BASE_RESUME
-           default_parameter_E: 1      #edit to your retract length
-           gcode:
-               G91
-               G1 E{E} F2100
-               G90
-               RESTORE_GCODE_STATE NAME=PAUSE_state MOVE=1
-               BASE_RESUME
-               
-           [gcode_macro CANCEL_PRINT]
-           rename_existing: BASE_CANCEL_PRINT
-           gcode:
-               TURN_OFF_HEATERS
-               CLEAR_PAUSE
-               SDCARD_RESET_FILE
-               BASE_CANCEL_PRINT
+    [display_status]
+    # for display messages in status panel
+
+    [pause_resume]
+    # for pause/resume functionality. 
+    # Mainsail/fluidd needs gcode macros for `PAUSE`, `RESUME` and `CANCEL_PRINT` to make the buttons work.
+
+    [gcode_macro PAUSE]
+    rename_existing: BASE_PAUSE
+    default_parameter_X: 230    #edit to your park position
+    default_parameter_Y: 230    #edit to your park position
+    default_parameter_Z: 10     #edit to your park position
+    default_parameter_E: 1      #edit to your retract length
+    gcode:
+        SAVE_GCODE_STATE NAME=PAUSE_state
+        BASE_PAUSE
+        G91
+        G1 E-{E} F2100
+        G1 Z{Z}
+        G90
+        G1 X{X} Y{Y} F6000
+
+    [gcode_macro RESUME]
+    rename_existing: BASE_RESUME
+    default_parameter_E: 1      #edit to your retract length
+    gcode:
+        G91
+        G1 E{E} F2100
+        G90
+        RESTORE_GCODE_STATE NAME=PAUSE_state MOVE=1
+        BASE_RESUME
+
+    [gcode_macro CANCEL_PRINT]
+    rename_existing: BASE_CANCEL_PRINT
+    gcode:
+        TURN_OFF_HEATERS
+        CLEAR_PAUSE
+        SDCARD_RESET_FILE
+        BASE_CANCEL_PRINT
            
 - **6.5 Restart klipper** - do `service klipper restart` or `/etc/init.d/klipper restart`
 - **6.6 Build `klipper.bin` file**
@@ -243,6 +251,7 @@ src/gz openwrt_telephony http://downloads.openwrt.org/releases/19.07.7/packages/
 
 </details>
  
+ 
 #### 8. Install mjpg-streamer - for webcam stream
 
 <details>
@@ -257,7 +266,100 @@ src/gz openwrt_telephony http://downloads.openwrt.org/releases/19.07.7/packages/
 
 </details>
  
-#### 9. Enjoy 
+#### 9. Enjoy
+
+</details>
+
+### duet-web-control
+
+<details>
+  <summary>Click to expand!</summary>
+
+#### 5. Install dependencies
+
+<details>
+  <summary>Click to expand!</summary>
+ 
+* for Klipper - check the `requirements.txt` file. 
+
+* :exclamation: Python2 packages are not available by default for this `snapshot` A workaround I found was to use the v19.07 OpenWrt release feeds (this version still has python2 packages) for the same target (_ramips/mt76x8_) and cpu architecture (_mipsel_24kc_) as the box. I make a backup of the original `/etc/opkg/distfeeds.conf` and create another `distfeeds.conf`file with the v19.07 url feeds. Don't forget to run `opkg update` everytime you make modifications to that file. After finishing with installing the packages that are only available for the v19.07 and below (like python2 packages) I switch back to the backup `distfeeds.conf` file. 
+
+* The `distfeeds.conf` file with openwrt v19.07 feeds should look something like this:
+> 
+
+     src/gz openwrt_core http://downloads.openwrt.org/releases/19.07.7/targets/ramips/mt7621/packages   
+     src/gz openwrt_freifunk http://downloads.openwrt.org/releases/19.07.7/packages/mipsel_24kc/freifunk  
+     src/gz openwrt_base http://downloads.openwrt.org/releases/19.07.7/packages/mipsel_24kc/base  
+     src/gz openwrt_luci http://downloads.openwrt.org/releases/19.07.7/packages/mipsel_24kc/luci  
+     src/gz openwrt_packages http://downloads.openwrt.org/releases/19.07.7/packages/mipsel_24kc/packages  
+     src/gz openwrt_routing http://downloads.openwrt.org/releases/19.07.7/packages/mipsel_24kc/routing  
+     src/gz openwrt_telephony http://downloads.openwrt.org/releases/19.07.7/packages/mipsel_24kc/telephony  
+
+* After you add the v19.07 `distfeeds.conf` install python2 with `opkg install python python-pip python-cffi python-pyserial`. with pip install: `pip install greenlet==0.4.15 jinja2`  
+* Switch back to original `distfeeds.conf`, `opkg update` -> install python3 and packages: `opkg install python3 python3-pip python3-tornado`.
+ 
+ </details>
+
+#### 6. Install Klipper
+
+<details>
+  <summary>Click to expand!</summary>
+ 
+- **6.1 Clone Klipper inside** `~/`
+           - do `opkg install git-http unzip` then  `git clone https://github.com/KevinOConnor/klipper.git`. 
+- **6.2 Use provided klipper service and place inside `/etc/init.d/`**  - find it inside `Services -> klipper`
+- **6.3 Everytime you create a service file you need to give it executable permissions. For klipper do `chmod 755 klipper`. You can enable it now by `/etc/init.d/klipper enable`
+- **6.4 Prepare your `printer.cfg` file**
+           - do `mkdir ~/klipper_config`  and  `mkdir ~/gcode_files` . Locate your `.cfg` file inside `~/klipper/config/` copy it to `~/klipper_config` and rename it to `printer.cfg`
+- **6.5 Restart klipper** - do `service klipper restart` or `/etc/init.d/klipper restart`
+- **6.6 Build `klipper.bin` file**
+            - Building is not mandatory to be done on the device that hosts klippy. To build it on this box you would need a lot of dependencies that are not available for OpenWrt so I just used my pc running ubuntu - I used a custom baud: `230400` since the default `250000` did not work for me)
+
+</details>
+
+#### 7. Get dwc socket for klipper
+
+<details>
+  <summary>Click to expand!</summary>
+
+* **Download**  
+`cd ~`  
+`git clone https://github.com/Stephan3/dwc2-for-klipper-socket`  
+
+* **Edit `dwc2.cfg`** - set the `web_root:` path to absolute path: `/root/sdcard/web`
+
+* **Create dwc socket service**  
+Create a `dwc` file inside `/etc/init.d/` with the contents of the `dwc` file inside my repo: `Services->dwc`  
+Give it executable permissions: `chmod 755 /etc/init.s/dwc`  
+Enable it: `/etc/init.d/dwc enable`  
+
+</details>
+
+#### 8. Get dwc
+
+<details>
+  <summary>Click to expand!</summary>
+ 
+ * Download dwc version 3 web interface  
+
+>
+
+    mkdir -p ~/sdcard/web
+    cd ~/sdcard/web
+    wget -o DuetWebControl-SD.zip https://github.com/Duet3D/DuetWebControl/releases/download/3.1.1/DuetWebControl-SD.zip
+    unzip *.zip && for f_ in $(find . | grep '.gz');do gunzip ${f_};done
+    rm DuetWebControl-SD.zip
+
+ 
+ * Restart dwc socket service: `service dwc restart` or `/etc/init.d/dwc restart`  
+ * Test: `https:://<your_ip>:4750`
+ 
+</details>
+
+#### 9. Enjoy
+
+</details>
+
 --------------------------------------------------------------------------
 #### Troubleshooting
 
@@ -349,6 +451,8 @@ src/gz openwrt_telephony http://downloads.openwrt.org/releases/19.07.7/packages/
   - cadriel - for [fluidd](https://github.com/cadriel/fluidd)
   - mateyou - for [mainsail](https://github.com/meteyou/mainsail)  
   - Eric Callahan - for [Moonraker](https://github.com/Arksine/moonraker)
+  - Stephan3 - for [dwc socket](https://github.com/Stephan3/dwc2-for-klipper-socket)
+  - Duet3D - for [DuetWebControl](https://github.com/Duet3D/DuetWebControl)
 * the fine tuning: andryblack - for the OpenWrt Klipper [service](https://github.com/andryblack/openwrt-build/tree/master/packages/klipper/files)
 * the encouragement: [Tom Hensel](https://github.com/gretel)- for supporting me into this
 
