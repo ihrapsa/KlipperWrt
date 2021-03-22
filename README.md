@@ -411,6 +411,21 @@ Enable it: `/etc/init.d/dwc enable`
 
 </details>
 
+#### (Optional) Use hostname instead of ip
+
+<details>
+  <summary>Click to expand!</summary>
+ 
+* To change your hostname go to `/etc/config/system` and modify `option hostname 'OpenWrt'` to your likings.
+* To use your hostname in browser and ssh instead of the ip:
+> 
+
+    opkg update
+    opkg install avahi-daemon-service-ssh avahi-daemon-service-http
+    reboot
+    
+</details>
+
 --------------------------------------------------------------------------
 #### Troubleshooting
 
