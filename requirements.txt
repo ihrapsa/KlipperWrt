@@ -24,6 +24,15 @@ Use original `distfeeds.conf`
   - streaming-form-data==1.8.1 - had issues with it - I provided a cross-compiled package inside `Packages`
 * nginx - install with `opkg install nginx-ssl`
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~Duet-Web-Control~~~ dependencies:
+
+Use original `distfeeds.conf`
+
+* Python3 - install with `opkg install python3 --force-overwrite`
+* Python3-pip - install with `opkg install python3-pip`
+* Python3 packages:
+  - tornado==6.1.0 - install with `opkg install python3-tornado`
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ## If you can't install python3 packages with opkg or pip and can't finde them inside menuconfig either you can build them by selecting "[*] Advanced configuration options (for developers)". After that a "python3-packages" option will appear inside Languages --> Python --> "python3-packages" -> select it with <M> -> type pacakge names space delimited inside --> "() List of python3 pacakges to install on target" - `lmdb` and `streaming-form-data` were cross-compiled that way. A single `*ipk` file installs both python packages.
