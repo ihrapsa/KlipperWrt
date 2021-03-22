@@ -90,10 +90,14 @@ Flashing:
 
 </details>
 
-#### 4. Enable [extroot](https://openwrt.org/docs/guide-user/additional-software/extroot_configuration) to expand the storage on the TF card.
+#### 4. Enable [extroot](https://openwrt.org/docs/guide-user/additional-software/extroot_configuration) _(to expand the storage on the TF card)_ and enable swap.
+
 <details>
-  <summary>Click to expand!</summary>
-  
+     <summary>Click to expand!</summary>
+ 
+
+- **Extroot**
+
 `opkg update && opkg install block-mount kmod-fs-ext4 kmod-usb-storage kmod-usb-ohci kmod-usb-uhci e2fsprogs fdisk`  
 `DEVICE="$(sed -n -e "/\s\/overlay\s.*$/s///p" /etc/mtab)"`  
 `uci -q delete fstab.rwm`  
@@ -115,27 +119,31 @@ Flashing:
 `cp -f -a /overlay/. /mnt`  
 `umount /mnt`  
 `reboot`  
-  </details>
-  
-- **4.1 Enable swap just in case** (though the existing 128mb RAM seemed more than enough)
-<details>
-  <summary>Click to expand!</summary>
 
-**run this once:**  
-`opkg update && opkg install swap-utils`
 
-`dd if=/dev/zero of=/overlay/swap.page bs=1M count=512`  
-`mkswap /overlay/swap.page`  
-`swapon /overlay/swap.page`  
-`mount -o remount,size=200M /tmp`  
-  
-**put this inside /etc/rc.local above exit so that swap is enabled at boot:**  
+- **swap** (though the existing 128mb RAM seemed more than enough)
 
-###activate the swap file on the SD card  
-`swapon /overlay/swap.page`  
+run this once:  
 
-###expand /tmp space  
-`mount -o remount,size=200M /tmp`  
+>
+
+    opkg update && opkg install swap-utils
+
+    dd if=/dev/zero of=/overlay/swap.page bs=1M count=512
+    mkswap /overlay/swap.page 
+    swapon /overlay/swap.page
+    mount -o remount,size=200M /tmp 
+
+put this inside /etc/rc.local above exit so that swap is enabled at boot:  
+
+>
+
+    ###activate the swap file on the SD card  
+    swapon /overlay/swap.page  
+
+    ###expand /tmp space  
+    mount -o remount,size=200M /tmp  
+
 </details>
 
 ### fluidd/mainsail
