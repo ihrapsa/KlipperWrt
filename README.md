@@ -22,8 +22,8 @@
 </details>
 
 ### What is the Creality [Wi-Fi Box](https://www.creality.com/goods-detail/creality-box-3d-printer)?
-| [![creality_wb](img/creality_wb.jpg)](https://www.creality.com/goods-detail/creality-box-3d-printer) | A router box device released by Creality meant to add network control to your printer.  <br> Big claims, lots of problems and frustrations. No desktop control, only mobile. <br> No custom slicing only cloud based. No camera support, only claims. |
-|---|:--|
+[![creality_wb](img/creality_wb.jpg)](https://www.creality.com/goods-detail/creality-box-3d-printer)   
+- A router box device released by Creality meant to add network control to your printer.  <br> Big claims, lots of problems and frustrations. No desktop control, only mobile. <br> No custom slicing only cloud based. No camera support, only claims.  
 
 <details>
   <summary>Specifications (Click to expand!)</summary>
@@ -41,26 +41,32 @@
  </details>
 
 ### What is [OpenWrt](https://github.com/openwrt/openwrt)?
-| [![OpenWrt](img/OpenWrt.png)](https://openwrt.org) | A Linux OS built for embeded devices, routers especially. Light, Open Source  with a great community and <br> packages that gives your device the freedom it deserves. |
-|---|:--|
+[![OpenWrt](img/OpenWrt.png)](https://openwrt.org)  
+
+- A Linux OS built for embeded devices, routers especially. Light, Open Source  with a great community and <br> packages that gives your device the freedom it deserves.
+
     
 ### What is [Klipper](https://github.com/KevinOConnor/klipper)?
 
-| [![Klipper](img/klipper.png)](https://www.klipper3d.org/) | A 3d-printer firmware. It runs on any kind of computer taking advantage of the host cpu. Extremely light on cpu, lots of feautres |
-|---|:--|
+[![Klipper](img/klipper.png)](https://www.klipper3d.org/)  
+
+- A 3d-printer firmware. It runs on any kind of computer taking advantage of the host cpu. Extremely light on cpu, lots of feautres
+
 
 ### What is [fluidd](https://github.com/cadriel/fluidd) / [mainsail](https://github.com/meteyou/mainsail)?
 
-| [![fluidd](img/fluidd.png)](https://docs.fluidd.xyz)  [![mainsail](img/mainsail.png)](https://docs.mainsail.xyz) | These are free and open-source Klipper web interface clients for managing your 3d printer. |
-|---|:--|
+[![fluidd](img/fluidd.png)](https://docs.fluidd.xyz)  [![mainsail](img/mainsail.png)](https://docs.mainsail.xyz)  
+- These are free and open-source Klipper web interface clients for managing your 3d printer. 
 
 ### What is [Moonraker](https://github.com/Arksine/moonraker)?
-| [![Moonraker](img/moonraker.png)](https://moonraker.readthedocs.io/en/latest/) | A Python 3 based web server that exposes APIs with which client applications (fluidd or mainsail) may use to interact with Klipper |
-|---|:--|
+[![Moonraker](img/moonraker_small.png)](https://moonraker.readthedocs.io/en/latest/)  
+- A Python 3 based web server that exposes APIs with which client applications (fluidd or mainsail) may use to interact with Klipper. Communcation between the Klippy host and Moonraker is done over a Unix Domain Socket. Tornado is used to provide Moonraker's server functionality.
+
 ### What is [duet-web-control](https://github.com/Duet3D/DuetWebControl)
 
-| [![dwc](img/dwc.png)](https://duet3d.dozuki.com/Wiki/Duet_Web_Control_v2_and_v3_%28DWC%29_Manual) | Duet Web Control is a fully-responsive HTML5-based web interface for RepRapFirmware. <br> [Stephan3](https://github.com/Stephan3/dwc2-for-klipper-socket) built a socket to make it communicate with klipper as well (klipper is not a RepRapFirmware). <br> This is a standalone webserver and client interface - so no need for moonraker or nginx. |
-|---|:--|
+[![dwc](img/dwc.png)](https://duet3d.dozuki.com/Wiki/Duet_Web_Control_v2_and_v3_%28DWC%29_Manual)  
+- Duet Web Control is a fully-responsive HTML5-based web interface for RepRapFirmware. [Stephan3](https://github.com/Stephan3/dwc2-for-klipper-socket) built a socket to make it communicate with klipper as well (klipper is not a RepRapFirmware). This is a standalone webserver and client interface - so no need for moonraker or nginx.
+
 --------------------------------------------------------------------------
 
 # Steps:
