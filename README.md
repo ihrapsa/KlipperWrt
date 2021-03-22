@@ -22,11 +22,15 @@
 </details>
 
 ### What is the Creality [Wi-Fi Box](https://www.creality.com/goods-detail/creality-box-3d-printer)?
+
+<details>
+  <summary>(Click to expand!)</summary>
+ 
 [![creality_wb](img/creality_wb.jpg)](https://www.creality.com/goods-detail/creality-box-3d-printer)   
 - A router box device released by Creality meant to add network control to your printer.  <br> Big claims, lots of problems and frustrations. No desktop control, only mobile. <br> No custom slicing only cloud based. No camera support, only claims.  
 
-<details>
-  <summary>Specifications (Click to expand!)</summary>
+ <details>
+   <summary>Specifications (Click to expand!)</summary>
  
  *(taken form figgyc's commit)*
 
@@ -38,34 +42,57 @@
 - **FCC ID**: 2AXH6CREALITY-BOX  
 - **UART**: test pads: (square on silkscreen) 3V3, TX, RX, GND; default baudrate: 57600  
  
+   </details>
  </details>
 
 ### What is [OpenWrt](https://github.com/openwrt/openwrt)?
+
+<details>
+  <summary>(Click to expand!)</summary>
+ 
 [![OpenWrt](img/OpenWrt.png)](https://openwrt.org)  
 
 - A Linux OS built for embeded devices, routers especially. Light, Open Source  with a great community and <br> packages that gives your device the freedom it deserves.
 
+ </details>
     
 ### What is [Klipper](https://github.com/KevinOConnor/klipper)?
 
+<details>
+  <summary>(Click to expand!)</summary>
+ 
 [![Klipper](img/klipper.png)](https://www.klipper3d.org/)  
 
 - A 3d-printer firmware. It runs on any kind of computer taking advantage of the host cpu. Extremely light on cpu, lots of feautres
-
+</details>
 
 ### What is [fluidd](https://github.com/cadriel/fluidd) / [mainsail](https://github.com/meteyou/mainsail)?
 
+<details>
+  <summary>(Click to expand!)</summary>
+ 
 [![fluidd](img/fluidd.png)](https://docs.fluidd.xyz)  [![mainsail](img/mainsail.png)](https://docs.mainsail.xyz)  
 - These are free and open-source Klipper web interface clients for managing your 3d printer. 
-
+</details>
+ 
 ### What is [Moonraker](https://github.com/Arksine/moonraker)?
-[![Moonraker](img/moonraker_small.png)](https://moonraker.readthedocs.io/en/latest/)  
+
+<details>
+  <summary>(Click to expand!)</summary>
+ 
+[![Moonraker](img/moonraker.png)](https://moonraker.readthedocs.io/en/latest/)  
 - A Python 3 based web server that exposes APIs with which client applications (fluidd or mainsail) may use to interact with Klipper. Communcation between the Klippy host and Moonraker is done over a Unix Domain Socket. Tornado is used to provide Moonraker's server functionality.
+</details>
 
 ### What is [duet-web-control](https://github.com/Duet3D/DuetWebControl)
 
+
+<details>
+  <summary>(Click to expand!)</summary>
+ 
 [![dwc](img/dwc.png)](https://duet3d.dozuki.com/Wiki/Duet_Web_Control_v2_and_v3_%28DWC%29_Manual)  
 - Duet Web Control is a fully-responsive HTML5-based web interface for RepRapFirmware. [Stephan3](https://github.com/Stephan3/dwc2-for-klipper-socket) built a socket to make it communicate with klipper as well (klipper is not a RepRapFirmware). This is a standalone webserver and client interface - so no need for moonraker or nginx.
+</details>
 
 --------------------------------------------------------------------------
 
