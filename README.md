@@ -397,7 +397,7 @@ Enable it: `/etc/init.d/dwc enable`
 
     mkdir -p ~/sdcard/web
     cd ~/sdcard/web
-    wget -o DuetWebControl-SD.zip https://github.com/Duet3D/DuetWebControl/releases/download/3.1.1/DuetWebControl-SD.zip
+    wget -O DuetWebControl-SD.zip https://github.com/Duet3D/DuetWebControl/releases/download/3.1.1/DuetWebControl-SD.zip
     unzip *.zip && for f_ in $(find . | grep '.gz');do gunzip ${f_};done
     rm DuetWebControl-SD.zip
 
