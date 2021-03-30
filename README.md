@@ -189,7 +189,9 @@ put this inside /etc/rc.local above exit so that swap is enabled at boot:
 
 </details>
 
-### fluidd/mainsail
+----------------------------------------------------------------------
+
+### fluidd/mainsail <img align="left" width="30" height="30" src="https://github.com/ihrapsa/KlipperWrt/blob/main/img/fluidd.png" alt="fluidd_icon"> <img align="left" width="30" height="30" src="https://github.com/ihrapsa/KlipperWrt/blob/main/img/mainsail.png" alt="mainsail_icon">
 
 <details>
   <summary>Click to expand!</summary>
@@ -356,7 +358,9 @@ It's ok to keep both client directories inside `~/` as these are static files. C
 
 </details>
 
-### duet-web-control
+----------------------------------------------------------------------
+
+### duet-web-control <img align="left" width="30" height="30" src="https://github.com/ihrapsa/KlipperWrt/blob/main/img/dwc.png" alt="dwc_icon"> 
 
 <details>
   <summary>Click to expand!</summary>
@@ -448,6 +452,8 @@ Enable it: `/etc/init.d/dwc enable`
 #### 9. Enjoy
 
 </details>
+
+----------------------------------------------------------------------
 
 #### (Optional) Use hostname instead of ip
 
