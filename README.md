@@ -1,7 +1,7 @@
 # KlipperWrt
  ---------------------------------------------------------------------------------
  
- Klipper and fluidd/mainsail/duet-web-control config files for OpenWrt embeded devices like the Creality Wi-Fi Box.
+ A guide to get _**Klipper**_ with _**fluidd**,_ _**Mainsail**_ or _**Duet-Web-Control**_ on OpenWrt embeded devices like the _Creality Wi-Fi Box_.
  
  ---------------------------------------------------------------------------------
 ### Why Klipper on a Router :question:
@@ -197,9 +197,8 @@ put this inside /etc/rc.local above exit so that swap is enabled at boot:
 
 </details>
 
-----------------------------------------------------------------------
 
-### fluidd <img align="left" width="30" height="30" src="https://github.com/ihrapsa/KlipperWrt/blob/main/img/fluidd.png" alt="fluidd_icon"> / <img width="30" height="30" src="https://github.com/ihrapsa/KlipperWrt/blob/main/img/mainsail.png" alt="mainsail_icon"> mainsail 
+### fluidd <img align="left" width="30" height="30" src="https://github.com/ihrapsa/KlipperWrt/blob/main/img/fluidd.png" alt="fluidd_icon"> / <img width="30" height="30" src="https://github.com/ihrapsa/KlipperWrt/blob/main/img/mainsail.png" alt="mainsail_icon"> Mainsail 
 
 <details>
   <summary>Click to expand!</summary>
@@ -381,7 +380,6 @@ It's ok to keep both client directories inside `~/` as these are static files. C
 
 </details>
 
-----------------------------------------------------------------------
 
 ### duet-web-control <img align="left" width="30" height="30" src="https://github.com/ihrapsa/KlipperWrt/blob/main/img/dwc.png" alt="dwc_icon"> 
 
