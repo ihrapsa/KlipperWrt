@@ -97,6 +97,12 @@
 --------------------------------------------------------------------------
 
 # Steps:
+
+### OpenWrt <img align="left" width="30" height="34" src="https://github.com/ihrapsa/KlipperWrt/blob/main/img/OpenWrt.png" alt="openwrt_icon">
+
+<details>
+  <summary>Click to expand!</summary>
+
 #### 1. Build OpenWrt image
 
 <details>
@@ -189,9 +195,11 @@ put this inside /etc/rc.local above exit so that swap is enabled at boot:
 
 </details>
 
+</details>
+
 ----------------------------------------------------------------------
 
-### fluidd/mainsail <img align="left" width="30" height="30" src="https://github.com/ihrapsa/KlipperWrt/blob/main/img/fluidd.png" alt="fluidd_icon"> <img align="left" width="30" height="30" src="https://github.com/ihrapsa/KlipperWrt/blob/main/img/mainsail.png" alt="mainsail_icon">
+### fluidd <img align="left" width="30" height="30" src="https://github.com/ihrapsa/KlipperWrt/blob/main/img/fluidd.png" alt="fluidd_icon"> / <img width="30" height="30" src="https://github.com/ihrapsa/KlipperWrt/blob/main/img/mainsail.png" alt="mainsail_icon"> mainsail 
 
 <details>
   <summary>Click to expand!</summary>
@@ -354,7 +362,22 @@ It's ok to keep both client directories inside `~/` as these are static files. C
 
 </details>
  
-#### 9. Enjoy
+ #### 9. (Optional) Use hostname instead of ip
+
+<details>
+  <summary>Click to expand!</summary>
+ 
+* To change your hostname go to `/etc/config/system` and modify `option hostname 'OpenWrt'` to your likings.
+* To use your hostname in browser and ssh instead of the ip do:
+> 
+
+    opkg update
+    opkg install avahi-daemon-service-ssh avahi-daemon-service-http
+    reboot
+* Instead of `http://your-ip` use `http://your_hostname.local`
+</details>
+ 
+#### 10. Enjoy
 
 </details>
 
@@ -449,13 +472,7 @@ Enable it: `/etc/init.d/dwc enable`
  
 </details>
 
-#### 9. Enjoy
-
-</details>
-
-----------------------------------------------------------------------
-
-#### (Optional) Use hostname instead of ip
+#### 9. (Optional) Use hostname instead of ip
 
 <details>
   <summary>Click to expand!</summary>
@@ -469,6 +486,11 @@ Enable it: `/etc/init.d/dwc enable`
     reboot
 * Instead of `http://your-ip` use `http://your_hostname.local`
 </details>
+
+#### 10. Enjoy
+
+</details>
+
 
 --------------------------------------------------------------------------
 #### Troubleshooting
