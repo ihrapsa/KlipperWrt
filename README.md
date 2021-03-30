@@ -233,7 +233,8 @@ put this inside /etc/rc.local above exit so that swap is enabled at boot:
 - **6.3 Everytime you create a service file you need to give it executable permissions. For klipper do `chmod 755 klipper`. You can enable it now by `/etc/init.d/klipper enable`
 - **6.4 Prepare your `printer.cfg` file**
            - do `mkdir ~/klipper_config`  and  `mkdir ~/gcode_files` . Locate your `.cfg` file inside `~/klipper/config/` copy it to `~/klipper_config` and rename it to `printer.cfg`
-           - Add these lines inside `printer.cfg`
+           - Inside `printer.cfg` under `[mcu]` replace  serial line with `serial: /dev/ttyUSB0` and add a new line: `baud: 230400`
+           - Add these lines at the end of the file:
 >
 
     [virtual_sdcard]
@@ -396,6 +397,7 @@ It's ok to keep both client directories inside `~/` as these are static files. C
 - **6.3 Everytime you create a service file you need to give it executable permissions. For klipper do `chmod 755 klipper`. You can enable it now by `/etc/init.d/klipper enable`
 - **6.4 Prepare your `printer.cfg` file**
            - do `mkdir ~/klipper_config`  and  `mkdir ~/gcode_files` . Locate your `.cfg` file inside `~/klipper/config/` copy it to `~/klipper_config` and rename it to `printer.cfg`
+           - Inside `printer.cfg` under `[mcu]` replace  serial line with `serial: /dev/ttyUSB0` and add a new line: `baud: 230400`  
 - **6.5 Restart klipper** - do `service klipper restart` or `/etc/init.d/klipper restart`
 - **6.6 Build `klipper.bin` file**
             - Building is not mandatory to be done on the device that hosts klippy. To build it on this box you would need a lot of dependencies that are not available for OpenWrt so I just used my pc running ubuntu: On a different computer running linux (or VM or live USB) -> Clone klipper just like you did before -> `cd klipper` -> `make menuconfig` -> use the configurations specific to your mainboard (Check the header inside your `printer.cfg` file for details).  
