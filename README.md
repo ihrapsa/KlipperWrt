@@ -216,7 +216,7 @@ put this inside /etc/rc.local above exit so that swap is enabled at boot:
     src/gz openwrt_telephony http://downloads.openwrt.org/releases/19.07.7/packages/mipsel_24kc/telephony  
 
 * After you add the v19.07 `distfeeds.conf` install python2 with `opkg install python python-pip python-cffi python-pyserial python-dev gcc`. with pip install: `pip install greenlet==0.4.15 jinja2`  
-* Switch back to original `distfeeds.conf`, `opkg update` -> install python3 and packages: `opkg install python3 python3-pyserial python3-pillow python3-tornado --force-overwrite`. `lmdb` and `streaming-form-data` can be found inside `Packages` as a single `*ipk` file. I cross-compiled those while building the OpenWrt image as I couldn't install it with `pip`.  
+* Switch back to original `distfeeds.conf`, `opkg update` -> install python3 and packages: `opkg install python3 python3-pyserial python3-pillow python3-tornado --force-overwrite`. `lmdb` and `streaming-form-data` can be found inside `Packages` as a single `*ipk` file. I cross-compiled those while building the OpenWrt image as I couldn't install it with `pip`. To install a `*ipk` file do: `opkg install filename_of_package.ipk`.
 * Install nginx with `opkg install nginx-ssl`
 
 
@@ -281,25 +281,59 @@ put this inside /etc/rc.local above exit so that swap is enabled at boot:
         BASE_CANCEL_PRINT
            
 - **6.5 Restart klipper** - do `service klipper restart` or `/etc/init.d/klipper restart`
-- **6.6 Build `klipper.bin` file**
-            - Building is not mandatory to be done on the device that hosts klippy. To build it on this box you would need a lot of dependencies that are not available for OpenWrt so I just used my pc running ubuntu - I used a custom baud: `230400` since the default `250000` did not work for me)
-</details>
+- **6.6 Build `klipper.bin` file**  
+            - Building is not mandatory to be done on the device that hosts klippy. To build it on this box you would need a lot of dependencies that are not available for OpenWrt so I just used my pc running ubuntu: On a different computer running linux (or VM or live USB) -> Clone klipper just like you did before -> `cd klipper` -> `make menuconfig` -> use the configurations specific to your mainboard (Check the header inside your `printer.cfg` file for details).  
+:exclamation: use custom baud: `230400` since the default `250000` did not work for me  
+-> once configured run `make` -> if succesfull the firmware will be inside `./out/klipper.bin` -> flash the mainboard:(check header of `printer.cfg` again - some mainboards need the `.bin` file renamed a certain way) copy the `.bin` file on a sd card -> plug the card with the printer off -> turn printer on and wait a minute -> Done (Depending on your mainboard/printer/lcd you will probably not have a sign that the mainboard got flashed so don't worry) - if at the end of this guide the client cannot connect to the klipper firmware usually the problem is with the `.bin` file building or flashing process.
+</details> 
  
 #### 7. Install moonraker + fluidd/mainsail
 <details>
   <summary>Click to expand!</summary>
  
-- **7.1 Follow mainsail Manual Setup [Guide](https://docs.mainsail.xyz/setup/manual-setup)** (it's almost identical for fluidd as well) - but avoid running any scripts (as those only work on debian/raspberry pi)
-- **7.2 Use provided moonraker.conf file** You can find the `moonraker.conf` files in my repo: `/moonraker/*.conf`. Depending on your chosen client (`mainsail` or `fluidd`) rename the respective `.conf` file to `moonraker.conf`and put it in `~/klipper_config`. Note: The `[update_manager]` plugin was commented out since this is curently only supported for `debian` distros only. For now, updating `moonraker`, `klipper`, `fluidd` or `mainsail` should be done manaully.
-- **7.3 Use provided moonraker service and place inside `/etc/init.d/`** - Don't forget to give it executable permissions and then to enable it just like you did with klipper service.
-        - Don't forget to modify the `moonraker.conf` you copied inside `~/klipper_config` under `trusted_clients:` with your subnet.
-        - Restart Moonraker service when you're done with `service moonraker restart` or `/etc/init.d/moonraker restart`
-- **7.4 Create and place all the nginx files inside `/etc/nginx/conf.d`***
-* if you followed mainsail guide, `mainsail` should pe renamed to `mainsail.conf` and placed inside `/etc/nginx/conf.d/` alongside `common_vars.conf` and `upstreams.conf` (those 2 files are common for mainsail and fluidd - you can find them in my repo inside `nginx`)
-* if you'd prefer fluidd, download the fluidd latest release instead of mainsail and use the `fluidd.conf` file instead of `mainsail.conf`.
-* I've uploaded the `mainsail.conf` and `fluidd.conf` as well (look inside `nginx`). You need to use one or the other depending on your chosen client. Don't use both .conf files inside `/etc/nginx/conf.d/` or rename the unused client. Don't forget to create/add the `common_vars.conf` and `upstreams.conf` files as well.
-- **7.5 Restart nginx** with `service nginx restart` and check browser if `http://your-ip` brings you the client interface (fluidd or mainsail).
+- **7.1 Clone Moonraker** 
+>
+    cd ~
+    git clone https://github.com/Arksine/moonraker.git
 
+- **7.2 Use provided moonraker.conf file** You can find the `moonraker.conf` files in my repo: `/moonraker/*.conf`.  
+Depending on your chosen client (`mainsail` or `fluidd`) rename the respective `.conf` file to `moonraker.conf`and put it in `~/klipper_config`. Note: The `[update_manager]` plugin was commented out since this is curently only supported for `debian` distros only. For now, updating `moonraker`, `klipper`, `fluidd` or `mainsail` should be done manaully.  
+Don't forget to edit(if necessary) the `moonraker.conf` file you copied inside `~/klipper_config` under `trusted_clients:` with your client ip or ip range (_client meaning the device you want to access fluidd/mainsail from_). Check the moonraker [configuration](https://github.com/Arksine/moonraker/blob/master/docs/configuration.md#authorization) doc for details.
+- **7.3 Use provided moonraker service and place inside `/etc/init.d/`** - find it in my repo inside `Services`  
+Don't forget to give it executable permissions and then to enable it just like you did with klipper service.    
+Restart Moonraker service when you're done with `service moonraker restart` or `/etc/init.d/moonraker restart`  
+- **7.4 Create and place all the nginx files inside `/etc/nginx/conf.d`***  
+ Make sure you've installed `nginx-ssl` and a `conf.d` directory appeared inside `/etc/nginx/`  
+ Place `fluidd.conf` OR `mainsail.conf`inside `/etc/nginx/conf.d/` alongside `common_vars.conf` AND `upstreams.conf` (those 2 files are common for mainsail and fluidd)- you can find all these files in my repo inside `nginx` directory.   
+**Note!**  
+You need to use either `fluidd.conf` or `mainsail.conf` file depending on your chosen client. Don't use both `.conf` files inside `/etc/nginx/conf.d/`. If you want to test both clients and easly switch between them check the exclamation mark below.
+
+- **7.5 Clone chosen client:**  
+
+**fluidd**
+
+>
+
+    mkdir ~/fluidd
+    cd ~/fluidd
+    wget -q -O fluidd.zip https://github.com/cadriel/fluidd/releases/latest/download/fluidd.zip && unzip fluidd.zip && rm fluidd.zip
+
+**Mainsail**
+
+>
+
+    mkdir ~/mainsail
+    cd ~/mainsail
+    wget -q -O mainsail.zip https://github.com/meteyou/mainsail/releases/latest/download/mainsail.zip && unzip mainsail.zip && rm mainsail.zip
+
+**Note!**  
+It's ok to keep both client directories inside `~/` as these are static files. Careful with the `.conf` file inside `/etc/nginx/conf.d`.
+- **7.6 Restart nginx** with `service nginx restart` and check browser if `http://your-ip` brings you the client interface (fluidd or mainsail).
+
+:exclamation: **How to switch between fluidd and mainsail:**
+   1. switch between `mainsail.conf`and `fluidd.conf` file inside `/etc/nginx/conf.d` (make sure the other one gets renamed to a different `extension`. eg: `*.conf_off` or moved to a different fodler.)
+   2. Switch between mainsail and fluidd `moonraker.conf` files inside `~/klipper_config`. Find them inside my repo under `moonraker` directory. 
+   3. Restart moonraker and nginx services: `service moonraker restart` and `service nginx restart`
 </details>
  
  
@@ -364,7 +398,9 @@ put this inside /etc/rc.local above exit so that swap is enabled at boot:
            - do `mkdir ~/klipper_config`  and  `mkdir ~/gcode_files` . Locate your `.cfg` file inside `~/klipper/config/` copy it to `~/klipper_config` and rename it to `printer.cfg`
 - **6.5 Restart klipper** - do `service klipper restart` or `/etc/init.d/klipper restart`
 - **6.6 Build `klipper.bin` file**
-            - Building is not mandatory to be done on the device that hosts klippy. To build it on this box you would need a lot of dependencies that are not available for OpenWrt so I just used my pc running ubuntu - I used a custom baud: `230400` since the default `250000` did not work for me)
+            - Building is not mandatory to be done on the device that hosts klippy. To build it on this box you would need a lot of dependencies that are not available for OpenWrt so I just used my pc running ubuntu: On a different computer running linux (or VM or live USB) -> Clone klipper just like you did before -> `cd klipper` -> `make menuconfig` -> use the configurations specific to your mainboard (Check the header inside your `printer.cfg` file for details).  
+:exclamation: use custom baud: `230400` since the default `250000` did not work for me  
+-> once configured run `make` -> if succesfull the firmware will be inside `./out/klipper.bin` -> flash the mainboard:(check header of `printer.cfg` again - some mainboards need the `.bin` file renamed a certain way) copy the `.bin` file on a sd card -> plug the card with the printer off -> turn printer on and wait a minute -> Done (Depending on your mainboard/printer/lcd you will probably not have a sign that the mainboard got flashed so don't worry) - if at the end of this guide the client cannot connect to the klipper firmware usually the problem is with the `.bin` file building or flashing process.
 
 </details>
 
