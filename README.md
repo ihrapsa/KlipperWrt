@@ -227,10 +227,10 @@ put this inside /etc/rc.local above exit so that swap is enabled at boot:
 <details>
   <summary>Click to expand!</summary>
  
-- **6.1 Clone Klipper inside** `~/`
+- **6.1 Clone Klipper inside** `~/`  
            - do `opkg install git-http unzip` then  `git clone https://github.com/KevinOConnor/klipper.git`. 
 - **6.2 Use provided klipper service and place inside `/etc/init.d/`**  
-- **6.3 Everytime you create a service file you need to give it executable permissions. For klipper do `chmod 755 klipper`. You can enable it now by `/etc/init.d/klipper enable`
+- **6.3 Enable klipper service:** Everytime you create a service file you need to give it executable permissions first before enabling it. For klipper do `chmod 755 klipper`. You can enable it now by `/etc/init.d/klipper enable`
 - **6.4 Prepare your `printer.cfg` file**
            - do `mkdir ~/klipper_config`  and  `mkdir ~/gcode_files` . Locate your `.cfg` file inside `~/klipper/config/` copy it to `~/klipper_config` and rename it to `printer.cfg`
            - Inside `printer.cfg` under `[mcu]` replace  serial line with `serial: /dev/ttyUSB0` and add a new line: `baud: 230400`
@@ -391,10 +391,10 @@ It's ok to keep both client directories inside `~/` as these are static files. C
 <details>
   <summary>Click to expand!</summary>
  
-- **6.1 Clone Klipper inside** `~/`
+- **6.1 Clone Klipper inside** `~/`  
            - do `opkg install git-http unzip` then  `git clone https://github.com/KevinOConnor/klipper.git`. 
 - **6.2 Use provided klipper service and place inside `/etc/init.d/`**  - find it inside `Services -> klipper`
-- **6.3 Everytime you create a service file you need to give it executable permissions. For klipper do `chmod 755 klipper`. You can enable it now by `/etc/init.d/klipper enable`
+- **6.3 Enable klipper service:** Everytime you create a service file you need to give it executable permissions before enabling it. For klipper do `chmod 755 klipper`. You can enable it now by `/etc/init.d/klipper enable`
 - **6.4 Prepare your `printer.cfg` file**
            - do `mkdir ~/klipper_config`  and  `mkdir ~/gcode_files` . Locate your `.cfg` file inside `~/klipper/config/` copy it to `~/klipper_config` and rename it to `printer.cfg`
            - Inside `printer.cfg` under `[mcu]` replace  serial line with `serial: /dev/ttyUSB0` and add a new line: `baud: 230400`  
