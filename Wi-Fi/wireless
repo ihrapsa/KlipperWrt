@@ -17,8 +17,8 @@ config wifi-iface 'default_radio0'
 
 config wifi-iface
 	option network 'wwan'
-	option ssid 'Your_internet_router_SSID' #<- change this
-	option encryption 'psk' #<- this might cause issues - try psk2 if issues connecting
+	option ssid 'Your_internet_router_SSID' #<- change this. Make sure your 2.4Ghz band has different SSID from the 5Ghz one
+	option encryption 'psk' #<- this might cause issues - try `psk2` if your router uses WPA2 encryption or `psk` if it uses WPA
 	option device 'radio0'
 	option mode 'sta'
 	option bssid 'your_router_mac_address' #<- this is not mandatory but recommended
