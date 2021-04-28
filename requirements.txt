@@ -20,6 +20,7 @@ Use original `distfeeds.conf`
   - pyserial==3.4 - install with `opkg install python3-pyserial --force-overwrite`
   - pillow==8.0.1 - install with `opkg install python3-pillow`
   - tornado==6.1.0 - install with `opkg install python3-tornado`
+  - distro==1.5.0 - install with `opkg install python3-distro`
   - lmdb==1.1.1 - had issues with it - I provided a cross-compiled package inside `Packages`. If you don't manage to install it or moonraker still errors on it switch to an older release of moonraker: https://github.com/Arksine/moonraker/archive/eb37ce767d73b064b0260432e4a3323cf8e8d758.zip
   - streaming-form-data==1.8.1 - had issues with it - I provided a cross-compiled package inside `Packages`
 * nginx - install with `opkg install nginx-ssl`
