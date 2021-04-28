@@ -225,7 +225,7 @@ put this inside /etc/rc.local above exit so that swap is enabled at boot:
     src/gz openwrt_telephony http://downloads.openwrt.org/releases/19.07.7/packages/mipsel_24kc/telephony  
 
 * After you add the v19.07 `distfeeds.conf` install python2 with `opkg install python python-pip python-cffi python-pyserial python-dev gcc`. with pip install: `pip install greenlet==0.4.15 jinja2`  
-* Switch back to original `distfeeds.conf`, `opkg update` -> install python3 and packages: `opkg install python3 python3-pyserial python3-pillow python3-tornado --force-overwrite`. `lmdb` and `streaming-form-data` can be found inside `Packages` as a single `*ipk` file. I cross-compiled those while building the OpenWrt image as I couldn't install it with `pip`. To install a `*ipk` file do: `opkg install filename_of_package.ipk`.
+* Switch back to original `distfeeds.conf`, `opkg update` -> install python3 and packages: `opkg install python3 python3-pyserial python3-pillow python3-tornado python3-distro --force-overwrite`. `lmdb` and `streaming-form-data` can be found inside `Packages` as a single `*ipk` file. I cross-compiled those while building the OpenWrt image as I couldn't install it with `pip`. To install a `*ipk` file do: `opkg install filename_of_package.ipk`.
 * Install nginx with `opkg install nginx-ssl`
 
 
