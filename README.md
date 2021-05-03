@@ -224,7 +224,7 @@ put this inside /etc/rc.local above exit so that swap is enabled at boot:
     src/gz openwrt_routing http://downloads.openwrt.org/releases/19.07.7/packages/mipsel_24kc/routing  
     src/gz openwrt_telephony http://downloads.openwrt.org/releases/19.07.7/packages/mipsel_24kc/telephony  
 
-* After you add the v19.07 `distfeeds.conf` install python2 with `opkg install python python-pip python-cffi python-pyserial python-dev gcc`. with pip install: `pip install greenlet==0.4.15 jinja2 python-can=3.3.4`  
+* After you add the v19.07 `distfeeds.conf` install python2 with `opkg install python python-pip python-cffi python-pyserial python-dev gcc`. with pip install: `pip install greenlet==0.4.15 jinja2 python-can==3.3.4`  
 * Switch back to original `distfeeds.conf`, `opkg update` -> install python3 and packages: `opkg install python3 python3-pyserial python3-pillow python3-tornado python3-distro --force-overwrite`. `lmdb` and `streaming-form-data` can be found inside `Packages` as a single `*ipk` file. I cross-compiled those while building the OpenWrt image as I couldn't install it with `pip`. To install a `*ipk` file do: `opkg install filename_of_package.ipk`.
 * Install nginx with `opkg install nginx-ssl`
 
@@ -257,38 +257,52 @@ put this inside /etc/rc.local above exit so that swap is enabled at boot:
     # for pause/resume functionality. 
     # Mainsail/fluidd needs gcode macros for `PAUSE`, `RESUME` and `CANCEL_PRINT` to make the buttons work.
 
-    [gcode_macro PAUSE]
-    rename_existing: BASE_PAUSE
-    default_parameter_X: 230    #edit to your park position
-    default_parameter_Y: 230    #edit to your park position
-    default_parameter_Z: 10     #edit to your park position
-    default_parameter_E: 1      #edit to your retract length
-    gcode:
-        SAVE_GCODE_STATE NAME=PAUSE_state
-        BASE_PAUSE
-        G91
-        G1 E-{E} F2100
-        G1 Z{Z}
-        G90
-        G1 X{X} Y{Y} F6000
-
-    [gcode_macro RESUME]
-    rename_existing: BASE_RESUME
-    default_parameter_E: 1      #edit to your retract length
-    gcode:
-        G91
-        G1 E{E} F2100
-        G90
-        RESTORE_GCODE_STATE NAME=PAUSE_state MOVE=1
-        BASE_RESUME
-
     [gcode_macro CANCEL_PRINT]
     rename_existing: BASE_CANCEL_PRINT
     gcode:
-        TURN_OFF_HEATERS
-        CLEAR_PAUSE
-        SDCARD_RESET_FILE
-        BASE_CANCEL_PRINT
+      TURN_OFF_HEATERS
+      CLEAR_PAUSE
+      SDCARD_RESET_FILE
+      BASE_CANCEL_PRINT
+
+    [gcode_macro PAUSE]
+    rename_existing: BASE_PAUSE
+    # change this if you need more or less extrusion
+    variable_extrude: 1.0
+    gcode:
+      ##### read E from pause macro #####
+      {% set E = printer["gcode_macro PAUSE"].extrude|float %}
+      ##### set park positon for x and y #####
+      # default is your max posion from your printer.cfg
+      {% set x_park = printer.toolhead.axis_maximum.x|float - 5.0 %}
+      {% set y_park = printer.toolhead.axis_maximum.y|float - 5.0 %}
+      ##### calculate save lift position #####
+      {% set max_z = printer.toolhead.axis_maximum.z|float %}
+      {% set act_z = printer.toolhead.position.z|float %}
+      {% if act_z < (max_z - 2.0) %}
+          {% set z_safe = 2.0 %}
+      {% else %}
+          {% set z_safe = max_z - act_z %}
+      {% endif %}
+      ##### end of definitions #####
+      SAVE_GCODE_STATE NAME=PAUSE_state
+      BASE_PAUSE
+      G91
+      G1 E-{E} F2100
+      G1 Z{z_safe} F900
+      G90
+      G1 X{x_park} Y{y_park} F6000
+
+    [gcode_macro RESUME]
+    rename_existing: BASE_RESUME
+    gcode:
+      ##### read E from pause macro #####
+      {% set E = printer["gcode_macro PAUSE"].extrude|float %}
+      ##### end of definitions #####
+      G91
+      G1 E{E} F2100
+      RESTORE_GCODE_STATE NAME=PAUSE_state
+      BASE_RESUME
            
 - **6.5 Restart klipper** - do `service klipper restart` or `/etc/init.d/klipper restart`
 - **6.6 Build `klipper.bin` file**  
