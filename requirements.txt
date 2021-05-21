@@ -22,6 +22,7 @@ Use original `distfeeds.conf`
   - pillow==8.0.1 - install with `opkg install python3-pillow`
   - tornado==6.1.0 - install with `opkg install python3-tornado`
   - distro==1.5.0 - install with `opkg install python3-distro`
+  - inotify-simple==1.3.5 - install with `pip3 install inotify-simple` - if you get a `_distutils_hack` error update python3-setuptools to ver>=56.2. OpenWrt repo might not have the latest version so you'd probably have to download it from [github](https://github.com/pypa/setuptools) and manually install it: Clone setuptools repo `cd` to root fodler then `python3 setup.py install`
   - lmdb==1.1.1 - had issues with it - I provided a cross-compiled package inside `Packages`. If you don't manage to install it or moonraker still errors on it switch to an older release of moonraker: https://github.com/Arksine/moonraker/archive/eb37ce767d73b064b0260432e4a3323cf8e8d758.zip
   - streaming-form-data==1.8.1 - had issues with it - I provided a cross-compiled package inside `Packages`
 * nginx - install with `opkg install nginx-ssl`
