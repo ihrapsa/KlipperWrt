@@ -209,7 +209,7 @@ put this inside /etc/rc.local above exit so that swap is enabled at boot:
 <details>
   <summary>Click to expand!</summary>
  
-* for Klipper and moonraker - check the `requirements.txt` file. 
+* for Klipper and moonraker - check the `requirements` folder. 
 
 * :exclamation: Python2 packages are not available by default for this `snapshot` A workaround I found was to use the v19.07 OpenWrt release feeds (this version still has python2 packages) for the same target (_ramips/mt76x8_) and cpu architecture (_mipsel_24kc_) as the box. I make a backup of the original `/etc/opkg/distfeeds.conf` and create another `distfeeds.conf`file with the v19.07 url feeds. Don't forget to run `opkg update` everytime you make modifications to that file. After finishing with installing the packages that are only available for the v19.07 and below (like python2 packages) I switch back to the backup `distfeeds.conf` file. 
 
@@ -225,8 +225,26 @@ put this inside /etc/rc.local above exit so that swap is enabled at boot:
     src/gz openwrt_routing http://downloads.openwrt.org/releases/19.07.7/packages/mipsel_24kc/routing  
     src/gz openwrt_telephony http://downloads.openwrt.org/releases/19.07.7/packages/mipsel_24kc/telephony  
 
-* After you add the v19.07 `distfeeds.conf` install python2 with `opkg install python python-pip python-cffi python-pyserial python-dev gcc`. with pip install: `pip install greenlet==0.4.15 jinja2 python-can==3.3.4`  
-* Switch back to original `distfeeds.conf`, `opkg update` -> install python3 and packages: `opkg install python3 python3-pyserial python3-pillow python3-tornado python3-distro --force-overwrite`. `lmdb` and `streaming-form-data` can be found inside `Packages` as a single `*ipk` file. I cross-compiled those while building the OpenWrt image as I couldn't install it with `pip`. To install a `*ipk` file do: `opkg install filename_of_package.ipk`.
+* After you add the v19.07 `distfeeds.conf`, `opkg update` -> install python2 and packages with 
+ >
+ 
+    opkg install python python-pip python-cffi python-pyserial python-dev gcc
+ >
+    pip install greenlet==0.4.15 jinja2 python-can==3.3.4  
+ 
+* Switch back to original `distfeeds.conf`, `opkg update` -> install python3 and packages: 
+ >            
+ 
+    opkg install python3 python3-pip python3-pyserial python3-pillow python3-tornado python3-distro --force-overwrite. 
+    
+ >
+    
+    pip3 install inotify-simple
+ 
+ _if you get errors for this check the [instructions](https://github.com/ihrapsa/KlipperWrt/tree/main/requirements#moonraker-dependencies) from `requirements` folder._  
+ 
+ `lmdb` and `streaming-form-data` can be found inside `Packages` as a single `*ipk` file. I cross-compiled those while building the OpenWrt image as I couldn't install it with `pip`. To install a `*ipk` file do: `opkg install filename_of_package.ipk`.
+
 * Install nginx with `opkg install nginx-ssl`
 
 
