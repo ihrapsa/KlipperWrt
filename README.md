@@ -628,5 +628,5 @@ Enable it: `/etc/init.d/dwc enable`
 
 You can find me on:  
 
-💬 discord: jonah1024#4422  or join the [server](https://discord.gg/aTN4Utjq)
+💬 discord: jonah1024#4422  or join the [server](https://discord.gg/aTN4Utjq)  
 :email: email: hrapsaiona@gmail.com  
