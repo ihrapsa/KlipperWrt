@@ -241,9 +241,14 @@ put this inside /etc/rc.local above exit so that swap is enabled at boot:
     
     pip3 install inotify-simple
  
- _if you get errors for this check the [instructions](https://github.com/ihrapsa/KlipperWrt/tree/main/requirements#moonraker-dependencies) from `requirements` folder._  
+ _if you get errors with this check the [instructions](https://github.com/ihrapsa/KlipperWrt/tree/main/requirements#moonraker-dependencies) from `requirements` folder, you might have to update `setuptools`._  
  
- `lmdb` and `streaming-form-data` can be found inside `Packages` as a single `*ipk` file. I cross-compiled those while building the OpenWrt image as I couldn't install it with `pip`. To install a `*ipk` file do: `opkg install filename_of_package.ipk`.
+ >
+    
+    pip3 install python-jose  
+
+ **`lmdb`** and **`streaming-form-data`** can be found inside `Packages` as a single `*ipk` file. I cross-compiled those while building the OpenWrt image as I couldn't install it with `pip` (they need gcc>=8.4 which is not available for OpenWrt yet). To install a `*ipk` file do: `opkg install filename_of_package.ipk`.
+
 
 * Install nginx with `opkg install nginx-ssl`
 
