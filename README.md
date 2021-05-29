@@ -237,7 +237,7 @@ put this inside /etc/rc.local above exit so that swap is enabled at boot:
 * Switch back to original `distfeeds.conf`, `opkg update` -> install python3 and packages: 
  >            
  
-    opkg install python3 python3-pip python3-pyserial python3-pillow python3-tornado python3-distro --force-overwrite. 
+    opkg install python3 python3-pip python3-pyserial python3-pillow python3-tornado python3-distro --force-overwrite 
     
  >
     
