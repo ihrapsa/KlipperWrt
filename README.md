@@ -95,6 +95,8 @@
 </details>
 
 --------------------------------------------------------------------------
+### :exclamation: Open issues or join the discord [server](https://discord.gg/ZGrCMVs35H) for better support.
+--------------------------------------------------------------------------
 
 # Steps:
 
@@ -628,5 +630,5 @@ Enable it: `/etc/init.d/dwc enable`
 
 You can find me on:  
 
-💬 discord: jonah1024#4422  or join the [server](https://discord.gg/aTN4Utjq)  
+💬 discord: jonah1024#4422  or join the [server](https://discord.gg/ZGrCMVs35H)  
 :email: email: hrapsaiona@gmail.com  
