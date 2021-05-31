@@ -137,6 +137,7 @@ Flashing:
 <details>
   <summary>Click to expand!</summary>
  
+* If the flashing was successful you should be able to ssh to the box through ethernet. Plug it in your PC (prefered way) or router and do `ssh root@192.168.1.1` in `Windows PowerShell` or any `unix terminal` or use `putty`.  
 * Edit `/etc/config/network`, `/etc/config/wireless` and `/etc/config/firewall`. I've uploaded these to follow as a model (inside `Wi-Fi`).
 * Use `iw dev wlan0 scan` to scan for near wi-fi networks and look for the bssid specific to your 2.4Ghz SSID.
 
