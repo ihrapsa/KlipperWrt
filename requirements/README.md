@@ -31,9 +31,10 @@
   | lmdb==1.1.1 | I had issues with it - I provided a cross-compiled package inside [`Packages`](https://github.com/ihrapsa/KlipperWrt/tree/main/packages). If you don't manage to install it or moonraker still errors on it switch to an [older](https://github.com/Arksine/moonraker/archive/eb37ce767d73b064b0260432e4a3323cf8e8d758.zip) release of moonraker where this package is not a requirement |
   | streaming-form-data==1.8.1 | I had issues with it - I provided a cross-compiled package inside [`Packages`](https://github.com/ihrapsa/KlipperWrt/tree/main/packages) |
   | python-jose[cryptography]==3.2.0 |  Install with `pip3 install python-jose` - if you get errors with this install it manually: Clone the python-jose [repo](https://github.com/mpdavis/python-jose.git) `cd` into it then `python3 setup.py install` | 
-  | libnacl==1.7.2 |  Install with `pip3 install libnacl`|  
-* nginx - install with `opkg install nginx-ssl`
+  | libnacl==1.7.2 |  Install with `pip3 install libnacl` |  
 
+* libsodium - install with `opkg install libsodium`  
+* nginx - install with `opkg install nginx-ssl`
 ### Duet-Web-Control dependencies:
 ------------------------
 #### Use original `distfeeds.conf`
