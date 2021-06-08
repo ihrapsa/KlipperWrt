@@ -253,7 +253,7 @@ put this inside /etc/rc.local above exit so that swap is enabled at boot:
  **`lmdb`** and **`streaming-form-data`** can be found inside `Packages` as a single `*ipk` file. I cross-compiled those while building the OpenWrt image as I couldn't install it with `pip` (they need gcc>=8.4 which is not available for OpenWrt yet). To install a `*ipk` file do: `opkg install filename_of_package.ipk`.
 
 
-* Install nginx with `opkg install nginx-ssl`
+* Install nginx with `opkg install nginx-ssl libsodium`
 
 
 </details>
