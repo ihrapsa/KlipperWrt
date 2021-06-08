@@ -589,7 +589,7 @@ Enable it: `/etc/init.d/dwc enable`
  
 - If enabling the services returns an error, do: `ls -l` inside `/etc/init.d/` and check if the service has executable permissions (x flag). If not do: `chmod 755 service` - replace `service` accordingly.
 
-- I didn't manage to get the printer to communicate on 250000 baudrate (I think because the box/pyserial is unable to set a custom nonstandard baudrate - I found a possible fix by [ckielstra](https://github.com/pyserial/pyserial/pull/496) but haven't tried it yet. I solved this by using 230400 instead (you need to change this both while building the mcu klipper firmware AND inside printer.cfg under [mcu]:  
+- I didn't manage to get the printer to communicate on 250000 baudrate (Official version of pyserial is unable to set a custom nonstandard baudrate - I found a fix by [ckielstra](https://github.com/pyserial/pyserial/pull/496) in a PR that is not yet merged. I've added his changes to my [forked](https://github.com/ihrapsa/pyserial) pyserial as well which is updated more often. If you don't want to use 250k baudrate I solved this issue by using 230400 instead (you need to change this both while building the mcu klipper firmware AND inside printer.cfg under [mcu]:  
 `[mcu]`  
 `baud: 230400`  
 
