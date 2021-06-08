@@ -9,7 +9,7 @@
   | package | instructions |
   |-|-|
   | cffi==1.12.2 | install with `opkg install python-cffi`|
-  | pyserial==3.4 | install with `opkg install python-pyserial`|
+  | pyserial==3.4 | install with `opkg install python-pyserial`. :exclamation: This pyserial version currently works with a max baud of 230400. If you'd like 250000 Install this pyserial [version](https://github.com/ihrapsa/pyserial) using `python2 setup.py install` |
   | greenlet==0.4.15 | To build and install it on the box you need `gcc` and `python-dev`. Install it with pip 2 not 3 `pip install greenlet==0.4.15` Otherwise use the *ipk file I crossbuilt.
   | Jinja2==2.10.1 | Install it with pip 2 not 3: `pip install jinja2`|
   | python-can==3.3.4 | Install with pip 2 not 3: `pip install python-can==3.3.4`|
