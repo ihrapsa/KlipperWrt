@@ -228,10 +228,15 @@ put this inside /etc/rc.local above exit so that swap is enabled at boot:
     src/gz openwrt_routing http://downloads.openwrt.org/releases/19.07.7/packages/mipsel_24kc/routing  
     src/gz openwrt_telephony http://downloads.openwrt.org/releases/19.07.7/packages/mipsel_24kc/telephony  
 
-* After you add the v19.07 `distfeeds.conf`, `opkg update` -> install python2 and packages with 
+ * Do `opkg update`  
+ :exclamation: If you get `wrong signature` errors, comment the `option check_signature` line under `/etc/opkg.conf` - you can uncomment this after finishing with `v19.07 distfeeds`  
+* After you add the v19.07 `distfeeds.conf` -> install python2 packages:
+
  >
  
-    opkg install python python-pip python-cffi python-pyserial python-dev gcc
+    opkg install python python-pip python-cffi python-pyserial python-dev gcc  
+ 
+ :exclamation: __The official `pyserial` python package is not configured to work with `250000 baud` on `MIPS` platforms (only `230400` max). If you want/need 250k baud, install this version of [pyserial](https://github.com/ihrapsa/pyserial) and install it with `python2 setup.py install`__
  >
     pip install greenlet==0.4.15 jinja2 python-can==3.3.4  
  
@@ -447,7 +452,11 @@ It's ok to keep both client directories inside `~/` as these are static files. C
      src/gz openwrt_routing http://downloads.openwrt.org/releases/19.07.7/packages/mipsel_24kc/routing  
      src/gz openwrt_telephony http://downloads.openwrt.org/releases/19.07.7/packages/mipsel_24kc/telephony  
 
-* After you add the v19.07 `distfeeds.conf` install python2 with `opkg install python python-pip python-cffi python-pyserial python-dev gcc`. with pip install: `pip install greenlet==0.4.15 jinja2 python-can=3.3.4`  
+* Do `opkg update`  
+ :exclamation: If you get `wrong signature` errors, comment the `option check_signature` line under `/etc/opkg.conf` - you can uncomment this after finishing with `v19.07 distfeeds`  
+* After you add the v19.07 `distfeeds.conf` -> install python2 packages: with `opkg install python python-pip python-cffi python-pyserial python-dev gcc`.   
+ :exclamation: __The official `pyserial` python package is not configured to work with `250000 baud` on `MIPS` platforms (only `230400` max). If you want/need 250k baud, install this version of [pyserial](https://github.com/ihrapsa/pyserial) and install it with `python2 setup.py install`__  
+* With pip install: `pip install greenlet==0.4.15 jinja2 python-can=3.3.4`  
 * Switch back to original `distfeeds.conf`, `opkg update` -> install python3 and packages: `opkg install python3 python3-pip python3-tornado`.
  
  </details>
