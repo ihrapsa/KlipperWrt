@@ -1,0 +1,133 @@
+Package: alsa-lib
+Version: 1.2.4-1
+Depends: libc, kmod-sound-core, libpthread, librt
+License: LGPL-2.1-or-later
+Section: libs
+Architecture: mipsel_24kc
+Installed-Size: 349417
+Filename: alsa-lib_1.2.4-1_mipsel_24kc.ipk
+Size: 347631
+SHA256sum: 9f238f8ef69f8fe2d703d57b28c9eaf93faeaad9a7efc7913f64faead0503c5a
+Description:  This is the library package for alsa, needed by some userspace programs.
+ You must have enabled the ALSA support in the kernel.
+
+Package: fdk-aac
+Version: 2.0.1-4
+Depends: libc
+License: Fraunhofer-FDK-AAC-for-Android
+Section: sound
+Architecture: mipsel_24kc
+Installed-Size: 532493
+Filename: fdk-aac_2.0.1-4_mipsel_24kc.ipk
+Size: 533279
+SHA256sum: 38bcc23d256f7be5582a2eb16c7b227670b176b42c1268142f29804aa2018db6
+Description:  Port of the Fraunhofer FDK AAC Codec Library for Android
+
+Package: ffmpeg
+Version: 4.3.2-1
+Depends: libc, libpthread, libffmpeg-full
+License: LGPL-2.1-or-later GPL-2.0-or-later LGPL-3.0-or-later
+Section: multimedia
+CPE-ID: cpe:/a:ffmpeg:ffmpeg
+Architecture: mipsel_24kc
+Installed-Size: 98064
+Filename: ffmpeg_4.3.2-1_mipsel_24kc.ipk
+Size: 98970
+SHA256sum: cee5da8edd10418fcd9da8fbf8d3bfdc9ec23f51ecf8fb4199994ea15ab54565
+Description:  FFmpeg is a a software package that can record, convert and stream digital
+ audio and video in numerous formats.
+ 
+ FFmpeg licensing / patent issues are complex. It is the reponsibility of the
+ user to understand any requirements in this regard with its usage. See:
+ https://ffmpeg.org/legal.html for further information.
+ .
+ This package contains the FFmpeg command line tool.
+
+Package: ffprobe
+Version: 4.3.2-1
+Depends: libc, libpthread, libffmpeg-full
+License: LGPL-2.1-or-later GPL-2.0-or-later LGPL-3.0-or-later
+Section: multimedia
+CPE-ID: cpe:/a:ffmpeg:ffmpeg
+Architecture: mipsel_24kc
+Installed-Size: 44600
+Filename: ffprobe_4.3.2-1_mipsel_24kc.ipk
+Size: 45600
+SHA256sum: 282aee0afd1705c482424d8066ca1e5dcdd963cd259c70b2135ed41bb0d2d44b
+Description:  FFmpeg is a a software package that can record, convert and stream digital
+ audio and video in numerous formats.
+ 
+ FFmpeg licensing / patent issues are complex. It is the reponsibility of the
+ user to understand any requirements in this regard with its usage. See:
+ https://ffmpeg.org/legal.html for further information.
+ .
+ This package contains the FFprobe command line tool.
+
+Package: libffmpeg-full
+Version: 4.3.2-1
+Depends: libc, libpthread, libpthread, zlib, libbz21.0, alsa-lib, libgnutls, shine, libx264
+Provides: libffmpeg
+License: LGPL-2.1-or-later GPL-2.0-or-later LGPL-3.0-or-later
+Section: libs
+CPE-ID: cpe:/a:ffmpeg:ffmpeg
+Architecture: mipsel_24kc
+Installed-Size: 6421332
+Filename: libffmpeg-full_4.3.2-1_mipsel_24kc.ipk
+Size: 6396491
+SHA256sum: ab2cdf35b058bae5dd09e267770ea672c4d39efe4728199c465dcd6443d06759
+Description:  FFmpeg is a a software package that can record, convert and stream digital
+ audio and video in numerous formats.
+ 
+ FFmpeg licensing / patent issues are complex. It is the reponsibility of the
+ user to understand any requirements in this regard with its usage. See:
+ https://ffmpeg.org/legal.html for further information.
+ .
+ This package contains full-featured FFmpeg shared libraries.
+
+Package: libgnutls
+Version: 3.7.2-1
+Depends: libc, libnettle8, libgmp10, libatomic1
+License: LGPL-2.1-or-later
+Section: libs
+CPE-ID: cpe:/a:gnu:gnutls
+Architecture: mipsel_24kc
+Installed-Size: 817729
+Filename: libgnutls_3.7.2-1_mipsel_24kc.ipk
+Size: 816871
+SHA256sum: 980133078f19163c720ebe4d5d536ae53956c80ae9e614d8c11841b9fb971f23
+Description:  GnuTLS is a secure communications library implementing the SSL, TLS
+ and DTLS protocols and technologies around them. It provides a simple
+ C language application programming interface (API) to access the secure
+ communications protocols as well as APIs to parse and write X.509, PKCS12,
+ OpenPGP and other required structures. It is aimed to be portable and
+ efficient with focus on security and interoperability.
+ This package contains the GnuTLS shared library, needed by other programs.
+
+Package: libx264
+Version: 2020-10-26-1
+Depends: libc, libpthread
+License: GPL-2.0-or-later
+Section: libs
+Architecture: mipsel_24kc
+Installed-Size: 781444
+Filename: libx264_2020-10-26-1_mipsel_24kc.ipk
+Size: 781077
+SHA256sum: c1ccca7ea300a93d9c88d237835f94ab3fb13512fd6da5d4b3b35129dfa694d3
+Description:  x264 is a free software library for encoding
+ video streams into the H.264/MPEG-4 AVC compression format.
+
+Package: shine
+Version: 3.1.1-1
+Depends: libc
+License: GPL-2.0
+Section: sound
+Architecture: mipsel_24kc
+Installed-Size: 29480
+Filename: shine_3.1.1-1_mipsel_24kc.ipk
+Size: 30280
+SHA256sum: efa8cf984f99c144dfd0d7fcbe08edc4cb0a4cf7b42a0771160aa727096800f5
+Description:  savonet/shine is a blazing fast mp3 encoding library implemented in fixed-point
+ arithmetic. The library can thus be used to perform super fast mp3 encoding on
+ architectures without a FPU, such as armel, etc.. It is also, however, also
+ super fast on architectures with a FPU!
+
