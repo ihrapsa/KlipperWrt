@@ -98,12 +98,12 @@
 ### :exclamation: Open issues or join the discord [server](https://discord.gg/ZGrCMVs35H) for better support.
 --------------------------------------------------------------------------
 
-# Steps:
+# Manual Steps:
 
 ### OpenWrt <img align="left" width="30" height="34" src="https://github.com/ihrapsa/KlipperWrt/blob/main/img/OpenWrt.png" alt="openwrt_icon">
 
 <details>
-  <summary>Click to expand!</summary>
+  <summary>Click to expand Steps!</summary>
 
 #### 1. Build OpenWrt image
 
@@ -132,7 +132,7 @@ Flashing:
 
 </details>
 
-#### 3. Setup Wi-FI
+#### 3. Setup Wi-Fi
 
 <details>
   <summary>Click to expand!</summary>
@@ -540,6 +540,62 @@ Enable it: `/etc/init.d/dwc enable`
 </details>
 
 
+# Automatic Steps:
+ 
+This uses the preinstalled extroot filesystem archives I've uploaded to [Releases](https://github.com/ihrapsa/KlipperWrt/releases/tag/v1.0).  
+They come preinstalled with either <img width="20" height="20" src="https://github.com/ihrapsa/KlipperWrt/blob/main/img/fluidd.png" alt="fluidd_icon"> **fluidd** v1.14.0 OR <img width="20" height="20" src="https://github.com/ihrapsa/KlipperWrt/blob/main/img/mainsail.png" alt="mainsail_icon"> **Mainsail** v1.6.0 and **Klipper**, **Moonraker**, **mjpg-streamer** (for webcam stream) and Fry's **timelapse component** (for taking frames and rendering the video).
+ 
+ <details>
+  <summary>Click to expand Steps!</summary>
+ 
+ #### STEPS:
+- Make sure you've flahsed/sysupgraded latest `.bin` file from `/Firmware/OpenWrt_snapshot/` or from latest [release](https://github.com/ihrapsa/KlipperWrt/releases/tag/v1.0). Check Step under **`Manual Steps`** -> **`OpenWrt`** -> **`2. Install OpenWrt to the device`** above
+- Format an sd card as ❗`ext4`❗ and untar one of the archive from latest [release](https://github.com/ihrapsa/KlipperWrt/releases/tag/v1.0) to its root: eg: `sudo tar -xzvf fluiddWrt.tar.gz -C /mnt` where `/mnt` is the path where the sd card is mounted on your linux pc. Might be different so double-check.
+- Do the step under **`Manual Steps`** -> **`OpenWrt`** -> **`3. Setup Wi-Fi`** above if you haven't done it already
+- Plug the sdcard into the box
+- Do the following commands to enable the sd card as extroot:
+
+>
+  
+    opkg update && opkg install block-mount kmod-fs-ext4 kmod-usb-storage kmod-usb-ohci kmod-usb-uhci e2fsprogs fdisk
+    DEVICE="$(sed -n -e "/\s\/overlay\s.*$/s///p" /etc/mtab)"
+    uci -q delete fstab.rwm
+    uci set fstab.rwm="mount"
+    uci set fstab.rwm.device="${DEVICE}"
+    uci set fstab.rwm.target="/rwm"
+    uci commit fstab
+    DEVICE="/dev/mmcblk0p1"
+    eval $(block info "${DEVICE}" | grep -o -e "UUID=\S*")
+    uci -q delete fstab.overlay
+    uci set fstab.overlay="mount"
+    uci set fstab.overlay.uuid="${UUID}"
+    uci set fstab.overlay.target="/overlay"
+    uci commit fstab
+    mount /dev/mmcblk0p1 /mnt
+    cp -f -a /overlay/. /mnt
+    umount /mnt
+    reboot
+
+- When back online you should be able to access `fluidd` or `Mainsail` interface by using your box's ip: `http://box-ip`. Make sure it's `http` and NOT `https`
+
+#### Setting up your `printer.cfg`
+- Put your `printer.cfg` inside `/root/klipper_config` (If you don't have one find your printer name inside `/root/klipper/config` copy it to `/root/klipper_config` and rename it to `printer.cfg`.
+- If you have these blocks in your `printer.cfg`: `[virtual_sdcard]`, `[display_status]`, `[pause_resume]` delete them since they're included inside `client.cfg`
+- Move all your macros to `client_macros.cfg`.
+- Add these 2 lines inside your `printer.cfg`:   
+`[include client.cfg]`
+`[include client_macros.cfg]` 
+- Under `[mcu]` block change your serial port path according to [this](https://github.com/ihrapsa/KlipperWrt/issues/8)
+- Build your `klippper.bin` mainboard firmware using a linux desktop/VM (follow `printer.cfg` header for instructions)
+- Flash your mainboard according to the `printer.cfg` header
+- Do a `FIRMWARE RESTART` inside fluidd/Minsail
+- Done
+_____________________________________________
+*Notes:*
+-  If the box doesn't connect back to your router wirelessly connect to it with an ethernet cable and setup/troubleshoot wifi.
+- timelapse is set to autorender which might take a while to finish after a long print. You might set it to ` autorender: False`  under `[timelapse]` block inside `moonraker.conf`. Check [here](https://github.com/FrYakaTKoP/moonraker/blob/dev-timelapse/docs/configuration.md#add-the-macro-to-your-slicer) for how to set your `TIMELAPSE_TAKE_FRAME` macro or `TIMELAPSE_TAKE_PARKED_FRAME` inside your slicer layer change.
+ 
+  </details>
 --------------------------------------------------------------------------
 #### Troubleshooting
 
