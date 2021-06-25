@@ -95,7 +95,7 @@
 </details>
 
 --------------------------------------------------------------------------
-### :exclamation: Open issues or join the discord [![discord](img/discord.png)](https://discord.gg/ZGrCMVs35H),[server](https://discord.gg/ZGrCMVs35H) for better support.
+### :exclamation: Open issues or join the [<img align="center" width="30" height="30" src="https://github.com/ihrapsa/KlipperWrt/blob/main/img/discord.png" alt="discord_icon">](https://discord.gg/ZGrCMVs35H) [server](https://discord.gg/ZGrCMVs35H) for better support.
 --------------------------------------------------------------------------
 
 # Manual Steps:
