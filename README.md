@@ -95,7 +95,7 @@
 </details>
 
 --------------------------------------------------------------------------
-### :exclamation: Open issues or join the discord [server](https://discord.gg/ZGrCMVs35H) for better support.
+### :exclamation: Open issues or join the discord [![discord](img/discord.png)](https://discord.gg/ZGrCMVs35H),[server](https://discord.gg/ZGrCMVs35H) for better support.
 --------------------------------------------------------------------------
 
 # Manual Steps:
@@ -273,7 +273,7 @@ put this inside /etc/rc.local above exit so that swap is enabled at boot:
 - **6.2 Use provided klipper service and place inside `/etc/init.d/`**  
 - **6.3 Enable klipper service:** Everytime you create a service file you need to give it executable permissions first before enabling it. For klipper do `chmod 755 klipper`. You can enable it now by `/etc/init.d/klipper enable`
 - **6.4 Prepare your `printer.cfg` file**
-           - do `mkdir ~/klipper_config`  and  `mkdir ~/gcode_files` . Locate your `.cfg` file inside `~/klipper/config/` copy it to `~/klipper_config` and rename it to `printer.cfg`
+           - do `mkdir ~/klipper_config ~/klipper_logs ~/gcode_files` . Locate your `.cfg` file inside `~/klipper/config/` copy it to `~/klipper_config` and rename it to `printer.cfg`
            - Inside `printer.cfg` under `[mcu]` replace  serial line with `serial: /dev/ttyUSB0` and add a new line: `baud: 230400` (check requirements if you want/need 250000 baud)
            - Add these lines at the end of the file:
 >
@@ -289,52 +289,70 @@ put this inside /etc/rc.local above exit so that swap is enabled at boot:
     # for pause/resume functionality. 
     # Mainsail/fluidd needs gcode macros for `PAUSE`, `RESUME` and `CANCEL_PRINT` to make the buttons work.
 
-    [gcode_macro CANCEL_PRINT]
-    rename_existing: BASE_CANCEL_PRINT
-    gcode:
-      TURN_OFF_HEATERS
-      CLEAR_PAUSE
-      SDCARD_RESET_FILE
-      BASE_CANCEL_PRINT
+	[gcode_macro CANCEL_PRINT]
+	description: Cancel the actual running print
+	rename_existing: CANCEL_PRINT_BASE
+	gcode:
+		TURN_OFF_HEATERS
+		CANCEL_PRINT_BASE
 
-    [gcode_macro PAUSE]
-    rename_existing: BASE_PAUSE
-    # change this if you need more or less extrusion
-    variable_extrude: 1.0
-    gcode:
-      ##### read E from pause macro #####
-      {% set E = printer["gcode_macro PAUSE"].extrude|float %}
-      ##### set park positon for x and y #####
-      # default is your max posion from your printer.cfg
-      {% set x_park = printer.toolhead.axis_maximum.x|float - 5.0 %}
-      {% set y_park = printer.toolhead.axis_maximum.y|float - 5.0 %}
-      ##### calculate save lift position #####
-      {% set max_z = printer.toolhead.axis_maximum.z|float %}
-      {% set act_z = printer.toolhead.position.z|float %}
-      {% if act_z < (max_z - 2.0) %}
-          {% set z_safe = 2.0 %}
-      {% else %}
-          {% set z_safe = max_z - act_z %}
-      {% endif %}
-      ##### end of definitions #####
-      SAVE_GCODE_STATE NAME=PAUSE_state
-      BASE_PAUSE
-      G91
-      G1 E-{E} F2100
-      G1 Z{z_safe} F900
-      G90
-      G1 X{x_park} Y{y_park} F6000
+	[gcode_macro PAUSE]
+	description: Pause the actual running print
+	rename_existing: PAUSE_BASE
+	# change this if you need more or less extrusion
+	variable_extrude: 1.0
+	gcode:
+		##### read E from pause macro #####
+		{% set E = printer["gcode_macro PAUSE"].extrude|float %}
+		##### set park positon for x and y #####
+		# default is your max posion from your printer.cfg
+		{% set x_park = printer.toolhead.axis_maximum.x|float - 5.0 %}
+		{% set y_park = printer.toolhead.axis_maximum.y|float - 5.0 %}
+		##### calculate save lift position #####
+		{% set max_z = printer.toolhead.axis_maximum.z|float %}
+		{% set act_z = printer.toolhead.position.z|float %}
+		{% if act_z < (max_z - 2.0) %}
+			{% set z_safe = 2.0 %}
+		{% else %}
+			{% set z_safe = max_z - act_z %}
+		{% endif %}
+		##### end of definitions #####
+		PAUSE_BASE
+		G91
+		{% if printer.extruder.can_extrude|lower == 'true' %}
+		  G1 E-{E} F2100
+		{% else %}
+		  {action_respond_info("Extruder not hot enough")}
+		{% endif %}
+		{% if "xyz" in printer.toolhead.homed_axes %}
+		  G1 Z{z_safe} F900
+		  G90
+		  G1 X{x_park} Y{y_park} F6000
+		{% else %}
+		  {action_respond_info("Printer not homed")}
+		{% endif %} 
+		
+	[gcode_macro RESUME]
+	description: Resume the actual running print
+	rename_existing: RESUME_BASE
+	gcode:
+		##### read E from pause macro #####
+		{% set E = printer["gcode_macro PAUSE"].extrude|float %}
+		#### get VELOCITY parameter if specified ####
+		{% if 'VELOCITY' in params|upper %}
+		  {% set get_params = ('VELOCITY=' + params.VELOCITY)  %}
+		{%else %}
+		  {% set get_params = "" %}
+		{% endif %}
+		##### end of definitions #####
+		{% if printer.extruder.can_extrude|lower == 'true' %}
+		  G91
+		  G1 E{E} F2100
+		{% else %}
+		  {action_respond_info("Extruder not hot enough")}
+		{% endif %}  
+		RESUME_BASE {get_params}
 
-    [gcode_macro RESUME]
-    rename_existing: BASE_RESUME
-    gcode:
-      ##### read E from pause macro #####
-      {% set E = printer["gcode_macro PAUSE"].extrude|float %}
-      ##### end of definitions #####
-      G91
-      G1 E{E} F2100
-      RESTORE_GCODE_STATE NAME=PAUSE_state
-      BASE_RESUME
            
 - **6.5 Restart klipper** - do `service klipper restart` or `/etc/init.d/klipper restart`
 - **6.6 Build `klipper.bin` file**  

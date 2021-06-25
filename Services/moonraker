@@ -10,7 +10,7 @@ USE_PROCD=1
 start_service() {
     procd_open_instance
     procd_set_param command /usr/bin/python3 \
-        /root/moonraker/moonraker/moonraker.py -c /root/klipper_config/moonraker.conf
+        /root/moonraker/moonraker/moonraker.py -c /root/klipper_config/moonraker.conf -l /root/klipper_logs/moonraker.log
     procd_set_param respawn
     procd_set_param stdout 1
     procd_set_param stderr 1
