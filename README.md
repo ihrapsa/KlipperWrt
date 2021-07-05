@@ -213,20 +213,19 @@ put this inside /etc/rc.local above exit so that swap is enabled at boot:
   <summary>Click to expand!</summary>
  
 * for Klipper and moonraker - check the `requirements` folder. 
-
+* Install`git-http` with `opkg update && opkg install git-http`
 * :exclamation: Python2 packages are not available by default for this `snapshot` A workaround I found was to use the v19.07 OpenWrt release feeds (this version still has python2 packages) for the same target (_ramips/mt76x8_) and cpu architecture (_mipsel_24kc_) as the box. I make a backup of the original `/etc/opkg/distfeeds.conf` and create another `distfeeds.conf`file with the v19.07 url feeds. Don't forget to run `opkg update` everytime you make modifications to that file. After finishing with installing the packages that are only available for the v19.07 and below (like python2 packages) I switch back to the backup `distfeeds.conf` file. 
 
 * The `distfeeds.conf` file with openwrt v19.07 feeds should look something like this:
 
  >
 
-    src/gz openwrt_core http://downloads.openwrt.org/releases/19.07.7/targets/ramips/mt7621/packages   
-    src/gz openwrt_freifunk http://downloads.openwrt.org/releases/19.07.7/packages/mipsel_24kc/freifunk  
-    src/gz openwrt_base http://downloads.openwrt.org/releases/19.07.7/packages/mipsel_24kc/base  
-    src/gz openwrt_luci http://downloads.openwrt.org/releases/19.07.7/packages/mipsel_24kc/luci  
-    src/gz openwrt_packages http://downloads.openwrt.org/releases/19.07.7/packages/mipsel_24kc/packages  
-    src/gz openwrt_routing http://downloads.openwrt.org/releases/19.07.7/packages/mipsel_24kc/routing  
-    src/gz openwrt_telephony http://downloads.openwrt.org/releases/19.07.7/packages/mipsel_24kc/telephony  
+	src/gz openwrt_core https://downloads.openwrt.org/releases/19.07.7/targets/ramips/mt76x8/packages
+	src/gz openwrt_base https://downloads.openwrt.org/releases/19.07.7/packages/mipsel_24kc/base
+	src/gz openwrt_luci https://downloads.openwrt.org/releases/19.07.7/packages/mipsel_24kc/luci
+	src/gz openwrt_packages https://downloads.openwrt.org/releases/19.07.7/packages/mipsel_24kc/packages
+	src/gz openwrt_routing https://downloads.openwrt.org/releases/19.07.7/packages/mipsel_24kc/routing
+	src/gz openwrt_telephony https://downloads.openwrt.org/releases/19.07.7/packages/mipsel_24kc/telephony  
 
  * Do `opkg update`  
  :exclamation: If you get `wrong signature` errors, comment the `option check_signature` line under `/etc/opkg.conf` - you can uncomment this after finishing with `v19.07 distfeeds`  
@@ -234,31 +233,57 @@ put this inside /etc/rc.local above exit so that swap is enabled at boot:
 
  >
  
-    opkg install python python-pip python-cffi python-pyserial python-dev gcc  
- 
- :exclamation: __The official `pyserial` python package is not configured to work with `250000 baud` on `MIPS` platforms (only `230400` max). If you want/need 250k baud, install this version of [pyserial](https://github.com/ihrapsa/pyserial) and install it with `python2 setup.py install`__
+    opkg install python python-pip python-cffi python-dev gcc
+* Install `250k` baud `pyserial`:
+
+>
+	cd ~
+	git clone https://github.com/ihrapsa/pyserial
+	cd pyserial
+	python setup.py install
+	rm -rf /root/pyserial
+	
+<details>
+  <summary>Note!</summary>	
+	
+_ The official `pyserial` python package is not configured to work with `250000 baud` on `MIPS` platforms (only `230400` max). Luckly someone fixed that in a fork and used his work to bring the [repo](https://github.com/ihrapsa/pyserial.git) up to date_
+	
+</details>
+	
  >
     pip install greenlet==0.4.15 jinja2 python-can==3.3.4  
  
-* Switch back to original `distfeeds.conf`, `opkg update` -> install python3 and packages: 
+* :exclamation: **Switch back to original `distfeeds.conf`, `opkg update` -> install python3 and packages:** 
  >            
  
-    opkg install python3 python3-pip python3-pyserial python3-pillow python3-tornado python3-distro --force-overwrite 
+    opkg install python3 python3-pip python3-pyserial python3-pillow python3-tornado python3-distro libsodium --force-overwrite 
     
- >
-    
-    pip3 install inotify-simple
- 
- _if you get errors with this check the [instructions](https://github.com/ihrapsa/KlipperWrt/tree/main/requirements#moonraker-dependencies) from `requirements` folder, you might have to manually update `setuptools`. After that the previous command will work_  
+* Update `setuptools`package to latest version otherwise `inotify-simple` will fail installing.	
  
  >
-    
-    pip3 install python-jose libnacl  
+    cd ~
+    git clone https://github.com/pypa/setuptools.git
+    cd setuptools
+    python3 setup.py install
+	
+    pip3 install inotify-simple python-jose libnacl paho-mqtt==1.5.1
 
- **`lmdb`** and **`streaming-form-data`** can be found inside `Packages` as a single `*ipk` file. I cross-compiled those while building the OpenWrt image as I couldn't install it with `pip` (they need gcc>=8.4 which is not available for OpenWrt yet). To install a `*ipk` file do: `opkg install filename_of_package.ipk`.
+*Install `lmdb` and `streaming-form-data` 
 
+<details>
+  <summary>Note!</summary>
+	
+_Those can be found inside `Packages` as a single `*ipk` file. I cross-compiled them while building the OpenWrt image as I couldn't install it with `pip` (they need gcc>=8.4 which is not available for OpenWrt yet)._
+	
+</details>
+	
+>
 
-* Install nginx with `opkg install nginx-ssl libsodium`
+	cd ~
+	wget https://github.com/ihrapsa/KlipperWrt/raw/main/packages/python3-lmdb%2Bstreaming-form-data_packages_1.0-1_mipsel_24kc.ipk
+	opkg install python3-lmdb%2Bstreaming-form-data_packages_1.0-1_mipsel_24kc.ipk
+
+* Install nginx with `opkg install nginx-ssl`
 
 
 </details>
@@ -462,13 +487,12 @@ It's ok to keep both client directories inside `~/` as these are static files. C
 * The `distfeeds.conf` file with openwrt v19.07 feeds should look something like this:
 > 
 
-     src/gz openwrt_core http://downloads.openwrt.org/releases/19.07.7/targets/ramips/mt7621/packages   
-     src/gz openwrt_freifunk http://downloads.openwrt.org/releases/19.07.7/packages/mipsel_24kc/freifunk  
-     src/gz openwrt_base http://downloads.openwrt.org/releases/19.07.7/packages/mipsel_24kc/base  
-     src/gz openwrt_luci http://downloads.openwrt.org/releases/19.07.7/packages/mipsel_24kc/luci  
-     src/gz openwrt_packages http://downloads.openwrt.org/releases/19.07.7/packages/mipsel_24kc/packages  
-     src/gz openwrt_routing http://downloads.openwrt.org/releases/19.07.7/packages/mipsel_24kc/routing  
-     src/gz openwrt_telephony http://downloads.openwrt.org/releases/19.07.7/packages/mipsel_24kc/telephony  
+	src/gz openwrt_core https://downloads.openwrt.org/releases/19.07.7/targets/ramips/mt76x8/packages
+	src/gz openwrt_base https://downloads.openwrt.org/releases/19.07.7/packages/mipsel_24kc/base
+	src/gz openwrt_luci https://downloads.openwrt.org/releases/19.07.7/packages/mipsel_24kc/luci
+	src/gz openwrt_packages https://downloads.openwrt.org/releases/19.07.7/packages/mipsel_24kc/packages
+	src/gz openwrt_routing https://downloads.openwrt.org/releases/19.07.7/packages/mipsel_24kc/routing
+	src/gz openwrt_telephony https://downloads.openwrt.org/releases/19.07.7/packages/mipsel_24kc/telephony  
 
 * Do `opkg update`  
  :exclamation: If you get `wrong signature` errors, comment the `option check_signature` line under `/etc/opkg.conf` - you can uncomment this after finishing with `v19.07 distfeeds`  
@@ -494,7 +518,7 @@ It's ok to keep both client directories inside `~/` as these are static files. C
 - **6.5 Restart klipper** - do `service klipper restart` or `/etc/init.d/klipper restart`
 - **6.6 Build `klipper.bin` file**
             - Building is not mandatory to be done on the device that hosts klippy. To build it on this box you would need a lot of dependencies that are not available for OpenWrt so I just used my pc running ubuntu: On a different computer running linux (or VM or live USB) -> Clone klipper just like you did before -> `cd klipper` -> `make menuconfig` -> use the configurations specific to your mainboard (Check the header inside your `printer.cfg` file for details).  
-:exclamation: use custom baud: `230400`. By default 250000 is selected. If you want/need that baud, remove the `python-pyserial` package and install this version of [pyserial](https://github.com/ihrapsa/pyserial) instead - check `Requirements` directory for details about installation process.
+:exclamation: use custom baud: `230400`. By default 250000 is selected. If you want/need that baud, remove the `python-pyserial` package and install this version of [pyserial](https://github.com/ihrapsa/pyserial.git) instead - check `Requirements` directory for details about installation process.
 -> once configured run `make` -> if succesfull the firmware will be inside `./out/klipper.bin` -> flash the mainboard:(check header of `printer.cfg` again - some mainboards need the `.bin` file renamed a certain way) copy the `.bin` file on a sd card -> plug the card with the printer off -> turn printer on and wait a minute -> Done (Depending on your mainboard/printer/lcd you will probably not have a sign that the mainboard got flashed so don't worry) - if at the end of this guide the client cannot connect to the klipper firmware usually the problem is with the `.bin` file building or flashing process.
 
 </details>
