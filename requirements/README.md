@@ -32,6 +32,7 @@
   | streaming-form-data==1.8.1 | I had issues with it - I provided a cross-compiled package inside [`Packages`](https://github.com/ihrapsa/KlipperWrt/tree/main/packages) |
   | python-jose[cryptography]==3.2.0 |  Install with `pip3 install python-jose` - if you get errors with this install it manually: Clone the python-jose [repo](https://github.com/mpdavis/python-jose.git) `cd` into it then `python3 setup.py install` | 
   | libnacl==1.7.2 |  Install with `pip3 install libnacl` |  
+  | paho-mqtt==1.5.1 |  Install with `pip3 install paho-mqtt==1.5.1` |  
 
 * libsodium - install with `opkg install libsodium`  
 * nginx - install with `opkg install nginx-ssl`
