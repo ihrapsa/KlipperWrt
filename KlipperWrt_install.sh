@@ -40,7 +40,9 @@ choose(){
 	case $n in
 	  1) 
 	   echo "You chose fluidd"
+	   sleep 1
 	   echo "Installing fluidd..."
+	   sleep 1
 	   echo " "
 	   echo "***************************"
 	   echo "**     Downloading...    **"
@@ -126,7 +128,6 @@ choose(){
 extroot(){
 	echo " "
 	sleep 1
-	echo "Making extroot..."
 	echo -ne 'Making extroot...     [=>                                ](6%)\r'
 	DEVICE="$(sed -n -e "/\s\/overlay\s.*$/s///p" /etc/mtab)";
 	echo -ne 'Making extroot...     [===>                              ](12%)\r'
