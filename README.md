@@ -295,11 +295,20 @@ _Those can be found inside `Packages` as a single `*ipk` file. I cross-compiled 
  
 - **6.1 Clone Klipper inside** `~/`  
            - do `opkg install git-http unzip` then  `git clone https://github.com/KevinOConnor/klipper.git`. 
-- **6.2 Use provided klipper service and place inside `/etc/init.d/`**  
-- **6.3 Enable klipper service:** Everytime you create a service file you need to give it executable permissions first before enabling it. For klipper do `chmod 755 klipper`. You can enable it now by `/etc/init.d/klipper enable`
+- **6.2 Use provided klipper service and place inside `/etc/init.d/`**
+	
+>
+	wget -q -O /etc/init.d/klipper https://raw.githubusercontent.com/ihrapsa/KlipperWrt/main/Services/klipper
+	chmod 755 /etc/init.d/klipper
+
+- **6.3 Enable klipper service:** 
+	
+>
+	`/etc/init.d/klipper enable`
+	
 - **6.4 Prepare your `printer.cfg` file**
            - do `mkdir ~/klipper_config ~/klipper_logs ~/gcode_files` . Locate your `.cfg` file inside `~/klipper/config/` copy it to `~/klipper_config` and rename it to `printer.cfg`
-           - Inside `printer.cfg` under `[mcu]` replace  serial line with `serial: /dev/ttyUSB0` and add a new line: `baud: 230400` (check requirements if you want/need 250000 baud)
+           - Inside `printer.cfg` under `[mcu]` replace  serial line with `serial: /dev/ttyUSB0`
            - Add these lines at the end of the file:
 >
 
@@ -396,16 +405,44 @@ _Those can be found inside `Packages` as a single `*ipk` file. I cross-compiled 
     git clone https://github.com/Arksine/moonraker.git
 
 - **7.2 Use provided moonraker.conf file** You can find the `moonraker.conf` files in my repo: `/moonraker/*.conf`.  
-Depending on your chosen client (`mainsail` or `fluidd`) rename the respective `.conf` file to `moonraker.conf`and put it in `~/klipper_config`. Note: The `[update_manager]` plugin was commented out since this is curently only supported for `debian` distros only. For now, updating `moonraker`, `klipper`, `fluidd` or `mainsail` should be done manaully.  
+	
+	**For fluidd:**
+
+>
+	mkdir ~/fluidd
+	wget -q -O /root/fluidd/fluidd.zip https://github.com/cadriel/fluidd/releases/latest/download/fluidd.zip && unzip /root/fluidd/fluidd.zip && rm /root/fluidd/fluidd.zip
+	wget -q -O /root/klipper_config/moonraker.conf https://raw.githubusercontent.com/ihrapsa/KlipperWrt/main/moonraker/fluidd_moonraker.conf 
+	wget -q -O /etc/nginx/conf.d/fluidd.conf https://raw.githubusercontent.com/ihrapsa/KlipperWrt/main/nginx/fluidd.conf
+	
+
+	**For Mainsail:**
+
+>
+	mkdir ~/mainsail
+	wget -q -O /root/mainsail/mainsail.zip https://github.com/meteyou/mainsail/releases/latest/download/mainsail.zip && unzip /root/mainsail/mainsail.zip && rm /root/mainsail/mainsail.zip
+	wget -q -O /root/klipper_config/moonraker.conf https://raw.githubusercontent.com/ihrapsa/KlipperWrt/main/moonraker/mainsail_moonraker.conf 
+	wget -q -O /etc/nginx/conf.d/mainsail.conf https://raw.githubusercontent.com/ihrapsa/KlipperWrt/main/nginx/mainsail.conf
+	
+Note: _The `[update_manager]` plugin was commented out since this is curently only supported for `debian` distros only. For now, updating `moonraker`, `klipper`, `fluidd` or `mainsail` should be done manaully._  
+	
 Don't forget to edit(if necessary) the `moonraker.conf` file you copied inside `~/klipper_config` under `trusted_clients:` with your client ip or ip range (_client meaning the device you want to access fluidd/mainsail from_). Check the moonraker [configuration](https://github.com/Arksine/moonraker/blob/master/docs/configuration.md#authorization) doc for details.
-- **7.3 Use provided moonraker service and place inside `/etc/init.d/`** - find it in my repo inside `Services`  
-Don't forget to give it executable permissions and then to enable it just like you did with klipper service.    
-Restart Moonraker service when you're done with `service moonraker restart` or `/etc/init.d/moonraker restart`  
-- **7.4 Create and place all the nginx files inside `/etc/nginx/conf.d`***  
- Make sure you've installed `nginx-ssl` and a `conf.d` directory appeared inside `/etc/nginx/`  
- Place `fluidd.conf` OR `mainsail.conf`inside `/etc/nginx/conf.d/` alongside `common_vars.conf` AND `upstreams.conf` (those 2 files are common for mainsail and fluidd)- you can find all these files in my repo inside `nginx` directory.   
+- **7.3 Use provided moonraker service and place inside `/etc/init.d/`** 
+
+>
+	wget -q -O /etc/init.d/moonraker https://raw.githubusercontent.com/ihrapsa/KlipperWrt/main/Services/moonraker
+	chmod 755 /etc/init.d/moonraker
+	/etc/init.d/moonraker enable
+	/etc/init.d/moonraker restart 
+	
+- **7.4 Download the rest of the nginx files inside `/etc/nginx/conf.d`***  
+ 
+>
+	wget -q -O /etc/nginx/conf.d/upstreams.conf https://raw.githubusercontent.com/ihrapsa/KlipperWrt/main/nginx/upstreams.conf
+	wget -q -O /etc/nginx/conf.d/common_vars.conf https://raw.githubusercontent.com/ihrapsa/KlipperWrt/main/nginx/common_vars.conf
+	
+ Inside `/etc/nginx/conf.d`you should have `fluidd.conf` OR `mainsail.conf` alongside `common_vars.conf` AND `upstreams.conf` (those 2 files are common for mainsail and fluidd)  
 **Note!**  
-You need to use either `fluidd.conf` or `mainsail.conf` file depending on your chosen client. Don't use both `.conf` files inside `/etc/nginx/conf.d/`. If you want to test both clients and easly switch between them check the exclamation mark below.
+You need to use either `fluidd.conf` or `mainsail.conf` file depending on your chosen client. Don't use both `.conf` files inside `/etc/nginx/conf.d/`. If you want to test both clients and easly switch between them check the **! How to switch between fluidd and mainsail:** below.
 
 - **7.5 Clone chosen client:**  
 
@@ -414,19 +451,18 @@ You need to use either `fluidd.conf` or `mainsail.conf` file depending on your c
 >
 
     mkdir ~/fluidd
-    cd ~/fluidd
-    wget -q -O fluidd.zip https://github.com/cadriel/fluidd/releases/latest/download/fluidd.zip && unzip fluidd.zip && rm fluidd.zip
+    wget -q -O /root/fluidd/fluidd.zip https://github.com/cadriel/fluidd/releases/latest/download/fluidd.zip && unzip /root/fluidd/fluidd.zip -d /root/fluidd/ && rm /root/fluidd/fluidd.zip
 
 **Mainsail**
 
 >
 
     mkdir ~/mainsail
-    cd ~/mainsail
-    wget -q -O mainsail.zip https://github.com/meteyou/mainsail/releases/latest/download/mainsail.zip && unzip mainsail.zip && rm mainsail.zip
+    wget -q -O /root/mainsail/mainsail.zip https://github.com/meteyou/mainsail/releases/latest/download/mainsail.zip && unzip /root/mainsail/mainsail.zip && rm mainsail.zip
 
 **Note!**  
-It's ok to keep both client directories inside `~/` as these are static files. Careful with the `.conf` file inside `/etc/nginx/conf.d`.
+It's ok to keep both client directories inside `/root/` as these are static files. Careful with the `.conf` file inside `/etc/nginx/conf.d`.
+	
 - **7.6 Restart nginx** with `service nginx restart` and check browser if `http://your-ip` brings you the client interface (fluidd or mainsail).
 
 :exclamation: **How to switch between fluidd and mainsail:**
@@ -585,14 +621,14 @@ Enable it: `/etc/init.d/dwc enable`
 # Automatic Steps:
  
 This uses the preinstalled extroot filesystem archives I've uploaded to [Releases](https://github.com/ihrapsa/KlipperWrt/releases/tag/v1.0).  
-They come preinstalled with either <img width="20" height="20" src="https://github.com/ihrapsa/KlipperWrt/blob/main/img/fluidd.png" alt="fluidd_icon"> **fluidd** v1.14.0 OR <img width="20" height="20" src="https://github.com/ihrapsa/KlipperWrt/blob/main/img/mainsail.png" alt="mainsail_icon"> **Mainsail** v1.6.0 and **Klipper**, **Moonraker**, **mjpg-streamer** (for webcam stream) and Fry's **timelapse component** (for taking frames and rendering the video).
+They come preinstalled with either <img width="20" height="20" src="https://github.com/ihrapsa/KlipperWrt/blob/main/img/fluidd.png" alt="fluidd_icon"> **fluidd**  OR <img width="20" height="20" src="https://github.com/ihrapsa/KlipperWrt/blob/main/img/mainsail.png" alt="mainsail_icon"> **Mainsail** and **Klipper**, **Moonraker**, **mjpg-streamer** (for webcam stream) and Fry's **timelapse component** (for taking frames and rendering the video).
  
  <details>
   <summary>Click to expand Steps!</summary>
  
  #### STEPS:
-- Make sure you've flahsed/sysupgraded latest `.bin` file from `/Firmware/OpenWrt_snapshot/` or from latest [release](https://github.com/ihrapsa/KlipperWrt/releases/tag/v1.0). Check Step under **`Manual Steps`** -> **`OpenWrt`** -> **`2. Install OpenWrt to the device`** above
-- Format an sd card as ❗`ext4`❗ and untar one of the archive from latest [release](https://github.com/ihrapsa/KlipperWrt/releases/tag/v1.0) to its root: eg: `sudo tar -xzvf fluiddWrt.tar.gz -C /mnt` where `/mnt` is the path where the sd card is mounted on your linux pc. Might be different so double-check.
+- Make sure you've flahsed/sysupgraded latest `.bin` file from `/Firmware/OpenWrt_snapshot/` or from latest [release](https://github.com/ihrapsa/KlipperWrt/releases/). Check Step under **`Manual Steps`** -> **`OpenWrt`** -> **`2. Install OpenWrt to the device`** above
+- Format an sd card as ❗`ext4`❗ and untar one of the archive from latest [release](https://github.com/ihrapsa/KlipperWrt/releases/) to its root: eg: `sudo tar -xzvf fluiddWrt.tar.gz -C /mnt` where `/mnt` is the path where the sd card is mounted on your linux pc. Might be different so double-check.
 - Do the step under **`Manual Steps`** -> **`OpenWrt`** -> **`3. Setup Wi-Fi`** above if you haven't done it already
 - Plug the sdcard into the box
 - Do the following commands to enable the sd card as extroot:
