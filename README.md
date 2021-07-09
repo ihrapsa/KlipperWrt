@@ -426,7 +426,7 @@ _Those can be found inside `Packages` as a single `*ipk` file. I cross-compiled 
 
 >
 	mkdir ~/mainsail
-	wget -q -O /root/mainsail/mainsail.zip https://github.com/meteyou/mainsail/releases/latest/download/mainsail.zip && unzip /root/mainsail/mainsail.zip && rm mainsail.zip
+	wget -q -O /root/mainsail/mainsail.zip https://github.com/meteyou/mainsail/releases/latest/download/mainsail.zip && unzip /root/mainsail/mainsail.zip -d /root/mainsail/ && rm /root/mainsail/mainsail.zip
 	wget -q -O /root/klipper_config/moonraker.conf https://raw.githubusercontent.com/ihrapsa/KlipperWrt/main/moonraker/mainsail_moonraker.conf 
 	wget -q -O /etc/nginx/conf.d/mainsail.conf https://raw.githubusercontent.com/ihrapsa/KlipperWrt/main/nginx/mainsail.conf
 	
