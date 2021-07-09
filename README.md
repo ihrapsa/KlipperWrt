@@ -306,10 +306,17 @@ _Those can be found inside `Packages` as a single `*ipk` file. I cross-compiled 
 >
 	`/etc/init.d/klipper enable`
 	
-- **6.4 Prepare your `printer.cfg` file**
-           - do `mkdir ~/klipper_config ~/klipper_logs ~/gcode_files` . Locate your `.cfg` file inside `~/klipper/config/` copy it to `~/klipper_config` and rename it to `printer.cfg`
-           - Inside `printer.cfg` under `[mcu]` replace  serial line with `serial: /dev/ttyUSB0`
-           - Add these lines at the end of the file:
+- **6.4 Prepare your `printer.cfg` file:**
+	
+>	
+	mkdir ~/klipper_config ~/klipper_logs ~/gcode_files
+	
+	
+- Locate your `.cfg` file inside `~/klipper/config/` copy it to `~/klipper_config` and rename it to `printer.cfg`
+	
+- Inside `printer.cfg` under `[mcu]` replace  serial line with `serial: /dev/ttyUSB0`
+- Add these lines at the end of the file:
+	
 >
 
     [virtual_sdcard]
@@ -404,22 +411,22 @@ _Those can be found inside `Packages` as a single `*ipk` file. I cross-compiled 
     cd ~
     git clone https://github.com/Arksine/moonraker.git
 
-- **7.2 Use provided moonraker.conf file** You can find the `moonraker.conf` files in my repo: `/moonraker/*.conf`.  
+- **7.2 Use provided moonraker.conf file and download chosen client** You can find the `moonraker.conf` files in my repo: `/moonraker/*.conf`.  
 	
-	**For fluidd:**
+**For fluidd:**
 
 >
 	mkdir ~/fluidd
-	wget -q -O /root/fluidd/fluidd.zip https://github.com/cadriel/fluidd/releases/latest/download/fluidd.zip && unzip /root/fluidd/fluidd.zip && rm /root/fluidd/fluidd.zip
+	wget -q -O /root/fluidd/fluidd.zip https://github.com/cadriel/fluidd/releases/latest/download/fluidd.zip && unzip /root/fluidd/fluidd.zip -d /root/fluidd/ && rm /root/fluidd/fluidd.zip
 	wget -q -O /root/klipper_config/moonraker.conf https://raw.githubusercontent.com/ihrapsa/KlipperWrt/main/moonraker/fluidd_moonraker.conf 
 	wget -q -O /etc/nginx/conf.d/fluidd.conf https://raw.githubusercontent.com/ihrapsa/KlipperWrt/main/nginx/fluidd.conf
 	
 
-	**For Mainsail:**
+**For Mainsail:**
 
 >
 	mkdir ~/mainsail
-	wget -q -O /root/mainsail/mainsail.zip https://github.com/meteyou/mainsail/releases/latest/download/mainsail.zip && unzip /root/mainsail/mainsail.zip && rm /root/mainsail/mainsail.zip
+	wget -q -O /root/mainsail/mainsail.zip https://github.com/meteyou/mainsail/releases/latest/download/mainsail.zip && unzip /root/mainsail/mainsail.zip && rm mainsail.zip
 	wget -q -O /root/klipper_config/moonraker.conf https://raw.githubusercontent.com/ihrapsa/KlipperWrt/main/moonraker/mainsail_moonraker.conf 
 	wget -q -O /etc/nginx/conf.d/mainsail.conf https://raw.githubusercontent.com/ihrapsa/KlipperWrt/main/nginx/mainsail.conf
 	
@@ -444,21 +451,6 @@ Don't forget to edit(if necessary) the `moonraker.conf` file you copied inside `
 **Note!**  
 You need to use either `fluidd.conf` or `mainsail.conf` file depending on your chosen client. Don't use both `.conf` files inside `/etc/nginx/conf.d/`. If you want to test both clients and easly switch between them check the **! How to switch between fluidd and mainsail:** below.
 
-- **7.5 Clone chosen client:**  
-
-**fluidd**
-
->
-
-    mkdir ~/fluidd
-    wget -q -O /root/fluidd/fluidd.zip https://github.com/cadriel/fluidd/releases/latest/download/fluidd.zip && unzip /root/fluidd/fluidd.zip -d /root/fluidd/ && rm /root/fluidd/fluidd.zip
-
-**Mainsail**
-
->
-
-    mkdir ~/mainsail
-    wget -q -O /root/mainsail/mainsail.zip https://github.com/meteyou/mainsail/releases/latest/download/mainsail.zip && unzip /root/mainsail/mainsail.zip && rm mainsail.zip
 
 **Note!**  
 It's ok to keep both client directories inside `/root/` as these are static files. Careful with the `.conf` file inside `/etc/nginx/conf.d`.
@@ -627,40 +619,34 @@ They come preinstalled with either <img width="20" height="20" src="https://gith
   <summary>Click to expand Steps!</summary>
  
  #### STEPS:
-- Make sure you've flahsed/sysupgraded latest `.bin` file from `/Firmware/OpenWrt_snapshot/` or from latest [release](https://github.com/ihrapsa/KlipperWrt/releases/). Check Step under **`Manual Steps`** -> **`OpenWrt`** -> **`2. Install OpenWrt to the device`** above
-- Format an sd card as ❗`ext4`❗ and untar one of the archive from latest [release](https://github.com/ihrapsa/KlipperWrt/releases/) to its root: eg: `sudo tar -xzvf fluiddWrt.tar.gz -C /mnt` where `/mnt` is the path where the sd card is mounted on your linux pc. Might be different so double-check.
-- Do the step under **`Manual Steps`** -> **`OpenWrt`** -> **`3. Setup Wi-Fi`** above if you haven't done it already
-- Plug the sdcard into the box
-- Do the following commands to enable the sd card as extroot:
+- Make sure you've flahsed/sysupgraded latest `.bin` file from `/Firmware/OpenWrt_snapshot/` or from latest release.
+- Connect to the `KlipperWrt` access point
+- Access LuCi web interface and log in on `192.168.1.1:81`
+- _(**optional** but recommended)_ Add a password to the `KlipperWrt` access point: `Wireless` -> Under wireless overview `EDIT` the `KlipperWrt` interface -> `Wireless Security` -> Choose an encryption -> set a password -> `Save` -> `Save & Apply`
+- _(**optional** but recommended)_ Add a password: `System` -> `Administration` -> `Router Password`
+- Connect as a client to your Internet router: `Network` -> `Wireless` -> `SCAN` -> `Join Network` -> check `Lock to BSSID` -> `Create/Assign Firewall zone` then under `custom` type `wwan` enter -> `Submit` -> `Save` -> `Save & Apply`
+- Connect back to your router and either find the new box's ip inside the `DHCP` list or type `http://klipperwrt.local:81`
+- ❗  Access the terminal tab (`Services` -> `Terminal`) ❗ If terminal tab is not working go to `Config` tab and change `Interface` to the interface you are connecting through the box (your wireless router SSID for example) -> `Save & Apply`.
+- Download and execute the install script:
 
 >
-  
-    opkg update && opkg install block-mount kmod-fs-ext4 kmod-usb-storage kmod-usb-ohci kmod-usb-uhci e2fsprogs fdisk
-    DEVICE="$(sed -n -e "/\s\/overlay\s.*$/s///p" /etc/mtab)"
-    uci -q delete fstab.rwm
-    uci set fstab.rwm="mount"
-    uci set fstab.rwm.device="${DEVICE}"
-    uci set fstab.rwm.target="/rwm"
-    uci commit fstab
-    DEVICE="/dev/mmcblk0p1"
-    eval $(block info "${DEVICE}" | grep -o -e "UUID=\S*")
-    uci -q delete fstab.overlay
-    uci set fstab.overlay="mount"
-    uci set fstab.overlay.uuid="${UUID}"
-    uci set fstab.overlay.target="/overlay"
-    uci commit fstab
-    mount /dev/mmcblk0p1 /mnt
-    cp -f -a /overlay/. /mnt
-    umount /mnt
-    reboot
+    cd ~
+    wget https://github.com/ihrapsa/KlipperWrt/raw/main/KlipperWrt_install.sh
+    chmod +x KlipperWrt_install.sh
+    ./KlipperWrt_install.sh
 
-- When back online you should be able to access `fluidd` or `Mainsail` interface by using your box's ip: `http://box-ip`. Make sure it's `http` and NOT `https`
+
+- Follow the script prompts to install either `fluidd` or `Mainsail` automatically
+- Wait until it prompts you to reboot
+- When done and rebooted use `http://klipperwrt.local` or `http://box-ip`to access the Klipper client
+- Done!
+
 
 #### Setting up your `printer.cfg`
-- Put your `printer.cfg` inside `/root/klipper_config` (If you don't have one find your printer name inside `/root/klipper/config` copy it to `/root/klipper_config` and rename it to `printer.cfg`.
-- If you have these blocks in your `printer.cfg`: `[virtual_sdcard]`, `[display_status]`, `[pause_resume]` delete them since they're included inside `client.cfg`
-- Move all your macros to `client_macros.cfg`.
-- Add these 2 lines inside your `printer.cfg`:   
+- put your `printer.cfg` inside `/root/klipper_config`
+- delete these blocks from your `printer.cfg`: `[virtual_sdcard]`, `[display_status]`, `[pause_resume]` since they're included inside `client.cfg`
+- move all your macros to `client_macros.cfg` 
+- add these 2 lines inside your `printer.cfg`:   
 `[include client.cfg]`
 `[include client_macros.cfg]` 
 - Under `[mcu]` block change your serial port path according to [this](https://github.com/ihrapsa/KlipperWrt/issues/8)
