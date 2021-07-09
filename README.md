@@ -304,7 +304,7 @@ _Those can be found inside `Packages` as a single `*ipk` file. I cross-compiled 
 - **6.3 Enable klipper service:** 
 	
 >
-	`/etc/init.d/klipper enable`
+	/etc/init.d/klipper enable
 	
 - **6.4 Prepare your `printer.cfg` file:**
 	
@@ -411,7 +411,7 @@ _Those can be found inside `Packages` as a single `*ipk` file. I cross-compiled 
     cd ~
     git clone https://github.com/Arksine/moonraker.git
 
-- **7.2 Use provided moonraker.conf file and download chosen client** You can find the `moonraker.conf` files in my repo: `/moonraker/*.conf`.  
+- **7.2 Use provided moonraker.conf file and download chosen client**   
 	
 **For fluidd:**
 
