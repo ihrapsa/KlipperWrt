@@ -185,7 +185,7 @@ run this once:
     dd if=/dev/zero of=/overlay/swap.page bs=1M count=512
     mkswap /overlay/swap.page 
     swapon /overlay/swap.page
-    mount -o remount,size=200M /tmp 
+    mount -o remount,size=256M /tmp 
 
 put this inside /etc/rc.local above exit so that swap is enabled at boot:  
 
@@ -195,7 +195,7 @@ put this inside /etc/rc.local above exit so that swap is enabled at boot:
     swapon /overlay/swap.page  
 
     ###expand /tmp space  
-    mount -o remount,size=200M /tmp  
+    mount -o remount,size=256M /tmp  
 
 </details>
 
@@ -213,7 +213,7 @@ put this inside /etc/rc.local above exit so that swap is enabled at boot:
   <summary>Click to expand!</summary>
  
 * for Klipper and moonraker - check the `requirements` folder. 
-* Install`git-http` with `opkg update && opkg install git-http`
+* Install`git-http` with `opkg update && opkg install git-http gcc unzip htop`
 * :exclamation: Python2 packages are not available by default for this `snapshot` A workaround I found was to use the v19.07 OpenWrt release feeds (this version still has python2 packages) for the same target (_ramips/mt76x8_) and cpu architecture (_mipsel_24kc_) as the box. I make a backup of the original `/etc/opkg/distfeeds.conf` and create another `distfeeds.conf`file with the v19.07 url feeds. Don't forget to run `opkg update` everytime you make modifications to that file. After finishing with installing the packages that are only available for the v19.07 and below (like python2 packages) I switch back to the backup `distfeeds.conf` file. 
 
 * The `distfeeds.conf` file with openwrt v19.07 feeds should look something like this:
@@ -233,7 +233,7 @@ put this inside /etc/rc.local above exit so that swap is enabled at boot:
 
  >
  
-    opkg install python python-pip python-cffi python-dev gcc
+    opkg install python python-pip python-cffi python-dev
 * Install `250k` baud `pyserial`:
 
 >
@@ -265,6 +265,7 @@ _ The official `pyserial` python package is not configured to work with `250000 
     git clone https://github.com/pypa/setuptools.git
     cd setuptools
     python3 setup.py install
+    rm -rf /root/setuptools
 	
     pip3 install inotify-simple python-jose libnacl paho-mqtt==1.5.1
 
@@ -294,7 +295,7 @@ _Those can be found inside `Packages` as a single `*ipk` file. I cross-compiled 
   <summary>Click to expand!</summary>
  
 - **6.1 Clone Klipper inside** `~/`  
-           - do `opkg install git-http unzip` then  `git clone https://github.com/KevinOConnor/klipper.git`. 
+           - `git clone https://github.com/KevinOConnor/klipper.git`. 
 - **6.2 Use provided klipper service and place inside `/etc/init.d/`**
 	
 >
