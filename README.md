@@ -100,8 +100,12 @@
 
 # Automatic Steps:
 
+<details>
+  <summary>Click to expand!</summary>
 
-## Extroot script method 
+### Extroot script method 
+Untarrs an laready working image.
+Maybe outdated but stable.
 
 <details>
   <summary>Click to expand!</summary>
@@ -110,7 +114,7 @@ This uses the preinstalled extroot filesystem archives I've uploaded to [Release
 They come preinstalled with either <img width="20" height="20" src="https://github.com/ihrapsa/KlipperWrt/blob/main/img/fluidd.png" alt="fluidd_icon"> **fluidd**  OR <img width="20" height="20" src="https://github.com/ihrapsa/KlipperWrt/blob/main/img/mainsail.png" alt="mainsail_icon"> **Mainsail** and **Klipper**, **Moonraker**, **mjpg-streamer** (for webcam stream) and Fry's **timelapse component** (for taking frames and rendering the video).
  
  
- #### STEPS:
+#### STEPS:
 - Make sure you've flahsed/sysupgraded latest `.bin` file from `/Firmware/OpenWrt_snapshot/` or from latest release.
 - Connect to the `KlipperWrt` access point
 - Access LuCi web interface and log in on `192.168.1.1:81`
@@ -130,6 +134,7 @@ They come preinstalled with either <img width="20" height="20" src="https://gith
 
 - Follow the script prompts to install either `fluidd` or `Mainsail` automatically
 - Wait until it prompts you to reboot
+- remove the script when done: `rm -rf /root/*.sh`
 - When done and rebooted use `http://klipperwrt.local` or `http://box-ip`to access the Klipper client
 - Done!
 
@@ -153,7 +158,11 @@ _____________________________________________
  
   </details>
   
-## Installing Script method
+### OR
+  
+### Installing Script method
+Installes everything up to date
+Possibly unstable, sometimes new dependencies are added and I might not have updated the script by then.
 
 <details>
   <summary>Click to expand!</summary>
@@ -189,6 +198,7 @@ This method uses 2 scripts to foramt an sd card and make it extroot and another 
     ./2_script_manual.sh
     
 - Follow the prompted instructions and wait for everything to be installed
+- remove the scripts when done: `rm -rf /root/*.sh`
 - Done!
 
 - When done and rebooted use `http://klipperwrt.local` or `http://box-ip`to access the Klipper client
@@ -214,6 +224,7 @@ _____________________________________________
 
 </details>
 
+</details>
 
 # Manual Steps:
 
