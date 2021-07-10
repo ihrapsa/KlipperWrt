@@ -262,6 +262,26 @@ echo " "
 echo "Installing mjpg-streamer..."
 opkg install v4l-utils;
 opkg install mjpg-streamer-input-uvc mjpg-streamer-output-http mjpg-streamer-www;
+
+rm /etc/config/mjpg-streamer;
+cat << "EOF" > /etc/config/mjpg-streamer
+config mjpg-streamer 'core'
+        option enabled '0'
+        option input 'uvc'
+        option output 'http'
+        option device '/dev/video0'
+        option resolution '640x480'
+        option yuv '0'
+        option quality '80'
+        option fps '5'
+        option led 'auto'
+        option www '/www/webcam'
+        option port '8080'
+        #option listen_ip '192.168.1.1'
+        #option username 'openwrt'
+        #option password 'openwrt'
+EOF
+
 /etc/init.d/mjpg-streamer enable;
 ln -s /etc/init.d/mjpg-streamer /etc/init.d/webcamd;
 
