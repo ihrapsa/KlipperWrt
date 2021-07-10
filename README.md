@@ -98,6 +98,123 @@
 ### :exclamation: Open issues or join the [<img align="center" width="30" height="30" src="https://github.com/ihrapsa/KlipperWrt/blob/main/img/discord.png" alt="discord_icon">](https://discord.gg/ZGrCMVs35H) [server](https://discord.gg/ZGrCMVs35H) for better support.
 --------------------------------------------------------------------------
 
+# Automatic Steps:
+
+
+## Extroot script method 
+
+<details>
+  <summary>Click to expand!</summary>
+  
+This uses the preinstalled extroot filesystem archives I've uploaded to [Releases](https://github.com/ihrapsa/KlipperWrt/releases/tag/v1.0).  
+They come preinstalled with either <img width="20" height="20" src="https://github.com/ihrapsa/KlipperWrt/blob/main/img/fluidd.png" alt="fluidd_icon"> **fluidd**  OR <img width="20" height="20" src="https://github.com/ihrapsa/KlipperWrt/blob/main/img/mainsail.png" alt="mainsail_icon"> **Mainsail** and **Klipper**, **Moonraker**, **mjpg-streamer** (for webcam stream) and Fry's **timelapse component** (for taking frames and rendering the video).
+ 
+ 
+ #### STEPS:
+- Make sure you've flahsed/sysupgraded latest `.bin` file from `/Firmware/OpenWrt_snapshot/` or from latest release.
+- Connect to the `KlipperWrt` access point
+- Access LuCi web interface and log in on `192.168.1.1:81`
+- _(**optional** but recommended)_ Add a password to the `KlipperWrt` access point: `Wireless` -> Under wireless overview `EDIT` the `KlipperWrt` interface -> `Wireless Security` -> Choose an encryption -> set a password -> `Save` -> `Save & Apply`
+- _(**optional** but recommended)_ Add a password: `System` -> `Administration` -> `Router Password`
+- Connect as a client to your Internet router: `Network` -> `Wireless` -> `SCAN` -> `Join Network` -> check `Lock to BSSID` -> `Create/Assign Firewall zone` then under `custom` type `wwan` enter -> `Submit` -> `Save` -> `Save & Apply`
+- Connect back to your router and either find the new box's ip inside the `DHCP` list.
+- ❗  Access the terminal tab (`Services` -> `Terminal`) ❗ If terminal tab is not working go to `Config` tab and change `Interface` to the interface you are connecting through the box (your wireless router SSID for example) -> `Save & Apply`.
+- Download and execute the install script:
+
+>
+    cd ~
+    wget https://github.com/ihrapsa/KlipperWrt/raw/main/KlipperWrt_install.sh
+    chmod +x KlipperWrt_install.sh
+    ./KlipperWrt_install.sh
+
+
+- Follow the script prompts to install either `fluidd` or `Mainsail` automatically
+- Wait until it prompts you to reboot
+- When done and rebooted use `http://klipperwrt.local` or `http://box-ip`to access the Klipper client
+- Done!
+
+
+#### Setting up your `printer.cfg`
+- put your `printer.cfg` inside `/root/klipper_config`
+- delete these blocks from your `printer.cfg`: `[virtual_sdcard]`, `[display_status]`, `[pause_resume]` since they're included inside `client.cfg`
+- move all your macros to `client_macros.cfg` 
+- add these 2 lines inside your `printer.cfg`:   
+`[include client.cfg]`
+`[include client_macros.cfg]` 
+- Under `[mcu]` block change your serial port path according to [this](https://github.com/ihrapsa/KlipperWrt/issues/8)
+- Build your `klippper.bin` mainboard firmware using a linux desktop/VM (follow `printer.cfg` header for instructions)
+- Flash your mainboard according to the `printer.cfg` header
+- Do a `FIRMWARE RESTART` inside fluidd/Minsail
+- Done
+_____________________________________________
+*Notes:*
+-  If the box doesn't connect back to your router wirelessly connect to it with an ethernet cable and setup/troubleshoot wifi.
+- timelapse is set to autorender which might take a while to finish after a long print. You might set it to ` autorender: False`  under `[timelapse]` block inside `moonraker.conf`. Check [here](https://github.com/FrYakaTKoP/moonraker/blob/dev-timelapse/docs/configuration.md#add-the-macro-to-your-slicer) for how to set your `TIMELAPSE_TAKE_FRAME` macro or `TIMELAPSE_TAKE_PARKED_FRAME` inside your slicer layer change.
+ 
+  </details>
+  
+## Installing Script method
+
+<details>
+  <summary>Click to expand!</summary>
+
+This method uses 2 scripts to foramt an sd card and make it extroot and another one that installes everything from the internet.
+
+#### STEPS:
+ 
+- Make sure you've flahsed/sysupgraded latest `.bin` file from `/Firmware/OpenWrt_snapshot/` or from latest release.
+- Connect to the `KlipperWrt` access point
+- Access LuCi web interface and log in on `192.168.1.1:81`
+- _(**optional** but recommended)_ Add a password to the `KlipperWrt` access point: `Wireless` -> Under wireless overview `EDIT` the `KlipperWrt` interface -> `Wireless Security` -> Choose an encryption -> set a password -> `Save` -> `Save & Apply`
+- _(**optional** but recommended)_ Add a password: `System` -> `Administration` -> `Router Password`
+- Connect as a client to your Internet router: `Network` -> `Wireless` -> `SCAN` -> `Join Network` -> check `Lock to BSSID` -> `Create/Assign Firewall zone` then under `custom` type `wwan` enter -> `Submit` -> `Save` -> `Save & Apply`
+- Connect back to your router and either find the new box's ip inside the `DHCP` list.
+- ❗  Access the terminal tab (`Services` -> `Terminal`) ❗ If terminal tab is not working go to `Config` tab and change `Interface` to the interface you are connecting through the box (your wireless router SSID for example) -> `Save & Apply`.
+- Download and execute the `1_format_extroot.sh` script:
+
+>
+    cd ~
+    wget https://github.com/ihrapsa/KlipperWrt/raw/main/scripts/1_format_extroot.sh
+    chmod +x 1_format_extroot.sh
+    ./1_format_extroot.sh
+
+- You'll be prompted to reboot: type `reboot`
+
+- Download and execute the `2_script_manual.sh` script:
+
+>
+    cd ~
+    wget https://github.com/ihrapsa/KlipperWrt/raw/main/scripts/2_script_manual.sh
+    chmod +x 2_script_manual.sh
+    ./2_script_manual.sh
+    
+- Follow the prompted instructions and wait for everything to be installed
+- Done!
+
+- When done and rebooted use `http://klipperwrt.local` or `http://box-ip`to access the Klipper client
+- Done!
+
+
+#### Setting up your `printer.cfg`
+- put your `printer.cfg` inside `/root/klipper_config`
+- delete these blocks from your `printer.cfg`: `[virtual_sdcard]`, `[display_status]`, `[pause_resume]` since they're included inside `client.cfg`
+- move all your macros to `client_macros.cfg` 
+- add these 2 lines inside your `printer.cfg`:   
+`[include client.cfg]`
+`[include client_macros.cfg]` 
+- Under `[mcu]` block change your serial port path according to [this](https://github.com/ihrapsa/KlipperWrt/issues/8)
+- Build your `klippper.bin` mainboard firmware using a linux desktop/VM (follow `printer.cfg` header for instructions)
+- Flash your mainboard according to the `printer.cfg` header
+- Do a `FIRMWARE RESTART` inside fluidd/Minsail
+- Done
+_____________________________________________
+*Notes:*
+-  If the box doesn't connect back to your router wirelessly connect to it with an ethernet cable and setup/troubleshoot wifi.
+- timelapse is set to autorender which might take a while to finish after a long print. You might set it to ` autorender: False`  under `[timelapse]` block inside `moonraker.conf`. Check [here](https://github.com/FrYakaTKoP/moonraker/blob/dev-timelapse/docs/configuration.md#add-the-macro-to-your-slicer) for how to set your `TIMELAPSE_TAKE_FRAME` macro or `TIMELAPSE_TAKE_PARKED_FRAME` inside your slicer layer change.
+
+</details>
+
+
 # Manual Steps:
 
 ### OpenWrt <img align="left" width="30" height="34" src="https://github.com/ihrapsa/KlipperWrt/blob/main/img/OpenWrt.png" alt="openwrt_icon">
@@ -611,56 +728,7 @@ Enable it: `/etc/init.d/dwc enable`
 </details>
 
 
-# Automatic Steps:
- 
-This uses the preinstalled extroot filesystem archives I've uploaded to [Releases](https://github.com/ihrapsa/KlipperWrt/releases/tag/v1.0).  
-They come preinstalled with either <img width="20" height="20" src="https://github.com/ihrapsa/KlipperWrt/blob/main/img/fluidd.png" alt="fluidd_icon"> **fluidd**  OR <img width="20" height="20" src="https://github.com/ihrapsa/KlipperWrt/blob/main/img/mainsail.png" alt="mainsail_icon"> **Mainsail** and **Klipper**, **Moonraker**, **mjpg-streamer** (for webcam stream) and Fry's **timelapse component** (for taking frames and rendering the video).
- 
- <details>
-  <summary>Click to expand Steps!</summary>
- 
- #### STEPS:
-- Make sure you've flahsed/sysupgraded latest `.bin` file from `/Firmware/OpenWrt_snapshot/` or from latest release.
-- Connect to the `KlipperWrt` access point
-- Access LuCi web interface and log in on `192.168.1.1:81`
-- _(**optional** but recommended)_ Add a password to the `KlipperWrt` access point: `Wireless` -> Under wireless overview `EDIT` the `KlipperWrt` interface -> `Wireless Security` -> Choose an encryption -> set a password -> `Save` -> `Save & Apply`
-- _(**optional** but recommended)_ Add a password: `System` -> `Administration` -> `Router Password`
-- Connect as a client to your Internet router: `Network` -> `Wireless` -> `SCAN` -> `Join Network` -> check `Lock to BSSID` -> `Create/Assign Firewall zone` then under `custom` type `wwan` enter -> `Submit` -> `Save` -> `Save & Apply`
-- Connect back to your router and either find the new box's ip inside the `DHCP` list or type `http://klipperwrt.local:81`
-- ❗  Access the terminal tab (`Services` -> `Terminal`) ❗ If terminal tab is not working go to `Config` tab and change `Interface` to the interface you are connecting through the box (your wireless router SSID for example) -> `Save & Apply`.
-- Download and execute the install script:
 
->
-    cd ~
-    wget https://github.com/ihrapsa/KlipperWrt/raw/main/KlipperWrt_install.sh
-    chmod +x KlipperWrt_install.sh
-    ./KlipperWrt_install.sh
-
-
-- Follow the script prompts to install either `fluidd` or `Mainsail` automatically
-- Wait until it prompts you to reboot
-- When done and rebooted use `http://klipperwrt.local` or `http://box-ip`to access the Klipper client
-- Done!
-
-
-#### Setting up your `printer.cfg`
-- put your `printer.cfg` inside `/root/klipper_config`
-- delete these blocks from your `printer.cfg`: `[virtual_sdcard]`, `[display_status]`, `[pause_resume]` since they're included inside `client.cfg`
-- move all your macros to `client_macros.cfg` 
-- add these 2 lines inside your `printer.cfg`:   
-`[include client.cfg]`
-`[include client_macros.cfg]` 
-- Under `[mcu]` block change your serial port path according to [this](https://github.com/ihrapsa/KlipperWrt/issues/8)
-- Build your `klippper.bin` mainboard firmware using a linux desktop/VM (follow `printer.cfg` header for instructions)
-- Flash your mainboard according to the `printer.cfg` header
-- Do a `FIRMWARE RESTART` inside fluidd/Minsail
-- Done
-_____________________________________________
-*Notes:*
--  If the box doesn't connect back to your router wirelessly connect to it with an ethernet cable and setup/troubleshoot wifi.
-- timelapse is set to autorender which might take a while to finish after a long print. You might set it to ` autorender: False`  under `[timelapse]` block inside `moonraker.conf`. Check [here](https://github.com/FrYakaTKoP/moonraker/blob/dev-timelapse/docs/configuration.md#add-the-macro-to-your-slicer) for how to set your `TIMELAPSE_TAKE_FRAME` macro or `TIMELAPSE_TAKE_PARKED_FRAME` inside your slicer layer change.
- 
-  </details>
 --------------------------------------------------------------------------
 #### Troubleshooting
 
