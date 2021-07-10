@@ -19,12 +19,14 @@ read -p "Press [ENTER] to check if extroot is enabled ...or [ctrl+c] to exit"
 
 df -h;
 
+
+
 echo " "
-echo "   #####################################"
-echo "   ##              OK?                ##"
-echo "   #####################################"
+echo "   ############################################"
+echo "   ## Is /dev/mmcblk0p1 mounted on /overlay? ##"
+echo "   ############################################"
 echo " "
-read -p "Press [ENTER] to Continue ...or [ctrl+c] to exit"
+read -p "Press [ENTER] if YES... or [ctrl+c] to exit"
 
 echo " "
 echo "   ########################################################"
@@ -32,6 +34,12 @@ echo "   ## Make sure you've got a stable Internet connection! ##"
 echo "   ########################################################"
 echo " "
 read -p "Press [ENTER] to Continue ...or [ctrl+c] to exit"
+
+echo " "
+echo "#################"
+echo "###   SWAP    ###"
+echo "#################"
+echo " "
 
 echo "Creating swap file"
 dd if=/dev/zero of=/overlay/swap.page bs=1M count=512;
@@ -54,6 +62,12 @@ mount -o remount,size=256M /tmp
 
 exit 0
 EOF
+
+echo " "
+echo "############################"
+echo "### Klipper dependencies ###"
+echo "############################"
+echo " "
 
 echo "Installing dependencies..."
 opkg update && opkg install git-http unzip htop zram-swap gcc;
@@ -94,6 +108,12 @@ echo "Installing pip2 packages..."
 pip install greenlet==0.4.15 jinja2 python-can==3.3.4;
 
 
+echo " "
+echo "##############################"
+echo "### Moonraker dependencies ###"
+echo "##############################"
+echo " "
+
 echo "Switching to original distfeeds..."
 mv /etc/opkg/distfeeds.conf /etc/opkg/distfeeds.conf_v19;
 mv /etc/opkg/distfeeds.conf_orig /etc/opkg/distfeeds.conf;
@@ -126,12 +146,21 @@ echo "Installing lmdb and streaming-form-data package..."
 opkg install /root/*ipk;
 rm -rf *ipk;
 
+echo " "
+echo "###############"
+echo "###  Nginx  ###"
+echo "###############"
+echo " "
+
 echo "Installing nginx..."
 opkg install nginx-ssl;
 
-###############
-### Klipper ###
-###############
+echo " "
+echo "###############"
+echo "### Klipper ###"
+echo "###############"
+echo " "
+
 echo "Cloning Klipper..."
 git clone https://github.com/KevinOConnor/klipper.git /root/klipper;
 
@@ -141,10 +170,14 @@ chmod 755 /etc/init.d/klipper;
 /etc/init.d/klipper enable;
 
 mkdir /root/klipper_config /root/klipper_logs /root/gcode_files;
+wget https://github.com/ihrapsa/KlipperWrt/raw/main/klipper_config/client.cfg -P /root/klipper_config/
+wget https://github.com/ihrapsa/KlipperWrt/raw/main/klipper_config/client_macros.cfg -P /root/klipper_config/
 
-#################
-### Moonraker ###
-#################
+echo " "
+echo "#################"
+echo "### Moonraker ###"
+echo "#################"
+echo " "
 
 git clone https://github.com/ihrapsa/moonraker.git /root/moonraker;
 wget https://raw.githubusercontent.com/ihrapsa/KlipperWrt/main/Services/moonraker -P /etc/init.d/
@@ -154,6 +187,12 @@ wget https://raw.githubusercontent.com/ihrapsa/KlipperWrt/main/nginx/upstreams.c
 wget https://raw.githubusercontent.com/ihrapsa/KlipperWrt/main/nginx/common_vars.conf -P /etc/nginx/conf.d/
 /etc/init.d/nginx enable
 
+
+echo " "
+echo "#################"
+echo "###  Client   ###"
+echo "#################"
+echo " "
 
 choose(){
 	echo " "
@@ -213,18 +252,33 @@ choose(){
 
 choose;
 
+
+echo " "
+echo "#################"
+echo "###  Webcam   ###"
+echo "#################"
+echo " "
+
 echo "Installing mjpg-streamer..."
 opkg install v4l-utils;
 opkg install mjpg-streamer-input-uvc mjpg-streamer-output-http mjpg-streamer-www;
 /etc/init.d/mjpg-streamer enable;
 ln -s /etc/init.d/mjpg-streamer /etc/init.d/webcamd;
 
-echo "Installing hostname instead of ip..."
+echo " "
+echo "###################"
+echo "### Hostname/ip ###"
+echo "###################"
+echo " "
+
+echo "Using hostname instead of ip..."
 opkg install avahi-daemon-service-ssh avahi-daemon-service-http;
 
-#################
-### Timelapse ###
-#################
+echo " "
+echo "#################"
+echo "### Timelapse ###"
+echo "#################"
+echo " "
 
 echo "Installing Tiemlapse packages..."
 wget https://github.com/FrYakaTKoP/moonraker/raw/dev-timelapse/moonraker/components/timelapse.py -P /root/moonraker/moonraker/components;
@@ -257,7 +311,11 @@ rm -rf /root/ffmpeg;
 
 
 
-
+echo " "
+echo "########################"
+echo "### tty hotplug rule ###"
+echo "########################"
+echo " "
 
 echo "Install tty hotplug rule..."
 opkg update && opkg install usbutils;
@@ -301,5 +359,12 @@ if [ "${ACTION}" = "remove" ]  ; then
 fi
 EOF
 
-echo "Please reboot for changes to take effect!";
+echo " "
+echo "#################"
+echo "###   Done!   ###"
+echo "#################"
+echo " "
+
+echo "Please reboot for changes to take effect...";
+echo "...then proceed configuring your printer.cfg!";
 
