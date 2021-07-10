@@ -126,7 +126,7 @@ They come preinstalled with either <img width="20" height="20" src="https://gith
 
 >
     cd ~
-    wget https://github.com/ihrapsa/KlipperWrt/raw/main/KlipperWrt_install.sh
+    wget https://github.com/ihrapsa/KlipperWrt/raw/main/scripts/KlipperWrt_install.sh
     chmod +x KlipperWrt_install.sh
     ./KlipperWrt_install.sh
 
