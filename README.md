@@ -104,11 +104,10 @@
   <summary>Click to expand!</summary>
 
 ### Extroot script method 
-Untarrs an laready working image.
-Maybe outdated but stable.
+Untarrs an already working image. Maybe outdated but stable. 
 
 <details>
-  <summary>Click to expand!</summary>
+  <summary>Click for STEPS!</summary>
   
 This uses the preinstalled extroot filesystem archives I've uploaded to [Releases](https://github.com/ihrapsa/KlipperWrt/releases/tag/v1.0).  
 They come preinstalled with either <img width="20" height="20" src="https://github.com/ihrapsa/KlipperWrt/blob/main/img/fluidd.png" alt="fluidd_icon"> **fluidd**  OR <img width="20" height="20" src="https://github.com/ihrapsa/KlipperWrt/blob/main/img/mainsail.png" alt="mainsail_icon"> **Mainsail** and **Klipper**, **Moonraker**, **mjpg-streamer** (for webcam stream) and Fry's **timelapse component** (for taking frames and rendering the video).
@@ -161,11 +160,10 @@ _____________________________________________
 ### OR
   
 ### Installing Script method
-Installes everything up to date
-Possibly unstable, sometimes new dependencies are added and I might not have updated the script by then.
+Installs everything up to date. Possibly unstable, sometimes new dependencies are added and I might not have updated the script by then.  
 
 <details>
-  <summary>Click to expand!</summary>
+  <summary>Click for STEPS!</summary>
 
 This method uses 2 scripts to foramt an sd card and make it extroot and another one that installes everything from the internet.
 
