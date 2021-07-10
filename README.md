@@ -739,6 +739,23 @@ Enable it: `/etc/init.d/dwc enable`
 
 
 --------------------------------------------------------------------------
+
+### Flashing a new OpenWrt .bin file 
+(aka Sysupgrading)	
+
+<details>
+  <summary>Click to expand!</summary>
+	
+1. Downloadthe sysupgrade.bin file to your computer  
+2. Connect the box to your pc and make sure it's reachable by ssh	
+3. Transfer it to the box inside `/tmp` directory with WinSCP or through command in Powershell/UNIX Terminal: `scp /path/to/sysupgrade.bin root@192.168.1.1:/tmp` 
+4. ssh to the box and navigate to `/tmp` make sure the bin is there  
+5. Do `sysupgrade -n -v *bin`  
+
+</details>	
+
+--------------------------------------------------------------------------
+	
 #### Troubleshooting
 
 <details>
@@ -804,7 +821,8 @@ Enable it: `/etc/init.d/dwc enable`
 
 </details>
 
---------------------------------------------------------------------------
+--------------------------------------------------------------------------	
+
 ### :warning:  Going back to stock (if ever needed) OR if it gets bricked:
 
 <details>
