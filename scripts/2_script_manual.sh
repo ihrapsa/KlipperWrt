@@ -380,6 +380,17 @@ fi
 EOF
 
 echo " "
+echo "########################"
+echo "###  get system.log  ###"
+echo "########################"
+echo " "
+
+uci set system.@system[0].log_file='/root/klipper_logs/system.log';
+uci set system.@system[0].log_size='512';
+uci set system.@system[0].log_remote='0';
+uci commit;
+
+echo " "
 echo "#################"
 echo "###   Done!   ###"
 echo "#################"
