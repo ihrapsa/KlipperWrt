@@ -381,14 +381,58 @@ EOF
 
 echo " "
 echo "########################"
-echo "###  get system.log  ###"
+echo "###  Fixing logs...  ###"
 echo "########################"
 echo " "
+echo "Creating system.log..."
 
 uci set system.@system[0].log_file='/root/klipper_logs/system.log';
-uci set system.@system[0].log_size='512';
+uci set system.@system[0].log_size='51200';
 uci set system.@system[0].log_remote='0';
 uci commit;
+
+echo " "
+echo "Installing logrotate..."
+echo " "
+opkg install logrotate;
+
+echo " "
+echo "Creating cron job..."
+echo " "
+echo "0 8 * * * *     /usr/sbin/logrotate /etc/logrotate.conf" >> /etc/crontabs/root
+
+
+echo " "
+echo "Creating logrotate configuration files..."
+echo " "
+
+cat << "EOF" > /etc/logrotate.d/klipper
+/root/klipper_logs/klippy.log
+{
+    rotate 7
+    daily
+    maxsize 64M
+    missingok
+    notifempty
+    compress
+    delaycompress
+    sharedscripts
+}
+EOF
+
+cat << "EOF" > /etc/logrotate.d/moonraker
+/root/klipper_logs/moonraker.log
+{
+    rotate 7
+    daily
+    maxsize 64M
+    missingok
+    notifempty
+    compress
+    delaycompress
+    sharedscripts
+}
+EOF
 
 echo " "
 echo "#################"

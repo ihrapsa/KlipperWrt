@@ -4,7 +4,12 @@
  A guide to get _**Klipper**_ with _**fluidd**,_ _**Mainsail**_ or _**Duet-Web-Control**_ on OpenWrt embeded devices like the _Creality Wi-Fi Box_.
  
  ---------------------------------------------------------------------------------
-### Why Klipper on a Router :question:
+### Before starting...
+
+<details>
+  <summary>Click to expand!</summary>
+ 
+#### Why Klipper on a Router :question:
 
 <details>
   <summary> ( :red_circle: Click to expand!)</summary>
@@ -21,7 +26,7 @@
 
 </details>
 
-### What is the Creality [Wi-Fi Box](https://www.creality.com/goods-detail/creality-box-3d-printer)?
+#### What is the Creality [Wi-Fi Box](https://www.creality.com/goods-detail/creality-box-3d-printer)?
 
 <details>
   <summary>(Click to expand!)</summary>
@@ -45,7 +50,7 @@
    </details>
  </details>
 
-### What is [OpenWrt](https://github.com/openwrt/openwrt)?
+#### What is [OpenWrt](https://github.com/openwrt/openwrt)?
 
 <details>
   <summary>(Click to expand!)</summary>
@@ -56,7 +61,7 @@
 
  </details>
     
-### What is [Klipper](https://github.com/KevinOConnor/klipper)?
+#### What is [Klipper](https://github.com/KevinOConnor/klipper)?
 
 <details>
   <summary>(Click to expand!)</summary>
@@ -66,7 +71,7 @@
 - A 3d-printer firmware. It runs on any kind of computer taking advantage of the host cpu. Extremely light on cpu, lots of feautres
 </details>
 
-### What is [fluidd](https://github.com/cadriel/fluidd) / [mainsail](https://github.com/meteyou/mainsail)?
+#### What is [fluidd](https://github.com/cadriel/fluidd) / [mainsail](https://github.com/meteyou/mainsail)?
 
 <details>
   <summary>(Click to expand!)</summary>
@@ -75,7 +80,7 @@
 - These are free and open-source Klipper web interface clients for managing your 3d printer. 
 </details>
  
-### What is [Moonraker](https://github.com/Arksine/moonraker)?
+#### What is [Moonraker](https://github.com/Arksine/moonraker)?
 
 <details>
   <summary>(Click to expand!)</summary>
@@ -84,7 +89,7 @@
 - A Python 3 based web server that exposes APIs with which client applications (fluidd or mainsail) may use to interact with Klipper. Communcation between the Klippy host and Moonraker is done over a Unix Domain Socket. Tornado is used to provide Moonraker's server functionality.
 </details>
 
-### What is [duet-web-control](https://github.com/Duet3D/DuetWebControl)
+#### What is [duet-web-control](https://github.com/Duet3D/DuetWebControl)
 
 
 <details>
@@ -92,6 +97,8 @@
  
 [![dwc](img/dwc.png)](https://duet3d.dozuki.com/Wiki/Duet_Web_Control_v2_and_v3_%28DWC%29_Manual)  
 - Duet Web Control is a fully-responsive HTML5-based web interface for RepRapFirmware. [Stephan3](https://github.com/Stephan3/dwc2-for-klipper-socket) built a socket to make it communicate with klipper as well (klipper is not a RepRapFirmware). This is a standalone webserver and client interface - so no need for moonraker or nginx.
+</details>
+
 </details>
 
 --------------------------------------------------------------------------
@@ -103,64 +110,8 @@
 <details>
   <summary>Click to expand!</summary>
 
-### Extroot script method 
-Untarrs an already working image. Maybe outdated but stable. 
-
-<details>
-  <summary>Click for STEPS!</summary>
-  
-This uses the preinstalled extroot filesystem archives I've uploaded to [Releases](https://github.com/ihrapsa/KlipperWrt/releases/tag/v1.0).  
-They come preinstalled with either <img width="20" height="20" src="https://github.com/ihrapsa/KlipperWrt/blob/main/img/fluidd.png" alt="fluidd_icon"> **fluidd**  OR <img width="20" height="20" src="https://github.com/ihrapsa/KlipperWrt/blob/main/img/mainsail.png" alt="mainsail_icon"> **Mainsail** and **Klipper**, **Moonraker**, **mjpg-streamer** (for webcam stream) and Fry's **timelapse component** (for taking frames and rendering the video).
- 
- 
-#### STEPS:
-- Make sure you've flahsed/sysupgraded latest `.bin` file from `/Firmware/OpenWrt_snapshot/` or from latest release.
-- Connect to the `KlipperWrt` access point
-- Access LuCi web interface and log in on `192.168.1.1:81`
-- _(**optional** but recommended)_ Add a password to the `KlipperWrt` access point: `Wireless` -> Under wireless overview `EDIT` the `KlipperWrt` interface -> `Wireless Security` -> Choose an encryption -> set a password -> `Save` -> `Save & Apply`
-- _(**optional** but recommended)_ Add a password: `System` -> `Administration` -> `Router Password`
-- Connect as a client to your Internet router: `Network` -> `Wireless` -> `SCAN` -> `Join Network` -> check `Lock to BSSID` -> `Create/Assign Firewall zone` then under `custom` type `wwan` enter -> `Submit` -> `Save` -> `Save & Apply`
-- Connect back to your router and either find the new box's ip inside the `DHCP` list.
-- ❗  Access the terminal tab (`Services` -> `Terminal`) ❗ If terminal tab is not working go to `Config` tab and change `Interface` to the interface you are connecting through the box (your wireless router SSID for example) -> `Save & Apply`.
-- Download and execute the install script:
-
->
-    cd ~
-    wget https://github.com/ihrapsa/KlipperWrt/raw/main/scripts/KlipperWrt_install.sh
-    chmod +x KlipperWrt_install.sh
-    ./KlipperWrt_install.sh
-
-
-- Follow the script prompts to install either `fluidd` or `Mainsail` automatically
-- Wait until it prompts you to reboot
-- remove the script when done: `rm -rf /root/*.sh`
-- When done and rebooted use `http://klipperwrt.local` or `http://box-ip`to access the Klipper client
-- Done!
-
-
-#### Setting up your `printer.cfg`
-- put your `printer.cfg` inside `/root/klipper_config`
-- delete these blocks from your `printer.cfg`: `[virtual_sdcard]`, `[display_status]`, `[pause_resume]` since they're included inside `client.cfg`
-- move all your macros to `client_macros.cfg` 
-- add these 2 lines inside your `printer.cfg`:   
-`[include client.cfg]`
-`[include client_macros.cfg]` 
-- Under `[mcu]` block change your serial port path according to [this](https://github.com/ihrapsa/KlipperWrt/issues/8)
-- Build your `klippper.bin` mainboard firmware using a linux desktop/VM (follow `printer.cfg` header for instructions)
-- Flash your mainboard according to the `printer.cfg` header
-- Do a `FIRMWARE RESTART` inside fluidd/Minsail
-- Done
-_____________________________________________
-*Notes:*
--  If the box doesn't connect back to your router wirelessly connect to it with an ethernet cable and setup/troubleshoot wifi.
-- timelapse is set to autorender which might take a while to finish after a long print. You might set it to ` autorender: False`  under `[timelapse]` block inside `moonraker.conf`. Check [here](https://github.com/FrYakaTKoP/moonraker/blob/dev-timelapse/docs/configuration.md#add-the-macro-to-your-slicer) for how to set your `TIMELAPSE_TAKE_FRAME` macro or `TIMELAPSE_TAKE_PARKED_FRAME` inside your slicer layer change.
- 
-  </details>
-  
-### OR
-  
 ### Installing Script method
-Installs everything up to date. Possibly unstable, sometimes new dependencies are added and I might not have updated the script by then.  
+Installs everything fresh and up to date. Possibly unstable, sometimes new dependencies are added and I might not have updated the script by then.  
 
 <details>
   <summary>Click for STEPS!</summary>
@@ -222,14 +173,75 @@ _____________________________________________
 
 </details>
 
+### OR
+
+### Extroot script method 
+Untarrs an already working image. Maybe outdated but stable. 
+
+<details>
+  <summary>Click for STEPS!</summary>
+  
+This uses the preinstalled extroot filesystem archives I've uploaded to [Releases](https://github.com/ihrapsa/KlipperWrt/releases/tag/v1.0).  
+They come preinstalled with either <img width="20" height="20" src="https://github.com/ihrapsa/KlipperWrt/blob/main/img/fluidd.png" alt="fluidd_icon"> **fluidd**  OR <img width="20" height="20" src="https://github.com/ihrapsa/KlipperWrt/blob/main/img/mainsail.png" alt="mainsail_icon"> **Mainsail** and **Klipper**, **Moonraker**, **mjpg-streamer** (for webcam stream) and Fry's **timelapse component** (for taking frames and rendering the video).
+ 
+ 
+#### STEPS:
+- Make sure you've flahsed/sysupgraded latest `.bin` file from `/Firmware/OpenWrt_snapshot/` or from latest release.
+- Connect to the `KlipperWrt` access point
+- Access LuCi web interface and log in on `192.168.1.1:81`
+- _(**optional** but recommended)_ Add a password to the `KlipperWrt` access point: `Wireless` -> Under wireless overview `EDIT` the `KlipperWrt` interface -> `Wireless Security` -> Choose an encryption -> set a password -> `Save` -> `Save & Apply`
+- _(**optional** but recommended)_ Add a password: `System` -> `Administration` -> `Router Password`
+- Connect as a client to your Internet router: `Network` -> `Wireless` -> `SCAN` -> `Join Network` -> check `Lock to BSSID` -> `Create/Assign Firewall zone` then under `custom` type `wwan` enter -> `Submit` -> `Save` -> `Save & Apply`
+- Connect back to your router and either find the new box's ip inside the `DHCP` list.
+- ❗  Access the terminal tab (`Services` -> `Terminal`) ❗ If terminal tab is not working go to `Config` tab and change `Interface` to the interface you are connecting through the box (your wireless router SSID for example) -> `Save & Apply`.
+- Download and execute the install script:
+
+>
+    cd ~
+    wget https://github.com/ihrapsa/KlipperWrt/raw/main/scripts/KlipperWrt_install.sh
+    chmod +x KlipperWrt_install.sh
+    ./KlipperWrt_install.sh
+
+
+- Follow the script prompts to install either `fluidd` or `Mainsail` automatically
+- Wait until it prompts you to reboot
+- remove the script when done: `rm -rf /root/*.sh`
+- When done and rebooted use `http://klipperwrt.local` or `http://box-ip`to access the Klipper client
+- Done!
+
+
+#### Setting up your `printer.cfg`
+- put your `printer.cfg` inside `/root/klipper_config`
+- delete these blocks from your `printer.cfg`: `[virtual_sdcard]`, `[display_status]`, `[pause_resume]` since they're included inside `client.cfg`
+- move all your macros to `client_macros.cfg` 
+- add these 2 lines inside your `printer.cfg`:   
+`[include client.cfg]`
+`[include client_macros.cfg]` 
+- Under `[mcu]` block change your serial port path according to [this](https://github.com/ihrapsa/KlipperWrt/issues/8)
+- Build your `klippper.bin` mainboard firmware using a linux desktop/VM (follow `printer.cfg` header for instructions)
+- Flash your mainboard according to the `printer.cfg` header
+- Do a `FIRMWARE RESTART` inside fluidd/Minsail
+- Done
+_____________________________________________
+*Notes:*
+-  If the box doesn't connect back to your router wirelessly connect to it with an ethernet cable and setup/troubleshoot wifi.
+- timelapse is set to autorender which might take a while to finish after a long print. You might set it to ` autorender: False`  under `[timelapse]` block inside `moonraker.conf`. Check [here](https://github.com/FrYakaTKoP/moonraker/blob/dev-timelapse/docs/configuration.md#add-the-macro-to-your-slicer) for how to set your `TIMELAPSE_TAKE_FRAME` macro or `TIMELAPSE_TAKE_PARKED_FRAME` inside your slicer layer change.
+ 
+  </details>
+  
+
 </details>
 
 # Manual Steps:
 
+<details>
+  <summary>Click to expand!</summary>
+
+
 ### OpenWrt <img align="left" width="30" height="34" src="https://github.com/ihrapsa/KlipperWrt/blob/main/img/OpenWrt.png" alt="openwrt_icon">
 
 <details>
-  <summary>Click to expand Steps!</summary>
+  <summary>Click for STEPS!</summary>
 
 #### 1. Build OpenWrt image
 
@@ -331,7 +343,7 @@ put this inside /etc/rc.local above exit so that swap is enabled at boot:
 ### fluidd <img align="left" width="30" height="30" src="https://github.com/ihrapsa/KlipperWrt/blob/main/img/fluidd.png" alt="fluidd_icon"> / <img width="30" height="30" src="https://github.com/ihrapsa/KlipperWrt/blob/main/img/mainsail.png" alt="mainsail_icon"> Mainsail 
 
 <details>
-  <summary>Click to expand!</summary>
+  <summary>Click for STEPS!</summary>
  
 #### 5. Install dependencies
 
@@ -628,7 +640,7 @@ It's ok to keep both client directories inside `/root/` as these are static file
 ### duet-web-control <img align="left" width="30" height="30" src="https://github.com/ihrapsa/KlipperWrt/blob/main/img/dwc.png" alt="dwc_icon"> 
 
 <details>
-  <summary>Click to expand!</summary>
+  <summary>Click for STEPS!</summary>
 
 #### 5. Install dependencies
 
@@ -736,7 +748,7 @@ Enable it: `/etc/init.d/dwc enable`
 
 </details>
 
-
+</details>
 
 --------------------------------------------------------------------------
 
