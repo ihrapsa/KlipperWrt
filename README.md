@@ -32,7 +32,11 @@
   <summary>(Click to expand!)</summary>
  
 [![creality_wb](img/creality_wb.jpg)](https://www.creality.com/goods-detail/creality-box-3d-printer)   
-- A router box device released by Creality meant to add network control to your printer.  <br> Big claims, lots of problems and frustrations. No desktop control, only mobile. <br> No custom slicing only cloud based. No camera support, only claims.  
+- A router box device released by Creality in 2020 meant to add cloud based remote control to your printer. Creality Cloud App is a contraption between social media and 3d printing that you have to use to be able to print and monitor.  
+	
+	Sounded like a good ideea. Unfortunately, the unpolished idea was not very well received by the public. Creality recently (July 2021) added **Cura integration** and **custom gcode upload**. Webcam support finally got released but it seems to only work with their new **proprietary webcam**. Everything is still **cloud based** and you **can't use it offline**. This raised a lot of concerns in terms of privacy and transparency. Putting all your trust in a company is not necesarily the best idea and although they seemed to have improved the app and user experience the full control is not in the user's hands yet.  
+	
+	It's hard to please everybody when creating a product/service but actually listening to the public's feedback is a good start. People need privacy, full control and reliability to actually consider using the product over the alternatives. **Klipper** and it's UI clients come as **open source** and **100% transaprent** alternatives to remote printing. 
 
  <details>
    <summary>Specifications (Click to expand!)</summary>
