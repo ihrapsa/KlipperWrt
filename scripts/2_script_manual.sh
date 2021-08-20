@@ -123,16 +123,14 @@ mv /etc/opkg.conf_orig /etc/opkg.conf;
 echo "Updating original distfeeds..."
 opkg update;
 echo "Installing python3 packages..."
-opkg install python3 python3-pip python3-pyserial python3-pillow python3-tornado python3-distro libsodium --force-overwrite;
+opkg install python3 python3-pip python3-pyserial python3-pillow python3-tornado python3-distro libsodium libffi --force-overwrite;
 
-echo "Cloning setuptools..."
-git clone https://github.com/pypa/setuptools.git /root/setuptools;
-echo "Installing setuptools..."
+echo "Fixing libffi symlinks..."
+ln -s /usr/lib/libffi.so.8 /usr/lib/libffi.so.7;
+ln -s /usr/lib/libffi.so.8 /usr/lib/libffi.so.7.1.0;
 
-cd /root/setuptools;
-python3 /root/setuptools/setup.py install;
-rm -rf /root/setuptools;
-cd /root/
+echo "Upgrading setuptools..."
+pip3 install --upgrade setuptools;
 
 echo "Installing pip3 packages..."
 pip3 install inotify-simple python-jose libnacl paho-mqtt==1.5.1;
