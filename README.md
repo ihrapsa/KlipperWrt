@@ -106,7 +106,12 @@
 </details>
 
 --------------------------------------------------------------------------
-### :exclamation: Open issues or join the [<img align="center" width="30" height="30" src="https://github.com/ihrapsa/KlipperWrt/blob/main/img/discord.png" alt="discord_icon">](https://discord.gg/ZGrCMVs35H) [server](https://discord.gg/ZGrCMVs35H) for better support.
+
+###  :clapper: Check out the [video](https://youtu.be/0y3qt8cvtKY) tutorial [Kruze17](https://github.com/Kruze17) has made on his [Hyper Makes](https://www.youtube.com/channel/UCrCxVyN2idCxPNOwCwK6qtQ) YouTube channel.
+
+### :exclamation: Open issues or join the [<img align="center" width="30" height="30" src="https://github.com/ihrapsa/KlipperWrt/blob/main/img/discord.png" alt="discord_icon">](https://discord.gg/ZGrCMVs35H) [server](https://discord.gg/ZGrCMVs35H) for extra support.
+
+
 --------------------------------------------------------------------------
 
 # Automatic Steps:
@@ -129,6 +134,7 @@ This method uses 2 scripts to foramt an sd card and make it extroot and another 
 - Access LuCi web interface and log in on `192.168.1.1:81`
 - _(**optional** but recommended)_ Add a password to the `KlipperWrt` access point: `Wireless` -> Under wireless overview `EDIT` the `KlipperWrt` interface -> `Wireless Security` -> Choose an encryption -> set a password -> `Save` -> `Save & Apply`
 - _(**optional** but recommended)_ Add a password: `System` -> `Administration` -> `Router Password`
+- ❗If your home network subnet is on 1 (192.168.1.x), in order to avoid any ip conflicts, change the static ip of the box LAN from 192.168.1.1 to something like 192.168.3.1. To do that access the luci webinterface -> `Network` -> `Interfaces` and edit the static ip -> `Save` -> press the down arow on the Save&Apply button -> `Apply Unchecked`. You can now access luci on the new ip and continue configureing Client setup. 
 - Connect as a client to your Internet router: `Network` -> `Wireless` -> `SCAN` -> `Join Network` -> check `Lock to BSSID` -> `Create/Assign Firewall zone` then under `custom` type `wwan` enter -> `Submit` -> `Save` -> `Save & Apply`
 - Connect back to your router and either find the new box's ip inside the `DHCP` list.
 - ❗  Access the terminal tab (`Services` -> `Terminal`) ❗ If terminal tab is not working go to `Config` tab and change `Interface` to the interface you are connecting through the box (your wireless router SSID for example) -> `Save & Apply`.
