@@ -70,8 +70,30 @@ echo "############################"
 echo " "
 
 echo "Installing dependencies..."
-opkg update && opkg install git-http unzip htop zram-swap gcc;
+### Backup no working distfeed.conf and opkg.conf for future use
+mv /etc/opkg/distfeeds.conf /etc/opkg/distfeeds.conf_orig_old;
+mv /etc/opkg.conf /etc/opkg.conf_orig;
 
+## create new distfeeds.conf using 21.02.0 releases 
+cat << "EOF" > /etc/opkg/distfeeds.conf
+src/gz openwrt_core https://downloads.openwrt.org/releases/21.02.0/targets/ramips/mt76x8/packages
+src/gz openwrt_base https://downloads.openwrt.org/releases/21.02.0/packages/mipsel_24kc/base
+src/gz openwrt_luci https://downloads.openwrt.org/releases/21.02.0/packages/mipsel_24kc/luci
+src/gz openwrt_packages https://downloads.openwrt.org/releases/21.02.0/packages/mipsel_24kc/packages
+src/gz openwrt_routing https://downloads.openwrt.org/releases/21.02.0/packages/mipsel_24kc/routing
+src/gz openwrt_telephony https://downloads.openwrt.org/releases/21.02.0/packages/mipsel_24kc/telephony
+EOF
+
+## create new opkg.conf with check_signature disable
+cat << "EOF" > /etc/opkg.conf
+dest root /
+dest ram /tmp
+lists_dir ext /var/opkg-lists
+option overlay_root /overlay
+#option check_signature
+EOF
+
+opkg update && opkg install git-http unzip htop zram-swap gcc;
 
 echo "Changing distfeeds for python2..."
 mv /etc/opkg/distfeeds.conf /etc/opkg/distfeeds.conf_orig;
@@ -82,16 +104,6 @@ src/gz openwrt_luci https://downloads.openwrt.org/releases/19.07.7/packages/mips
 src/gz openwrt_packages https://downloads.openwrt.org/releases/19.07.7/packages/mipsel_24kc/packages
 src/gz openwrt_routing https://downloads.openwrt.org/releases/19.07.7/packages/mipsel_24kc/routing
 src/gz openwrt_telephony https://downloads.openwrt.org/releases/19.07.7/packages/mipsel_24kc/telephony
-EOF
-
-mv /etc/opkg.conf /etc/opkg.conf_orig;
-
-cat << "EOF" > /etc/opkg.conf
-dest root /
-dest ram /tmp
-lists_dir ext /var/opkg-lists
-option overlay_root /overlay
-#option check_signature
 EOF
 
 opkg update;
@@ -117,8 +129,10 @@ echo " "
 echo "Switching to original distfeeds..."
 mv /etc/opkg/distfeeds.conf /etc/opkg/distfeeds.conf_v19;
 mv /etc/opkg/distfeeds.conf_orig /etc/opkg/distfeeds.conf;
-rm /etc/opkg.conf;
-mv /etc/opkg.conf_orig /etc/opkg.conf;
+
+### disable opkg.conf restore as we are using release distfeeds
+### rm /etc/opkg.conf;
+### mv /etc/opkg.conf_orig /etc/opkg.conf;
 
 echo "Updating original distfeeds..."
 opkg update;
@@ -440,4 +454,3 @@ echo " "
 
 echo "Please reboot for changes to take effect...";
 echo "...then proceed configuring your printer.cfg!";
-
