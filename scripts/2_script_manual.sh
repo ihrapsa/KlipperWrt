@@ -74,14 +74,14 @@ echo "Installing dependencies..."
 mv /etc/opkg/distfeeds.conf /etc/opkg/distfeeds.conf_orig_old;
 mv /etc/opkg.conf /etc/opkg.conf_orig;
 
-## create new distfeeds.conf using 21.02.0 releases 
+## create new distfeeds.conf using 21.02.1 releases 
 cat << "EOF" > /etc/opkg/distfeeds.conf
-src/gz openwrt_core https://downloads.openwrt.org/releases/21.02.0/targets/ramips/mt76x8/packages
-src/gz openwrt_base https://downloads.openwrt.org/releases/21.02.0/packages/mipsel_24kc/base
-src/gz openwrt_luci https://downloads.openwrt.org/releases/21.02.0/packages/mipsel_24kc/luci
-src/gz openwrt_packages https://downloads.openwrt.org/releases/21.02.0/packages/mipsel_24kc/packages
-src/gz openwrt_routing https://downloads.openwrt.org/releases/21.02.0/packages/mipsel_24kc/routing
-src/gz openwrt_telephony https://downloads.openwrt.org/releases/21.02.0/packages/mipsel_24kc/telephony
+src/gz openwrt_core https://downloads.openwrt.org/releases/21.02.1/targets/ramips/mt76x8/packages
+src/gz openwrt_base https://downloads.openwrt.org/releases/21.02.1/packages/mipsel_24kc/base
+src/gz openwrt_luci https://downloads.openwrt.org/releases/21.02.1/packages/mipsel_24kc/luci
+src/gz openwrt_packages https://downloads.openwrt.org/releases/21.02.1/packages/mipsel_24kc/packages
+src/gz openwrt_routing https://downloads.openwrt.org/releases/21.02.1/packages/mipsel_24kc/routing
+src/gz openwrt_telephony https://downloads.openwrt.org/releases/21.02.1/packages/mipsel_24kc/telephony
 EOF
 
 ## create new opkg.conf with check_signature disable
@@ -313,7 +313,7 @@ echo "#################"
 echo " "
 
 echo "Installing Tiemlapse packages..."
-wget https://github.com/FrYakaTKoP/moonraker/raw/dev-timelapse/moonraker/components/timelapse.py -P /root/moonraker/moonraker/components;
+wget https://raw.githubusercontent.com/mainsail-crew/moonraker-timelapse/main/component/timelapse.py -P /root/moonraker/moonraker/components;
 opkg install wget-ssl;
 
 rm -rf /tmp/opkg-lists 
