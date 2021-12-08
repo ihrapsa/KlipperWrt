@@ -351,9 +351,14 @@ echo " "
 
 echo "Install tty hotplug rule..."
 opkg update && opkg install usbutils;
-cat << "EOF" > /etc/hotplug.d/usb/22-tty-symlink
+
+
+PRODID=$(grep -h "$( lsusb | grep Host | awk '{ gsub(":0*", "/", $6); print $6 }' )" /sys/bus/usb/devices/*/uevent | uniq | awk '{ gsub("PRODUCT=", "", $1); print $1}')
+
+echo "PRODID=\"$PRODID\"" > /etc/hotplug.d/usb/22-tty-symlink
+
+cat << "EOF" >> /etc/hotplug.d/usb/22-tty-symlink
 # Description: Action executed on boot (bind) and with the system on the fly
-PRODID="1a86/7523/264" #change here according to "PRODUCT=" from grep command 
 SYMLINK="ttyPrinter" #you can change this to whatever you want just don't use spaces. Use this inside printer.cfg as serial port path
 if [ "${ACTION}" = "bind" ] ; then
   case "${PRODUCT}" in
