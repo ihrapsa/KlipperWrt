@@ -313,7 +313,7 @@ echo "#################"
 echo " "
 
 echo "Installing Tiemlapse packages..."
-wget https://raw.githubusercontent.com/mainsail-crew/moonraker-timelapse/main/component/timelapse.py -P /root/moonraker/moonraker/components;
+wget https://raw.githubusercontent.com/FrYakaTKoP/moonraker/c9ec89ca8a633501b200bce8748538b77b085a57/moonraker/components/timelapse.py -P /root/moonraker/moonraker/components;
 opkg install wget-ssl;
 
 rm -rf /tmp/opkg-lists 
