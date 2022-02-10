@@ -33,6 +33,12 @@
   | python-jose[cryptography]==3.2.0 |  Install with `pip3 install python-jose` - if you get errors with this install it manually: Clone the python-jose [repo](https://github.com/mpdavis/python-jose.git) `cd` into it then `python3 setup.py install` | 
   | libnacl==1.7.2 |  Install with `pip3 install libnacl` |  
   | paho-mqtt==1.5.1 |  Install with `pip3 install paho-mqtt==1.5.1` |  
+  | pycurl==7.44.1 |  Install with `opkg install python3-curl` |
+  | libcurl4 | Install with `opkgs install libcurl4` |
+  | zeroconf==0.37.0 | Install with `pip3 install zeroconf` |
+  | preprocess-cancellation==0.1.6 | Install with `pip3 install preprocess-cancellation` |
+  | jinja2=3.0.3 | Install with `pip3 install jinja2`|
+  | dbus-next==0.2.3 | Install with `pip3 install dbus-next`|
 
 * libsodium - install with `opkg install libsodium`  
 * nginx - install with `opkg install nginx-ssl`

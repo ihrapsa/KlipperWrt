@@ -224,9 +224,10 @@ They come preinstalled with either <img width="20" height="20" src="https://gith
 - put your `printer.cfg` inside `/root/klipper_config`
 - delete these blocks from your `printer.cfg`: `[virtual_sdcard]`, `[display_status]`, `[pause_resume]` since they're included inside `client.cfg`
 - move all your macros to `client_macros.cfg` 
-- add these 2 lines inside your `printer.cfg`:   
+- add these 3 lines inside your `printer.cfg`:   
 `[include client.cfg]`
 `[include client_macros.cfg]` 
+`[include timelapse.cfg]`
 - Under `[mcu]` block change your serial port path according to [this](https://github.com/ihrapsa/KlipperWrt/issues/8)
 - Build your `klippper.bin` mainboard firmware using a linux desktop/VM (follow `printer.cfg` header for instructions)
 - Flash your mainboard according to the `printer.cfg` header
@@ -235,7 +236,7 @@ They come preinstalled with either <img width="20" height="20" src="https://gith
 _____________________________________________
 *Notes:*
 -  If the box doesn't connect back to your router wirelessly connect to it with an ethernet cable and setup/troubleshoot wifi.
-- timelapse is set to autorender which might take a while to finish after a long print. You might set it to ` autorender: False`  under `[timelapse]` block inside `moonraker.conf`. Check [here](https://github.com/FrYakaTKoP/moonraker/blob/dev-timelapse/docs/configuration.md#add-the-macro-to-your-slicer) for how to set your `TIMELAPSE_TAKE_FRAME` macro or `TIMELAPSE_TAKE_PARKED_FRAME` inside your slicer layer change.
+-  Check [here](https://github.com/mainsail-crew/moonraker-timelapse/blob/main/docs/configuration.md) for how to configure timelapse plugin inside your dashboard and slicer.
  
   </details>
   
