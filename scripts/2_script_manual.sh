@@ -314,7 +314,7 @@ echo " "
 
 echo "Installing Tiemlapse packages..."
 #wget https://raw.githubusercontent.com/FrYakaTKoP/moonraker/c9ec89ca8a633501b200bce8748538b77b085a57/moonraker/components/timelapse.py -P /root/moonraker/moonraker/components;
-git clone https://github.com/mainsail-crew/moonraker-timelapse.git /root/moonraker-timelapse;
+git clone https://github.com/ihrapsa/moonraker-timelapse.git /root/moonraker-timelapse;
 /root/moonraker-timelapse/install.sh;
 
 opkg install wget-ssl;
