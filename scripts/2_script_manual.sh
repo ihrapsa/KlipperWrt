@@ -182,8 +182,7 @@ chmod 755 /etc/init.d/klipper;
 /etc/init.d/klipper enable;
 
 mkdir /root/klipper_config /root/klipper_logs /root/gcode_files;
-wget https://github.com/ihrapsa/KlipperWrt/raw/main/klipper_config/client.cfg -P /root/klipper_config/
-wget https://github.com/ihrapsa/KlipperWrt/raw/main/klipper_config/client_macros.cfg -P /root/klipper_config/
+
 
 echo " "
 echo "#################"
@@ -229,7 +228,8 @@ choose(){
 	   wget -q -O /root/fluidd/fluidd.zip https://github.com/cadriel/fluidd/releases/latest/download/fluidd.zip && unzip /root/fluidd/fluidd.zip -d /root/fluidd/ && rm /root/fluidd/fluidd.zip;
 	   wget -q -O /root/klipper_config/moonraker.conf https://raw.githubusercontent.com/ihrapsa/KlipperWrt/main/moonraker/fluidd_moonraker.conf;
 	   wget -q -O /etc/nginx/conf.d/fluidd.conf https://raw.githubusercontent.com/ihrapsa/KlipperWrt/main/nginx/fluidd.conf;
-
+     wget https://github.com/ihrapsa/KlipperWrt/raw/main/klipper_config/fluidd.cfg -P /root/klipper_config/
+     wget https://github.com/ihrapsa/KlipperWrt/raw/main/klipper_config/fluidd_macros.cfg -P /root/klipper_config/
 	   
 	   echo "***************************"
 	   echo "**         Done!         **"
@@ -248,7 +248,7 @@ choose(){
 	   wget -q -O /root/mainsail/mainsail.zip https://github.com/meteyou/mainsail/releases/latest/download/mainsail.zip && unzip /root/mainsail/mainsail.zip -d /root/mainsail/ && rm /root/mainsail/mainsail.zip;
 	   wget -q -O /root/klipper_config/moonraker.conf https://raw.githubusercontent.com/ihrapsa/KlipperWrt/main/moonraker/mainsail_moonraker.conf;
 	   wget -q -O /etc/nginx/conf.d/mainsail.conf https://raw.githubusercontent.com/ihrapsa/KlipperWrt/main/nginx/mainsail.conf;
-   
+     wget https://github.com/ihrapsa/KlipperWrt/raw/main/klipper_config/mainsail.cfg -P /root/klipper_config/
 	   
 	   echo "***************************"
 	   echo "**         Done          **"
