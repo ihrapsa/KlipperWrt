@@ -137,7 +137,7 @@ mv /etc/opkg/distfeeds.conf_orig /etc/opkg/distfeeds.conf;
 echo "Updating original distfeeds..."
 opkg update;
 echo "Installing python3 packages..."
-opkg install python3 python3-pip python3-pyserial python3-pillow python3-tornado python3-distro python3-curl libcurl4 libsodium libffi ip-full dbus --force-overwrite;
+opkg install python3 python3-pip python3-pyserial python3-pillow python3-tornado python3-distro python3-curl libcurl4 libsodium libffi ip-full --force-overwrite;
 
 echo "Fixing libffi symlinks..."
 ln -s /usr/lib/libffi.so.8 /usr/lib/libffi.so.7;
