@@ -166,15 +166,20 @@ This method uses 2 scripts to foramt an sd card and make it extroot and another 
 
 #### Setting up your `printer.cfg`
 - put your `printer.cfg` inside `/root/klipper_config`
-- delete these blocks from your `printer.cfg`: `[virtual_sdcard]`, `[display_status]`, `[pause_resume]` since they're included inside `client.cfg`
-- move all your macros to `client_macros.cfg` 
-- add these 2 lines inside your `printer.cfg`:   
-`[include client.cfg]`
-`[include client_macros.cfg]` 
-- Under `[mcu]` block change your serial port path according to [this](https://github.com/ihrapsa/KlipperWrt/issues/8)
+- delete these blocks from your `printer.cfg`: `[virtual_sdcard]`, `[display_status]`, `[pause_resume]` since they're included inside `fluidd.cfg`/ `mainsail.cfg`
+- add these lines inside your `printer.cfg` depending on your klipper client (mainsail/fluidd):   
+- **Fluidd:** 
+`[include fluidd.cfg]` 
+`[include fluidd_macros.cfg] # include your macros inside this file` 
+
+- **Mainsail:** 
+`[include mainsail.cfg]` 
+`[include timelapse.cfg]` 
+
+- Under `[mcu]` block change your serial port path according to [this](https://github.com/ihrapsa/KlipperWrt/issues/8)[Optional]
 - Build your `klippper.bin` mainboard firmware using a linux desktop/VM (follow `printer.cfg` header for instructions)
 - Flash your mainboard according to the `printer.cfg` header
-- Do a `FIRMWARE RESTART` inside fluidd/Minsail
+- Do a `FIRMWARE RESTART` inside fluidd/Mainsail
 - Done
 _____________________________________________
 *Notes:*
@@ -232,10 +237,10 @@ They come preinstalled with either <img width="20" height="20" src="https://gith
 `[include mainsail.cfg]` 
 `[include timelapse.cfg]` 
 
-- Under `[mcu]` block change your serial port path according to [this](https://github.com/ihrapsa/KlipperWrt/issues/8)
+- Under `[mcu]` block change your serial port path according to [this](https://github.com/ihrapsa/KlipperWrt/issues/8)[Optional]
 - Build your `klippper.bin` mainboard firmware using a linux desktop/VM (follow `printer.cfg` header for instructions)
 - Flash your mainboard according to the `printer.cfg` header
-- Do a `FIRMWARE RESTART` inside fluidd/Minsail
+- Do a `FIRMWARE RESTART` inside fluidd/Mainsail
 - Done
 _____________________________________________
 *Notes:*
