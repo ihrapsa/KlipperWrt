@@ -188,10 +188,15 @@ _____________________________________________
 
 </details>
 
-### OR
+--------------------------------------------------------------------------
+	
 
-### Extroot script method 
-Untarrs an already working image. Maybe outdated but stable. 
+<details>
+  <summary>OR</summary>
+
+
+### Cloning script method 
+Untarrs an already working image(outdated). 
 
 <details>
   <summary>Click for STEPS!</summary>
@@ -249,6 +254,8 @@ _____________________________________________
  
   </details>
   
+
+</details>
 
 </details>
 
