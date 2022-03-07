@@ -291,16 +291,13 @@ echo "### Timelapse ###"
 echo "#################"
 echo " "
 
-echo "Installing Tiemlapse packages..."
-#wget https://raw.githubusercontent.com/FrYakaTKoP/moonraker/c9ec89ca8a633501b200bce8748538b77b085a57/moonraker/components/timelapse.py -P /root/moonraker/moonraker/components;
-git clone https://github.com/ihrapsa/moonraker-timelapse.git /root/moonraker-timelapse;
-/root/moonraker-timelapse/install.sh;
+
 
 opkg install wget-ssl;
 
 rm -rf /tmp/opkg-lists 
 
-echo "Installing Timelapse offline pacakges..."
+echo "Installing ffmpeg offline pacakges..."
 mkdir /root/ffmpeg;
 wget https://github.com/ihrapsa/KlipperWrt/raw/main/packages/ffmpeg/Packages -P /root/ffmpeg;
 wget https://github.com/ihrapsa/KlipperWrt/raw/main/packages/ffmpeg/Packages.gz -P /root/ffmpeg;
@@ -323,7 +320,8 @@ wget https://github.com/ihrapsa/KlipperWrt/raw/main/packages/ffmpeg/shine_3.1.1-
 opkg install /root/ffmpeg/*ipk --force-overwrite;
 rm -rf /root/ffmpeg;
 
-echo "Installing Tiemlapse packages..."
+
+echo "Installing Timelapse packages..."
 #wget https://raw.githubusercontent.com/FrYakaTKoP/moonraker/c9ec89ca8a633501b200bce8748538b77b085a57/moonraker/components/timelapse.py -P /root/moonraker/moonraker/components;
 git clone https://github.com/ihrapsa/moonraker-timelapse.git /root/moonraker-timelapse;
 /root/moonraker-timelapse/install.sh;
