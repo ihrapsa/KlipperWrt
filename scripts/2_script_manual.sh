@@ -115,7 +115,7 @@ echo " "
 
 
 echo "Installing moonraker python3 packages..."
-opkg install python3 python3-pip python3-pyserial python3-pillow python3-tornado python3-distro python3-curl libcurl4 libsodium libffi ip-full --force-overwrite;
+opkg install python3 python3-pip python3-pillow python3-tornado python3-distro python3-curl libcurl4 libsodium libffi ip-full --force-overwrite;
 
 
 echo "Fixing libffi symlinks..."
