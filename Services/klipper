@@ -9,7 +9,7 @@ USE_PROCD=1
 
 start_service() {
     procd_open_instance
-    procd_set_param command /usr/bin/python2 \
+    procd_set_param command /usr/bin/python3 \
         /root/klipper/klippy/klippy.py \
         /root/klipper_config/printer.cfg -l /root/klipper_logs/klippy.log -a /tmp/klippy_uds
     procd_set_param respawn

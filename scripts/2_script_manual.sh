@@ -69,9 +69,9 @@ echo "### Klipper dependencies ###"
 echo "############################"
 echo " "
 
-echo "Installing dependencies..."
+echo "Installing klipper dependencies..."
 ### Backup no working distfeed.conf and opkg.conf for future use
-mv /etc/opkg/distfeeds.conf /etc/opkg/distfeeds.conf_orig_old;
+mv /etc/opkg/distfeeds.conf /etc/opkg/distfeeds.conf_snapshot;
 mv /etc/opkg.conf /etc/opkg.conf_orig;
 
 ## create new distfeeds.conf using 21.02.1 releases 
@@ -95,29 +95,16 @@ EOF
 
 opkg update && opkg install git-http unzip htop zram-swap gcc;
 
-echo "Changing distfeeds for python2..."
-mv /etc/opkg/distfeeds.conf /etc/opkg/distfeeds.conf_orig;
-cat << "EOF" > /etc/opkg/distfeeds.conf
-src/gz openwrt_core https://downloads.openwrt.org/releases/19.07.7/targets/ramips/mt76x8/packages
-src/gz openwrt_base https://downloads.openwrt.org/releases/19.07.7/packages/mipsel_24kc/base
-src/gz openwrt_luci https://downloads.openwrt.org/releases/19.07.7/packages/mipsel_24kc/luci
-src/gz openwrt_packages https://downloads.openwrt.org/releases/19.07.7/packages/mipsel_24kc/packages
-src/gz openwrt_routing https://downloads.openwrt.org/releases/19.07.7/packages/mipsel_24kc/routing
-src/gz openwrt_telephony https://downloads.openwrt.org/releases/19.07.7/packages/mipsel_24kc/telephony
-EOF
-
-opkg update;
-opkg install python python-pip python-cffi python-dev gcc;
+opkg install python3 python3-pip python3-cffi python3-dev python3-greenlet gcc;
+/usr/bin/python3 -m pip install --upgrade pip;
+pip install jinja2 python-can markupsafe configparser
 
 echo "Cloning 250k baud pyserial"
-git clone https://github.com/ihrapsa/pyserial /root/pyserial;
+git clone https://github.com/pyserial/pyserial /root/pyserial;
 cd /root/pyserial
 python /root/pyserial/setup.py install;
 cd /root/
 rm -rf /root/pyserial;
-
-echo "Installing pip2 packages..."
-pip install greenlet==0.4.15 jinja2 python-can==3.3.4 configparser==4.0.2;
 
 
 echo " "
@@ -126,28 +113,20 @@ echo "### Moonraker dependencies ###"
 echo "##############################"
 echo " "
 
-echo "Switching to original distfeeds..."
-mv /etc/opkg/distfeeds.conf /etc/opkg/distfeeds.conf_v19;
-mv /etc/opkg/distfeeds.conf_orig /etc/opkg/distfeeds.conf;
 
-### disable opkg.conf restore as we are using release distfeeds
-### rm /etc/opkg.conf;
-### mv /etc/opkg.conf_orig /etc/opkg.conf;
-
-echo "Updating original distfeeds..."
-opkg update;
-echo "Installing python3 packages..."
+echo "Installing moonraker python3 packages..."
 opkg install python3 python3-pip python3-pyserial python3-pillow python3-tornado python3-distro python3-curl libcurl4 libsodium libffi ip-full --force-overwrite;
+
 
 echo "Fixing libffi symlinks..."
 ln -s /usr/lib/libffi.so.8 /usr/lib/libffi.so.7;
 ln -s /usr/lib/libffi.so.8 /usr/lib/libffi.so.7.1.0;
 
 echo "Upgrading setuptools..."
-pip3 install --upgrade setuptools;
+pip install --upgrade setuptools;
 
 echo "Installing pip3 packages..."
-pip3 install inotify-simple python-jose libnacl paho-mqtt==1.5.1 dbus-next zeroconf preprocess-cancellation jinja2;
+pip install inotify-simple python-jose libnacl paho-mqtt==1.5.1 dbus-next zeroconf preprocess-cancellation jinja2;
 
 
 echo "Downloading lmdb and streaming-form-data package..."
@@ -344,7 +323,10 @@ wget https://github.com/ihrapsa/KlipperWrt/raw/main/packages/ffmpeg/shine_3.1.1-
 opkg install /root/ffmpeg/*ipk --force-overwrite;
 rm -rf /root/ffmpeg;
 
-
+echo "Installing Tiemlapse packages..."
+#wget https://raw.githubusercontent.com/FrYakaTKoP/moonraker/c9ec89ca8a633501b200bce8748538b77b085a57/moonraker/components/timelapse.py -P /root/moonraker/moonraker/components;
+git clone https://github.com/ihrapsa/moonraker-timelapse.git /root/moonraker-timelapse;
+/root/moonraker-timelapse/install.sh;
 
 echo " "
 echo "########################"

@@ -861,19 +861,33 @@ Enable it: `/etc/init.d/dwc enable`
 </details>
 
 --------------------------------------------------------------------------	
-
-### :warning:  Going back to stock (if ever needed) OR if it gets bricked:
+### :warning: Recovering/Unbricking OpenWrt
 
 <details>
   <summary>Click to expand!</summary>
- 
-1. Download a [stock](http://file2-cdn.creality.com/model/cfg/box/V1.01b51/cxsw_update.tar.bz2) image (found inside `Firmware/Creality_Stock` folder as well) or get a previowsly working OpenWrt image.
-2. Unzip the stock `tar.bz2` and get the `root_uImage` file OR if you have a previously working OpenWrt image: rename it to `root_uImage`
+
+1. Download a previowsly working SYSUPGRADE OpenWrt image.
+2. Rename it to `root_uImage`
 3. Put it on a FAT32 formatted USB stick (NOT sd card)
 4. Insert it in the box while off
 5. Press and hold the reset button
 6. Power on the box while still holding the reset button for about 6-10 sec.
-7. Release the button and wait for a couple of minutes. If stock, you should find it on network. If OpenWrt you should be able to ssh into it through ethernet(`ssh root@192.168.1.1`)
+7. Release the button and wait for a couple of minutes. After a couple of seconds you should find the KlipperWrt AP. You should be able to ssh into it through ethernet or connected to it's wifi (`ssh root@192.168.1.1`) 
+
+</details>
+
+### :warning:  Going back to stock (if ever needed) :
+
+<details>
+  <summary>Click to expand!</summary>
+ 
+1. Download a [stock](http://file2-cdn.creality.com/model/cfg/box/V1.01b51/cxsw_update.tar.bz2) image (found inside `Firmware/Creality_Stock` folder as well) 
+2. Unzip the stock `tar.bz2` and get the `root_uImage` file
+3. Put it on a FAT32 formatted USB stick (NOT sd card)
+4. Insert it in the box while off
+5. Press and hold the reset button
+6. Power on the box while still holding the reset button for about 6-10 sec.
+7. Release the button and wait for a couple of minutes. After a few seconds you should find it on network.
 
 </details>
 
