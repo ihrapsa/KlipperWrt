@@ -70,32 +70,10 @@ echo "############################"
 echo " "
 
 echo "Installing klipper dependencies..."
-### Backup no working distfeed.conf and opkg.conf for future use
-mv /etc/opkg/distfeeds.conf /etc/opkg/distfeeds.conf_snapshot;
-mv /etc/opkg.conf /etc/opkg.conf_orig;
 
-## create new distfeeds.conf using 21.02.1 releases 
-cat << "EOF" > /etc/opkg/distfeeds.conf
-src/gz openwrt_core https://downloads.openwrt.org/releases/21.02.1/targets/ramips/mt76x8/packages
-src/gz openwrt_base https://downloads.openwrt.org/releases/21.02.1/packages/mipsel_24kc/base
-src/gz openwrt_luci https://downloads.openwrt.org/releases/21.02.1/packages/mipsel_24kc/luci
-src/gz openwrt_packages https://downloads.openwrt.org/releases/21.02.1/packages/mipsel_24kc/packages
-src/gz openwrt_routing https://downloads.openwrt.org/releases/21.02.1/packages/mipsel_24kc/routing
-src/gz openwrt_telephony https://downloads.openwrt.org/releases/21.02.1/packages/mipsel_24kc/telephony
-EOF
+opkg update && opkg install git-http unzip htop gcc patch;
 
-## create new opkg.conf with check_signature disable
-cat << "EOF" > /etc/opkg.conf
-dest root /
-dest ram /tmp
-lists_dir ext /var/opkg-lists
-option overlay_root /overlay
-#option check_signature
-EOF
-
-opkg update && opkg install git-http unzip htop zram-swap gcc;
-
-opkg install python3 python3-pip python3-cffi python3-dev python3-greenlet gcc;
+opkg install python3 python3-pip python3-cffi python3-dev python3-greenlet;
 /usr/bin/python3 -m pip install --upgrade pip;
 pip install jinja2 python-can markupsafe configparser
 
@@ -115,27 +93,14 @@ echo " "
 
 
 echo "Installing moonraker python3 packages..."
-opkg install python3 python3-pip python3-pillow python3-tornado python3-distro python3-curl libcurl4 libsodium libffi ip-full --force-overwrite;
-
-
-echo "Fixing libffi symlinks..."
-ln -s /usr/lib/libffi.so.8 /usr/lib/libffi.so.7;
-ln -s /usr/lib/libffi.so.8 /usr/lib/libffi.so.7.1.0;
+opkg install python3-tornado python3-pillow python3-distro python3-curl ip-full libsodium;
 
 echo "Upgrading setuptools..."
 pip install --upgrade setuptools;
 
 echo "Installing pip3 packages..."
-pip install inotify-simple python-jose libnacl paho-mqtt==1.5.1 dbus-next zeroconf preprocess-cancellation jinja2;
+pip install pyserial-asyncio lmdb streaming-form-data inotify-simple libnacl paho-mqtt==1.5.1 zeroconf preprocess-cancellation apprise ldap3 dbus-next;
 
-
-echo "Downloading lmdb and streaming-form-data package..."
-
-wget https://github.com/ihrapsa/KlipperWrt/raw/main/packages/python3-lmdb%2Bstreaming-form-data_packages_1.0-1_mipsel_24kc.ipk -P /root/;
-
-echo "Installing lmdb and streaming-form-data package..."
-opkg install /root/*ipk;
-rm -rf *ipk;
 
 echo " "
 echo "###############"
@@ -169,7 +134,7 @@ echo "### Moonraker ###"
 echo "#################"
 echo " "
 
-git clone https://github.com/ihrapsa/moonraker.git /root/moonraker;
+git clone https://github.com/Arksine/moonraker.git /root/moonraker;
 wget https://raw.githubusercontent.com/ihrapsa/KlipperWrt/main/Services/moonraker -P /etc/init.d/
 chmod 755 /etc/init.d/moonraker
 /etc/init.d/moonraker enable
@@ -208,7 +173,7 @@ choose(){
 	   wget -q -O /root/klipper_config/moonraker.conf https://raw.githubusercontent.com/ihrapsa/KlipperWrt/main/moonraker/fluidd_moonraker.conf;
 	   wget -q -O /etc/nginx/conf.d/fluidd.conf https://raw.githubusercontent.com/ihrapsa/KlipperWrt/main/nginx/fluidd.conf;
      wget https://github.com/ihrapsa/KlipperWrt/raw/main/klipper_config/fluidd.cfg -P /root/klipper_config/
-     wget https://github.com/ihrapsa/KlipperWrt/raw/main/klipper_config/fluidd_macros.cfg -P /root/klipper_config/
+     
 	   
 	   echo "***************************"
 	   echo "**         Done!         **"
@@ -322,7 +287,6 @@ rm -rf /root/ffmpeg;
 
 
 echo "Installing Timelapse packages..."
-#wget https://raw.githubusercontent.com/FrYakaTKoP/moonraker/c9ec89ca8a633501b200bce8748538b77b085a57/moonraker/components/timelapse.py -P /root/moonraker/moonraker/components;
 git clone https://github.com/ihrapsa/moonraker-timelapse.git /root/moonraker-timelapse;
 /root/moonraker-timelapse/install.sh;
 

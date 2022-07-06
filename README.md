@@ -130,9 +130,9 @@ This method uses 2 scripts to foramt an sd card and make it extroot and another 
 #### STEPS:
  
 - Make sure you've flahsed/sysupgraded latest `.bin` file from `/Firmware/OpenWrt_snapshot/` or from latest release.
-- Connect to the `KlipperWrt` access point
+- Connect to the `OpenWrt` access point
 - Access LuCi web interface and log in on `192.168.1.1:81`
-- _(**optional** but recommended)_ Add a password to the `KlipperWrt` access point: `Wireless` -> Under wireless overview `EDIT` the `KlipperWrt` interface -> `Wireless Security` -> Choose an encryption -> set a password -> `Save` -> `Save & Apply`
+- _(**optional** but recommended)_ Add a password to the `OpenWrt` access point: `Wireless` -> Under wireless overview `EDIT` the `OpenWrt` interface -> `Wireless Security` -> Choose an encryption -> set a password -> `Save` -> `Save & Apply`
 - _(**optional** but recommended)_ Add a password: `System` -> `Administration` -> `Router Password`
 - ❗If your home network subnet is on 1 (192.168.1.x), in order to avoid any ip conflicts, change the static ip of the box LAN from 192.168.1.1 to something like 192.168.3.1. To do that access the luci webinterface -> `Network` -> `Interfaces` and edit the static ip -> `Save` -> press the down arow on the Save&Apply button -> `Apply Unchecked`. You can now access luci on the new ip and continue configureing Client setup. 
 - Connect as a client to your Internet router: `Network` -> `Wireless` -> `SCAN` -> `Join Network` -> check `Lock to BSSID` -> `Create/Assign Firewall zone` then under `custom` type `wwan` enter -> `Submit` -> `Save` -> `Save & Apply`
@@ -160,7 +160,7 @@ This method uses 2 scripts to foramt an sd card and make it extroot and another 
 - remove the scripts when done: `rm -rf /root/*.sh`
 - Done!
 
-- When done and rebooted use `http://klipperwrt.local` or `http://box-ip`to access the Klipper client
+- When done and rebooted use `http://openwrt.local` or `http://box-ip`to access the Klipper client
 - Done!
 
 
@@ -170,7 +170,7 @@ This method uses 2 scripts to foramt an sd card and make it extroot and another 
 - add these lines inside your `printer.cfg` depending on your klipper client (mainsail/fluidd):   
 - **Fluidd:** 
 `[include fluidd.cfg]` 
-`[include fluidd_macros.cfg] # include your macros inside this file` 
+`[include timelapse.cfg]`
 
 - **Mainsail:** 
 `[include mainsail.cfg]` 
@@ -184,7 +184,7 @@ This method uses 2 scripts to foramt an sd card and make it extroot and another 
 _____________________________________________
 *Notes:*
 -  If the box doesn't connect back to your router wirelessly connect to it with an ethernet cable and setup/troubleshoot wifi.
-- timelapse is set to autorender which might take a while to finish after a long print. You might set it to ` autorender: False`  under `[timelapse]` block inside `moonraker.conf`. Check [here](https://github.com/FrYakaTKoP/moonraker/blob/dev-timelapse/docs/configuration.md#add-the-macro-to-your-slicer) for how to set your `TIMELAPSE_TAKE_FRAME` macro or `TIMELAPSE_TAKE_PARKED_FRAME` inside your slicer layer change.
+-  Check [here](https://github.com/mainsail-crew/moonraker-timelapse/blob/main/docs/configuration.md#slicer-setup) for how to set your `TIMELAPSE_TAKE_FRAME` macro inside your slicer layer change.
 
 </details>
 
