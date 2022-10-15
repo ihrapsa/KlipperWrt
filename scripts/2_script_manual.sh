@@ -73,9 +73,9 @@ echo "Installing klipper dependencies..."
 
 opkg update && opkg install git-http unzip htop gcc patch;
 
-opkg install python3 python3-pip python3-cffi python3-dev python3-greenlet;
-/usr/bin/python3 -m pip install --upgrade pip;
-pip install jinja2 python-can markupsafe configparser
+opkg install python3 python3-pip python3-cffi python3-dev python3-greenlet python3-jinja2 python3-markupsafe;
+pip install --upgrade pip;
+pip install python-can configparser
 
 echo "Cloning 250k baud pyserial"
 git clone https://github.com/pyserial/pyserial /root/pyserial;
@@ -93,14 +93,15 @@ echo " "
 
 
 echo "Installing moonraker python3 packages..."
-opkg install python3-tornado python3-pillow python3-distro python3-curl ip-full libsodium;
+opkg install python3-tornado python3-pillow python3-distro python3-curl python3-zeroconf python3-paho-mqtt python3-yaml python3-requests ip-full libsodium --force-overwrite;
 
 echo "Upgrading setuptools..."
 pip install --upgrade setuptools;
 
 echo "Installing pip3 packages..."
-pip install pyserial-asyncio lmdb streaming-form-data inotify-simple libnacl paho-mqtt==1.5.1 zeroconf preprocess-cancellation apprise ldap3 dbus-next;
+pip install pyserial-asyncio lmdb streaming-form-data inotify-simple libnacl preprocess-cancellation apprise ldap3 dbus-next;
 
+#--use-pep517
 
 echo " "
 echo "###############"
