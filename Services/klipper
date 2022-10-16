@@ -2,7 +2,7 @@
 # Copyright (C) 2009-2014 OpenWrt.org
 # Put this inside /etc/init.d/
 
-START=91
+START=99
 STOP=10
 USE_PROCD=1
 
@@ -11,7 +11,7 @@ start_service() {
     procd_open_instance
     procd_set_param command /usr/bin/python3 \
         /root/klipper/klippy/klippy.py \
-        /root/klipper_config/printer.cfg -l /root/klipper_logs/klippy.log -a /tmp/klippy_uds
+        /root/printer_data/config/printer.cfg -l /root/printer_data/logs/klippy.log -a /tmp/klippy_uds
     procd_set_param respawn
     procd_set_param stdout 1
     procd_set_param stderr 1

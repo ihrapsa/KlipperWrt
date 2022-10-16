@@ -126,7 +126,7 @@ wget https://raw.githubusercontent.com/ihrapsa/KlipperWrt/main/Services/klipper 
 chmod 755 /etc/init.d/klipper;
 /etc/init.d/klipper enable;
 
-mkdir /root/klipper_config /root/klipper_logs /root/gcode_files;
+mkdir -p /root/printer_data/config;
 
 
 echo " "
@@ -136,6 +136,7 @@ echo "#################"
 echo " "
 
 git clone https://github.com/Arksine/moonraker.git /root/moonraker;
+git -C /root/moonraker checkout 06279d0e10ae4e0349f7b415756821d7ca38774b
 wget https://raw.githubusercontent.com/ihrapsa/KlipperWrt/main/Services/moonraker -P /etc/init.d/
 chmod 755 /etc/init.d/moonraker
 /etc/init.d/moonraker enable
@@ -171,9 +172,9 @@ choose(){
 	   echo " "
 	   mkdir /root/fluidd;
 	   wget -q -O /root/fluidd/fluidd.zip https://github.com/cadriel/fluidd/releases/latest/download/fluidd.zip && unzip /root/fluidd/fluidd.zip -d /root/fluidd/ && rm /root/fluidd/fluidd.zip;
-	   wget -q -O /root/klipper_config/moonraker.conf https://raw.githubusercontent.com/ihrapsa/KlipperWrt/main/moonraker/fluidd_moonraker.conf;
+	   wget -q -O /root/printer_data/config/moonraker.conf https://raw.githubusercontent.com/ihrapsa/KlipperWrt/main/moonraker/fluidd_moonraker.conf;
 	   wget -q -O /etc/nginx/conf.d/fluidd.conf https://raw.githubusercontent.com/ihrapsa/KlipperWrt/main/nginx/fluidd.conf;
-     wget https://github.com/ihrapsa/KlipperWrt/raw/main/klipper_config/fluidd.cfg -P /root/klipper_config/
+     wget https://github.com/ihrapsa/KlipperWrt/raw/main/klipper_config/fluidd.cfg -P /root/printer_data/config/
      
 	   
 	   echo "***************************"
@@ -191,9 +192,9 @@ choose(){
 	   echo " "
 	   mkdir /root/mainsail;
 	   wget -q -O /root/mainsail/mainsail.zip https://github.com/mainsail-crew/mainsail/releases/latest/download/mainsail.zip && unzip /root/mainsail/mainsail.zip -d /root/mainsail/ && rm /root/mainsail/mainsail.zip;
-	   wget -q -O /root/klipper_config/moonraker.conf https://raw.githubusercontent.com/ihrapsa/KlipperWrt/main/moonraker/mainsail_moonraker.conf;
+	   wget -q -O /root/printer_data/config/moonraker.conf https://raw.githubusercontent.com/ihrapsa/KlipperWrt/main/moonraker/mainsail_moonraker.conf;
 	   wget -q -O /etc/nginx/conf.d/mainsail.conf https://raw.githubusercontent.com/ihrapsa/KlipperWrt/main/nginx/mainsail.conf;
-     wget https://github.com/ihrapsa/KlipperWrt/raw/main/klipper_config/mainsail.cfg -P /root/klipper_config/
+     wget https://github.com/ihrapsa/KlipperWrt/raw/main/klipper_config/mainsail.cfg -P /root/printer_data/config/
 	   
 	   echo "***************************"
 	   echo "**         Done          **"
